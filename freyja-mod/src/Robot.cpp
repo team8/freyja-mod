@@ -1,39 +1,62 @@
-#include "WPILib.h"
+#include "Robot.h"
 
-class Robot: public IterativeRobot
+Robot::Robot():
+	state{NOTHING},
+	path(paths::NOTHING)
 {
-private:
-	LiveWindow *lw;
 
-	void RobotInit()
-	{
-		lw = LiveWindow::GetInstance();
+}
+
+Robot::~Robot() {
+
+}
+
+void Robot::init() {
+	state = TELE;
+}
+
+void Robot::update() {
+	switch (state) {
+		case NOTHING:
+			break;
+		case AUTO: //fallthrough correct
+		case TELE:
+			//update Subsystems here
+			break;
+		case TROUT: //Teleoperated Routines
+			if (is_idle() && !path.empty()) {
+				path.front()(this);
+				path.pop_front();
+			}
+
+			//update Subsystems here
+
+			if (path.empty())
+				state = TELE;
+			break;
+		default:
+			std::cerr << "error: Robot in nonexistant state" << std::endl;
+			break;
 	}
+}
 
-	void AutonomousInit()
-	{
+void Robot::disable() {
+	//disable Subsystems here
+}
 
-	}
+bool Robot::is_idle() const {
+	//return whether all Subsystems are idle here
+	return true;
+}
 
-	void AutonomousPeriodic()
-	{
+void Robot::set_state(const State &new_state) {
+	if (new_state == TROUT) {
+		disable();
+		state = new_state;
+	} else
+		state = new_state;
+}
 
-	}
-
-	void TeleopInit()
-	{
-
-	}
-
-	void TeleopPeriodic()
-	{
-
-	}
-
-	void TestPeriodic()
-	{
-		lw->Run();
-	}
-};
-
-START_ROBOT_CLASS(Robot);
+void Robot::set_path(const Path &new_path) {
+	path = new_path;
+}
