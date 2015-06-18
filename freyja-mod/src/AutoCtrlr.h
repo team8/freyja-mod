@@ -28,7 +28,7 @@ public:
 	 * Executes the next Cmd in path, if there is one
 	 * @param robot The pointer to the robot which will be controlled by the AutoCtrlr
 	 */
-	void update(Robot *const robot); //
+	void update(Robot *const robot);
 };
 
 

@@ -8,10 +8,6 @@ template <typename T> Path paths::build_path(const T &t) {
 	return to_path(t);
 }
 
-Path paths::build_path() {
-	return Path{};
-}
-
 Path paths::combine_paths(Path lhs, const Path &rhs) {
 	for (const Cmd &cmd : rhs)
 		lhs.push_back(cmd);
