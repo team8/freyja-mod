@@ -31,5 +31,4 @@ public:
 	void update(Robot *const robot);
 };
 
-
 #endif //AUTO_CTRLR_H

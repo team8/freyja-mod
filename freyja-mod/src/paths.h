@@ -21,10 +21,14 @@ namespace paths {
 
 	/**
 	 * build_path is used to make Paths that are comprised of other Paths (then subpaths) and/or Cmds
-	 * Infinite arguments
+	 * Infinite arguments, any combination
 	 */
 	template <typename T> Path build_path(const T &t);
 	template <typename F, typename ... R> Path build_path(const F &first, const R& ... rest); 
+
+	/**
+	 * Paths
+	 */
 
 	const Path NOTHING = {cmds::STOP};
 

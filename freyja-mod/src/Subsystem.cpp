@@ -4,7 +4,6 @@ Subsys::Subsys() {
 
 }
 
-
 Subsys::~Subsys() {
 
 }
