@@ -27,7 +27,7 @@ public:
 	 */
 	State state;
 
-	void set_state(const State &new_state);
+	void setState(const State &newState);
 
 	/**
 	 * Initializes the robot, and sets it to AUTO/TELE
@@ -48,14 +48,14 @@ public:
 	/**
 	 * @return Returns whether all subsystems are idle
 	 */
-	bool is_idle() const;
+	bool isIdle() const;
 
 	/**
 	 * If a Teleop Routine is given by TeleCtrlr, path stores the Path given
 	 */
 	Path path;
 
-	void set_path(const Path &new_path); 
+	void setPath(const Path &newPath);
 
 };
 

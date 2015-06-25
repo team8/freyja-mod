@@ -3,7 +3,7 @@
 #include "TeleController.h"
 #include "AutoController.h"
 
-class Freyja_mod: public IterativeRobot {
+class Freyja : public IterativeRobot {
 private:
 
 	Robot robot;
@@ -26,34 +26,34 @@ private:
 
 };
 
-void Freyja_mod::RobotInit() {
+void Freyja::RobotInit() {
 	robot.init();
 }
 
-void Freyja_mod::AutonomousInit() {
+void Freyja::AutonomousInit() {
 	autocontroller.init(paths::NOTHING);
 }
 
-void Freyja_mod::AutonomousPeriodic() {
+void Freyja::AutonomousPeriodic() {
 	autocontroller.update(&robot);
 	robot.update();
 }
 
-void Freyja_mod::TeleopInit() {
+void Freyja::TeleopInit() {
 	telecontroller.init();
 }
 
-void Freyja_mod::TeleopPeriodic() {
+void Freyja::TeleopPeriodic() {
 	telecontroller.update(&robot);
 	robot.update();
 }
 
-void Freyja_mod::DisabledInit() {
+void Freyja::DisabledInit() {
 	robot.disable();
 }
 
-void Freyja_mod::DisabledPeriodic() {
+void Freyja::DisabledPeriodic() {
 	robot.disable();
 }
 
-START_ROBOT_CLASS(Freyja_mod)
+START_ROBOT_CLASS(Freyja)

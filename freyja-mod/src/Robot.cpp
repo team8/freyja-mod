@@ -24,7 +24,7 @@ void Robot::update() {
 			//update Subsystems here
 			break;
 		case TROUT: //Teleoperated Routines
-			if (is_idle() && !path.empty()) {
+			if (isIdle() && !path.empty()) {
 				path.front()(this);
 				path.pop_front();
 			}
@@ -44,19 +44,19 @@ void Robot::disable() {
 	//disable Subsystems here
 }
 
-bool Robot::is_idle() const {
+bool Robot::isIdle() const {
 	//return whether all Subsystems are idle here
 	return true;
 }
 
-void Robot::set_state(const State &new_state) {
-	if (new_state == TROUT) {
+void Robot::setState(const State &newState) {
+	if (newState == TROUT) {
 		disable();
-		state = new_state;
+		state = newState;
 	} else
-		state = new_state;
+		state = newState;
 }
 
-void Robot::set_path(const Path &new_path) {
-	path = new_path;
+void Robot::setPath(const Path &newPath) {
+	path = newPath;
 }

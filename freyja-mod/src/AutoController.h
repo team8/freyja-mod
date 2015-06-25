@@ -22,7 +22,7 @@ public:
 	 * Sets the Path for the autonomous period
 	 * @param new_path The path for the autonomous period
 	 */
-	void init(const Path &new_path);
+	void init(const Path &newPath);
 
 	/**
 	 * Executes the next Cmd in path, if there is one

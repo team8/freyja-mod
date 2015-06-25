@@ -1,23 +1,23 @@
 #include "paths.h"
 
-template <typename F, typename ... R> Path paths::build_path(const F &first, const R& ... rest) {
-	return combine_paths(to_path(first), build_path(rest...));
+template <typename F, typename ... R> Path paths::buildPath(const F &first, const R& ... rest) {
+	return combinePaths(toPath(first), buildPath(rest...));
 }
 
-template <typename T> Path paths::build_path(const T &t) {
-	return to_path(t);
+template <typename T> Path paths::buildPath(const T &t) {
+	return toPath(t);
 }
 
-Path paths::combine_paths(Path lhs, const Path &rhs) {
+Path paths::combinePaths(Path lhs, const Path &rhs) {
 	for (const Cmd &cmd : rhs)
 		lhs.push_back(cmd);
 	return lhs;
 }
 
-Path paths::to_path(const Cmd &cmd) {
+Path paths::toPath(const Cmd &cmd) {
 	return Path{cmd};
 }
 
-Path paths::to_path(const Path &path) {
+Path paths::toPath(const Path &path) {
 	return path;
 }
