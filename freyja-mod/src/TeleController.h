@@ -1,16 +1,16 @@
-#ifndef TELE_CTRLR_H
-#define TELE_CTRLR_H
+#ifndef TELE_CONTROLLER_H
+#define TELE_CONTROLLER_H
 
 #include "WPILib.h"
 #include "Robot.h"
 #include "paths.h"
 
-class TeleCtrlr {
+class TeleController {
 public:
 
-	TeleCtrlr();
+	TeleController();
 
-	~TeleCtrlr();
+	~TeleController();
 
 	/**
 	 * Currently doesn't actually do anything
@@ -19,7 +19,7 @@ public:
 
 	/**
 	 * Commands the robot's actions based on human input
-	 * @param robot The pointer to the robot which will be controlled by the TeleCtrlr
+	 * @param robot The pointer to the robot which will be controlled by the TeleController
 	 */
 	void update(Robot *const robot);
 

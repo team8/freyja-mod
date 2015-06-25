@@ -1,10 +1,10 @@
-#ifndef AUTO_CTRLR_H
-#define AUTO_CTRLR_H
+#ifndef AUTO_CONTROLLER_H
+#define AUTO_CONTROLLER_H
 
 #include "Robot.h"
 #include "paths.h"
 
-class AutoCtrlr {
+class AutoController {
 private:
 
 	/**
@@ -14,9 +14,9 @@ private:
 
 public:
 
-	AutoCtrlr();
+	AutoController();
 
-	~AutoCtrlr();
+	~AutoController();
 
 	/**
 	 * Sets the Path for the autonomous period
@@ -26,9 +26,9 @@ public:
 
 	/**
 	 * Executes the next Cmd in path, if there is one
-	 * @param robot The pointer to the robot which will be controlled by the AutoCtrlr
+	 * @param robot The pointer to the robot which will be controlled by the AutoController
 	 */
 	void update(Robot *const robot);
 };
 
-#endif //AUTO_CTRLR_H
+#endif //AUTO_CONTROLLER_H

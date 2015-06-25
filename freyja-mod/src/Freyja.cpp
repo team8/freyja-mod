@@ -1,14 +1,14 @@
 #include "WPILib.h"
 
-#include "TeleCtrlr.h"
-#include "AutoCtrlr.h"
+#include "TeleController.h"
+#include "AutoController.h"
 
 class Freyja_mod: public IterativeRobot {
 private:
 
 	Robot robot;
-	TeleCtrlr telectrlr;
-	AutoCtrlr autoctrlr;
+	TeleController telecontroller;
+	AutoController autocontroller;
 
 	void RobotInit();
 
@@ -31,20 +31,20 @@ void Freyja_mod::RobotInit() {
 }
 
 void Freyja_mod::AutonomousInit() {
-	autoctrlr.init(paths::NOTHING);
+	autocontroller.init(paths::NOTHING);
 }
 
 void Freyja_mod::AutonomousPeriodic() {
-	autoctrlr.update(&robot);
+	autocontroller.update(&robot);
 	robot.update();
 }
 
 void Freyja_mod::TeleopInit() {
-	telectrlr.init();
+	telecontroller.init();
 }
 
 void Freyja_mod::TeleopPeriodic() {
-	telectrlr.update(&robot);
+	telecontroller.update(&robot);
 	robot.update();
 }
 
