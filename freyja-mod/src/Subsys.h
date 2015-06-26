@@ -1,5 +1,5 @@
-#ifndef SUBSYSTEM_H
-#define SUBSYSTEM_H
+#ifndef SUBSYS_H
+#define SUBSYS_H
 
 #include <iostream>
 
