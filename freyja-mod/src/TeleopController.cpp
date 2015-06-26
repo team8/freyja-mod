@@ -1,17 +1,17 @@
-#include <TeleController.h>
+#include <TeleopController.h>
 
-TeleController::TeleController() {
-
-}
-
-void TeleController::init() {
+TeleopController::TeleopController() {
 
 }
 
-void TeleController::update(Robot *const robot) {
+void TeleopController::init() {
 
 }
 
-TeleController::~TeleController() {
+void TeleopController::update(Robot *const robot) {
+
+}
+
+TeleopController::~TeleopController() {
 
 }

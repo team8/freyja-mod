@@ -12,15 +12,15 @@ Robot::~Robot() {
 }
 
 void Robot::init() {
-	state = TELE;
+	state = TELEOP;
 }
 
 void Robot::update() {
 	switch (state) {
 		case NOTHING:
 			break;
-		case AUTO: //fallthrough correct
-		case TELE:
+		case AUTONOMOUS: //fallthrough correct
+		case TELEOP:
 			//update Subsystems here
 			break;
 		case TROUT: //Teleoperated Routines
@@ -32,7 +32,7 @@ void Robot::update() {
 			//update Subsystems here
 
 			if (path.empty())
-				state = TELE;
+				state = TELEOP;
 			break;
 		default:
 			std::cerr << "error: Robot in nonexistant state" << std::endl;

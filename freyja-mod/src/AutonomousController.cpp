@@ -1,14 +1,14 @@
-#include <AutoController.h>
+#include <AutonomousController.h>
 
-AutoController::AutoController() {
+AutonomousController::AutonomousController() {
 
 }
 
-void AutoController::init(const Path &newPath) {
+void AutonomousController::init(const Path &newPath) {
 	path = newPath;
 }
 
-void AutoController::update(Robot *const robot) {
+void AutonomousController::update(Robot *const robot) {
 	if (robot->isIdle() && !path.empty()) {
 		path.front()(robot); //path is a list of Cmds (functions), so path.front() is callable
 		path.pop_front();
@@ -16,6 +16,6 @@ void AutoController::update(Robot *const robot) {
 }
 
 
-AutoController::~AutoController() {
+AutonomousController::~AutonomousController() {
 
 }

@@ -1,10 +1,10 @@
-#ifndef AUTO_CONTROLLER_H
-#define AUTO_CONTROLLER_H
+#ifndef AUTONOMOUS_CONTROLLER_H
+#define AUTONOMOUS_CONTROLLER_H
 
 #include "Robot.h"
 #include "paths.h"
 
-class AutoController {
+class AutonomousController {
 private:
 
 	/**
@@ -14,8 +14,8 @@ private:
 
 public:
 
-	AutoController();
-	~AutoController();
+	AutonomousController();
+	~AutonomousController();
 
 	/**
 	 * Sets the Path for the autonomous period
@@ -25,7 +25,7 @@ public:
 
 	/**
 	 * Executes the next Cmd in path, if there is one
-	 * @param robot The pointer to the robot which will be controlled by the AutoController
+	 * @param robot The pointer to the robot which will be controlled by the AutonomousController
 	 */
 	void update(Robot *const robot);
 };

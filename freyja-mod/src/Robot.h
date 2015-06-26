@@ -17,8 +17,8 @@ public:
 	 */
 	enum State {
 		NOTHING,
-		AUTO,
-		TELE,
+		AUTONOMOUS,
+		TELEOP,
 		TROUT //Tele Routines
 	};
 

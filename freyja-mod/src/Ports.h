@@ -7,7 +7,7 @@
 #define PORT_JOYSTICK_TURN 2
 
 
-// Pulse With Modulation
+// Pulse Width Modulation
 #define PORT_DRIVETRAIN_TALON_LEFT 0
 #define PORT_DRIVETRAIN_TALON_RIGHT 0
 

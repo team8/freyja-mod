@@ -1,14 +1,14 @@
+#include <AutonomousController.h>
+#include <TeleopController.h>
 #include "WPILib.h"
 
-#include "TeleController.h"
-#include "AutoController.h"
 
 class Freyja : public IterativeRobot {
 private:
 
 	Robot robot;
-	TeleController telecontroller;
-	AutoController autocontroller;
+	TeleopController telecontroller;
+	AutonomousController autocontroller;
 
 	void RobotInit();
 

@@ -1,15 +1,15 @@
-#ifndef TELE_CONTROLLER_H
-#define TELE_CONTROLLER_H
+#ifndef TELEOP_CONTROLLER_H
+#define TELEOP_CONTROLLER_H
 
 #include "WPILib.h"
 #include "Robot.h"
 #include "paths.h"
 
-class TeleController {
+class TeleopController {
 public:
 
-	TeleController();
-	~TeleController();
+	TeleopController();
+	~TeleopController();
 
 	/**
 	 * Currently doesn't actually do anything
