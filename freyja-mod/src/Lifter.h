@@ -17,6 +17,7 @@ public:
 	void init();
 	void update();
 	void disable();
+	void idle();
 	bool isIdle();
 
 private:

@@ -16,6 +16,10 @@ void Lifter::disable(){
 
 }
 
+void Lifter::idle() {
+
+}
+
 bool Lifter::isIdle() {
 
 }

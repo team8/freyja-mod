@@ -15,7 +15,6 @@ private:
 public:
 
 	AutoController();
-
 	~AutoController();
 
 	/**

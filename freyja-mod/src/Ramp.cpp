@@ -16,6 +16,10 @@ void Ramp::disable(){
 
 }
 
+void Ramp::idle() {
+
+}
+
 bool Ramp::isIdle() {
 
 }

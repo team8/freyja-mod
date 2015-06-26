@@ -11,7 +11,6 @@ class Subsys {
 public:
 
 	Subsys();
-
 	virtual ~Subsys();
 
 	// virtual = 0 means the function is overridable and must be implemented in non-abstract base classes
@@ -31,10 +30,14 @@ public:
 	 */
 	virtual void disable() = 0;
 
+	virtual void idle() = 0;
+
 	/**
 	 * @return whether the subsystem is in state IDLE
 	 */
 	virtual bool isIdle() const = 0;
+
+
 
 };
 

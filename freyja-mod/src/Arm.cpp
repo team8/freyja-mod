@@ -16,6 +16,10 @@ void Arm::disable(){
 
 }
 
+void Arm::idle() {
+
+}
+
 bool Arm::isIdle() {
 
 }

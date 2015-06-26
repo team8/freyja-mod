@@ -16,9 +16,14 @@ void Drivetrain::disable(){
 
 }
 
+void Drivetrain::idle() {
+
+}
+
 bool Drivetrain::isIdle() {
 
 }
+
 
 Drivetrain::~Drivetrain() {
 

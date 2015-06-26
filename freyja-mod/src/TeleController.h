@@ -9,7 +9,6 @@ class TeleController {
 public:
 
 	TeleController();
-
 	~TeleController();
 
 	/**
