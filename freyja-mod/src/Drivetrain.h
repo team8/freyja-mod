@@ -5,9 +5,11 @@
 #include "Subsys.h"
 #include <Ports.h>
 
-// Robot will be able to move faster than MAX_SPEED while turning
-#define MAX_SPEED 0.0
+// max forward speed + max turn speed should not exceed 1
+#define MAX_FORWARD_SPEED 0.0
 #define MAX_TURN_SPEED 0.0
+#define SPEED_CONSTANT 0.0
+#define TURN_CONSTANT 0.0
 
 #define LEFT_DRIVE_PROPORTIONAL 0.0
 #define LEFT_DRIVE_INTEGRAL 0.0
@@ -44,7 +46,7 @@ public:
 	bool isIdle();
 
 	//Not inherited from Subsystem
-	void drive(double x, double y);
+	void drive(double turnValue, double forwardValue);
 	void driveDist(double distance);
 	void rotateAngle(double angle);
 	void brake();

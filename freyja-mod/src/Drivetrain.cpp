@@ -92,14 +92,18 @@ int Drivetrain::rotateControllerError() {
 	return std::max(leftGyroController.GetError(), rightGyroController.GetError());
 }
 
-void Drivetrain::drive(double x, double y) {
+void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
-	leftDriveController.SetSetpoint(y + x);
-	rightDriveController.SetSetpoint(y - x);
+	int scaledForward = std::max(std::min(SPEED_CONSTANT * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
+	int scaledTurn = std::max(std::min(TURN_CONSTANT * turnValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
+
+
+	leftDriveController.SetSetpoint(scaledForward + scaledTurn);
+	rightDriveController.SetSetpoint(scaledForward + scaledTurn);
 }
 
 void Drivetrain::driveDist(double distance) {
@@ -141,4 +145,3 @@ void Drivetrain::brake() {
 Drivetrain::~Drivetrain() {
 
 }
-
