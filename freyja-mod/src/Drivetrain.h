@@ -6,9 +6,25 @@
 #include <Ports.h>
 
 // Robot will be able to move faster than MAX_SPEED while turning
-#define MAX_SPEED 0.5
-#define MAX_TURN_SPEED 0.25
+#define MAX_SPEED 0.0
+#define MAX_TURN_SPEED 0.0
 
+#define LEFT_DRIVE_PROPORTIONAL 0.0
+#define LEFT_DRIVE_INTEGRAL 0.0
+#define LEFT_DRIVE_DERIVATIVE 0.0
+
+#define RIGHT_DRIVE_PROPORTIONAL 0.0
+#define RIGHT_DRIVE_INTEGRAL 0.0
+#define RIGHT_DRIVE_DERIVATIVE 0.0
+
+#define GYRO_PROPORTIONAL 0.0
+#define GYRO_INTEGRAL 0.0
+#define GYRO_DERIVATIVE 0.0
+
+#define RIGHT_DPP 0.0
+#define LEFT_DPP 0.0
+
+#define ENCODER_MAX_PERIOD 0
 
 /**
  * Represents Freyja's West-Coast Drivetrain

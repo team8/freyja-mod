@@ -1,22 +1,24 @@
 #include <Drivetrain.h>
 
 Drivetrain::Drivetrain() :
-leftTalon((uint32_t) 1),
-rightTalon((uint32_t) 1),
-gyro((uint32_t) 1),
+leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
+rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
+gyro((uint32_t) PORT_GYROSCOPE),
 
-leftDriveEncoder((uint32_t) 1, (uint32_t) 2),
-rightDriveEncoder((uint32_t) 1, (uint32_t) 2),
+leftDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B),
+rightDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B),
 
-leftGyroController(1, 1, 1, &gyro, &leftTalon),
-rightGyroController(1, 1, 1, &gyro, &rightTalon),
-leftDriveController(1, 1, 1, &leftDriveEncoder, &leftTalon),
-rightDriveController(1, 1, 1, &rightDriveEncoder, &rightTalon),
+leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
+rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
+leftDriveController(LEFT_DRIVE_PROPORTIONAL, LEFT_DRIVE_INTEGRAL, LEFT_DRIVE_DERIVATIVE, &leftDriveEncoder, &leftTalon),
+rightDriveController(RIGHT_DRIVE_PROPORTIONAL, RIGHT_DRIVE_INTEGRAL, RIGHT_DRIVE_DERIVATIVE, &rightDriveEncoder, &rightTalon),
 state(IDLE)
 
 {
-
-
+	leftDriveEncoder.SetDistancePerPulse(LEFT_DPP);
+	rightDriveEncoder.SetDistancePerPulse(RIGHT_DPP);
+	leftDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	rightDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 }
 
 void Drivetrain::init() {
@@ -30,10 +32,19 @@ void Drivetrain::update(){
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
+		if(encodersStopped() && driveControllerError() < 1) {
+			setState(IDLE);
+		}
 		break;
 	case AUTOMATED_ROTATE:
+		if(encodersStopped() && rotateControllerError() < 1) {
+			setState(IDLE);
+		}
 		break;
 	case BRAKING:
+		if(encodersStopped() && driveControllerError() < 1) {
+			setState(IDLE);
+		}
 		break;
 	case STOPPED:
 		break;
@@ -45,7 +56,7 @@ void Drivetrain::disable(){
 }
 
 void Drivetrain::idle() {
-	state = IDLE;
+	setState(IDLE);
 	leftDriveController.Disable();
 	rightDriveController.Disable();
 	leftGyroController.Disable();
