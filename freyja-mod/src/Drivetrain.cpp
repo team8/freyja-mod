@@ -5,8 +5,8 @@ leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
 rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
 gyro((uint32_t) PORT_GYROSCOPE),
 
-leftDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B),
-rightDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B),
+leftDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
+rightDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
 
 leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
 rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
@@ -19,6 +19,13 @@ state(IDLE)
 	rightDriveEncoder.SetDistancePerPulse(RIGHT_DPP);
 	leftDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+
+	leftDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	rightDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	leftDriveController.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	rightDriveController.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	leftGyroController.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	rightGyroController.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
 }
 
 void Drivetrain::init() {

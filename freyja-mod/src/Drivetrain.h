@@ -23,8 +23,10 @@
 
 #define RIGHT_DPP 0.0
 #define LEFT_DPP 0.0
-
 #define ENCODER_MAX_PERIOD 0
+#define ENCODER_INPUT_RANGE 0
+#define ENCODER_DRIVE_OUTPUT_RANGE 0
+#define ENCODER_GYRO_OUTPUT_RANGE 0
 
 /**
  * Represents Freyja's West-Coast Drivetrain
