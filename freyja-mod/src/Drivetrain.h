@@ -20,7 +20,34 @@ public:
 	void idle();
 	bool isIdle();
 
+	//Not inherited from Subsystem
+	void drive();
+	void driveDist();
+	void rotateAngle();
+	void brake();
+
 private:
+	PIDController leftDriveController;
+	PIDController rightDriveController;
+
+	PIDController leftGyroController;
+	PIDController rightGyroController;
+
+	Talon leftTalon;
+	Talon rightTalon;
+
+	Encoder leftDriveEncoder;
+	Encoder rightDriveEncoder;
+
+	enum State{
+		TELEOP,
+		AUTOMATED_DRIVE,
+		AUTOMATED_ROTATE,
+		IDLE,
+		BRAKING,
+		STOPPED
+	};
+	State state;
 
 };
 
