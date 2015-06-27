@@ -5,6 +5,11 @@
 #include "Subsys.h"
 #include <Ports.h>
 
+// Robot will be able to move faster than MAX_SPEED while turning
+#define MAX_SPEED 0.5
+#define MAX_TURN_SPEED 0.25
+
+
 /**
  * Represents Freyja's West-Coast Drivetrain
  */
@@ -51,6 +56,10 @@ private:
 	};
 	State state;
 
+	void setState(State state);\
+	bool encodersStopped();
+	int driveControllerError();
+	int rotateControllerError();
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
