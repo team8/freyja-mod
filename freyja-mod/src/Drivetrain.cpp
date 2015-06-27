@@ -92,30 +92,31 @@ int Drivetrain::rotateControllerError() {
 	return std::max(leftGyroController.GetError(), rightGyroController.GetError());
 }
 
-void Drivetrain::drive() {
+void Drivetrain::drive(double x, double y) {
 	setState(TELEOP);
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
+
+	leftDriveController.SetSetpoint(y + x);
+	rightDriveController.SetSetpoint(y - x);
 }
 
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
 	leftDriveController.SetSetpoint(distance);
 	rightDriveController.SetSetpoint(distance);
+
+	leftDriveController.Enable();
+	rightDriveController.Enable();
 }
 
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
-	double targetAngle = gyro.GetAngle() + angle;
-	if(angle > 0 && gyro.GetAngle() < targetAngle) {
-		leftDriveController.SetSetpoint(leftDriveController.Get() + 1);
-		rightDriveController.SetSetpoint(rightDriveController.Get() - 1);
-	}
+	leftGyroController.SetSetpoint(angle);
+	rightGyroController.SetSetpoint(angle);
 
-	if(angle < 0 && gyro.GetAngle() > targetAngle) {
-		leftDriveController.SetSetpoint(leftDriveController.Get() - 1);
-		rightDriveController.SetSetpoint(rightDriveController.Get() + 1);
-	}
+	leftGyroController.Enable();
+	rightGyroController.Enable();
 }
 
 Drivetrain::~Drivetrain() {

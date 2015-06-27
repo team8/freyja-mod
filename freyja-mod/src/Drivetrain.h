@@ -44,7 +44,7 @@ public:
 	bool isIdle();
 
 	//Not inherited from Subsystem
-	void drive();
+	void drive(double x, double y);
 	void driveDist(double distance);
 	void rotateAngle(double angle);
 	void brake();
