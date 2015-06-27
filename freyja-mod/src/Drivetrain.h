@@ -21,14 +21,14 @@ public:
 	// Inherited from Subsystem
 	void init();
 	void update();
-	void disable();
+	 void disable();
 	void idle();
 	bool isIdle();
 
 	//Not inherited from Subsystem
 	void drive();
-	void driveDist();
-	void rotateAngle();
+	void driveDist(double distance);
+	void rotateAngle(double angle);
 	void brake();
 
 private:
