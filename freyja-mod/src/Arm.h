@@ -5,6 +5,8 @@
 #include "Subsys.h"
 #include <Ports.h>
 
+#define ARM_EXTEND_TIME 0.4
+
 /**
  * Represents Freyja's pneumatically controlled arms
  */
@@ -19,8 +21,30 @@ public:
 	void disable();
 	void idle();
 	bool isIdle();
+	void toggle();
 
 private:
+	Compressor comp;
+	DoubleSolenoid sol;
+	Timer timer;
+
+	enum State {
+		IDLE_OPEN,
+		IDLE_CLOSED,
+		OPENING,
+		CLOSING,
+		STOPPED
+	};
+	enum CompressorState {
+		ON, OFF
+	};
+
+	State state;
+	CompressorState compState;
+
+	void setState(State);
+	void open();
+	void close();
 
 };
 
