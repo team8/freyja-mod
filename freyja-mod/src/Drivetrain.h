@@ -36,6 +36,8 @@ private:
 	Talon leftTalon;
 	Talon rightTalon;
 
+	Gyro gyro;
+
 	Encoder leftDriveEncoder;
 	Encoder rightDriveEncoder;
 
