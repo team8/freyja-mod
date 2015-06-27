@@ -94,6 +94,7 @@ int Drivetrain::rotateControllerError() {
 
 void Drivetrain::drive(double x, double y) {
 	setState(TELEOP);
+
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
@@ -103,6 +104,10 @@ void Drivetrain::drive(double x, double y) {
 
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
+
+	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+
 	leftDriveController.SetSetpoint(distance);
 	rightDriveController.SetSetpoint(distance);
 
@@ -112,11 +117,25 @@ void Drivetrain::driveDist(double distance) {
 
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
+
+	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+
 	leftGyroController.SetSetpoint(angle);
 	rightGyroController.SetSetpoint(angle);
 
 	leftGyroController.Enable();
 	rightGyroController.Enable();
+}
+
+void Drivetrain::brake() {
+	setState(BRAKING);
+
+	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
+	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
+
+	leftDriveController.SetSetpoint(0);
+	rightDriveController.SetSetpoint(0);
 }
 
 Drivetrain::~Drivetrain() {
