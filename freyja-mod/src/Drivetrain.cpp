@@ -3,7 +3,7 @@
 Drivetrain::Drivetrain() :
 leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
 rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
-gyro((uint32_t) PORT_GYROSCOPE),
+gyro((int32_t) PORT_GYROSCOPE),
 
 leftDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
 rightDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
@@ -95,6 +95,9 @@ int Drivetrain::rotateControllerError() {
 void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
 
+	leftGyroController.Disable();
+	rightGyroController.Disable();
+
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
@@ -104,10 +107,16 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 
 	leftDriveController.SetSetpoint(scaledForward + scaledTurn);
 	rightDriveController.SetSetpoint(scaledForward + scaledTurn);
+
+	leftDriveController.Enable();
+	rightDriveController.Enable();
 }
 
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
+
+	leftGyroController.Disable();
+	rightGyroController.Disable();
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -122,6 +131,9 @@ void Drivetrain::driveDist(double distance) {
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
 
+	leftDriveController.Disable();
+	rightDriveController.Disable();
+
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
@@ -134,6 +146,9 @@ void Drivetrain::rotateAngle(double angle) {
 
 void Drivetrain::brake() {
 	setState(BRAKING);
+
+	leftGyroController.Disable();
+	rightGyroController.Disable();
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
