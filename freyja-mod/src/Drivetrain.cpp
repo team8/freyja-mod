@@ -136,8 +136,7 @@ void Drivetrain::rotateAngle(double angle) {
 void Drivetrain::brake() {
 	setState(BRAKING);
 
-	leftGyroController.Disable();
-	rightGyroController.Disable();
+	disableGyroControllers();
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
