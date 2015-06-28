@@ -1,3 +1,7 @@
+// TODO: Add functionality for max v, a and j
+// TODO: Implement field map system similar to 254
+
+
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 
