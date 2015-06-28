@@ -36,6 +36,7 @@
 
 #define ACCEPTABLE_DRIVE_ERROR 1
 #define ACCEPTABLE_ROTATE_ERROR 1
+#define ACCEPTABLE_BRAKE_ERROR 0.01
 
 /**
  * Represents Freyja's West-Coast Drivetrain

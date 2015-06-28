@@ -51,7 +51,7 @@ void Drivetrain::update(){
 		}
 		break;
 	case BRAKING:
-		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
+		if(encodersStopped() && driveControllerError() < ACCEPTABLE_BRAKE_ERROR) {
 			disableControllers();
 			setState(IDLE);
 		}
