@@ -29,7 +29,9 @@ state(IDLE)
 }
 
 void Drivetrain::init() {
-
+	gyro.InitGyro();
+	leftDriveEncoder.Reset();
+	rightDriveEncoder.Reset();
 }
 
 void Drivetrain::update(){
@@ -59,7 +61,7 @@ void Drivetrain::update(){
 }
 
 void Drivetrain::disable(){
-
+	setState(STOPPED);
 }
 
 void Drivetrain::idle() {
