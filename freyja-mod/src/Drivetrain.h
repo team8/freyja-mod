@@ -94,16 +94,53 @@ private:
 	};
 	State state;
 
+	/**
+	 *
+	 */
 	void setState(State state);
-	bool encodersStopped();
-	int driveControllerError();
-	int rotateControllerError();
-	void enableGyroControllers();
-	void enableDriveControllers();
-	void disableControllers();
-	void disableGyroControllers();
-	void disableDriveControllers();
 
+	/**
+	 * Returns true if the encoders are stopped
+	 * @return if both encoders are stopped
+	 */
+	bool encodersStopped();
+
+	/**
+	 * Gets the maximum error of the drive PIDControllers
+	 * @return the error of the drive PIDControllers
+	 */
+	int driveControllerError();
+
+	/**
+	 * Gets the maximum error of the gyro PIDControllers
+	 * @return the error of the gyro PIDControllers
+	 */
+	int rotateControllerError();
+
+	/**
+	 * Enables the gyro PIDControllers that rotate the robot
+	 */
+	void enableGyroControllers();
+
+	/**
+	 * Enables the drive PIDControlers that drive and brake the robot
+	 */
+	void enableDriveControllers();
+
+	/**
+	 * Disables all the PIDControllers
+	 */
+	void disableControllers();
+
+	/**
+	 * Disables the gyro PIDControllers that rotate the robot
+	 */
+	void disableGyroControllers();
+
+	/**
+	 * Disables the drive PIDControllers that drive and brake the robot
+	 */
+	void disableDriveControllers();
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
