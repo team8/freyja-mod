@@ -30,8 +30,6 @@ state(IDLE)
 
 void Drivetrain::init() {
 	gyro.InitGyro();
-	leftDriveEncoder.Reset();
-	rightDriveEncoder.Reset();
 }
 
 void Drivetrain::update(){
@@ -42,16 +40,19 @@ void Drivetrain::update(){
 		break;
 	case AUTOMATED_DRIVE:
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
+			disableControllers();
 			setState(IDLE);
 		}
 		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
+			disableControllers();
 			setState(IDLE);
 		}
 		break;
 	case BRAKING:
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
+			disableControllers();
 			setState(IDLE);
 		}
 		break;
@@ -61,15 +62,13 @@ void Drivetrain::update(){
 }
 
 void Drivetrain::disable(){
+	disableControllers();
 	setState(STOPPED);
 }
 
 void Drivetrain::idle() {
+	disableControllers();
 	setState(IDLE);
-	leftDriveController.Disable();
-	rightDriveController.Disable();
-	leftGyroController.Disable();
-	rightGyroController.Disable();
 }
 
 bool Drivetrain::isIdle() {
@@ -113,8 +112,7 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
 
-	leftGyroController.Disable();
-	rightGyroController.Disable();
+	disableGyroControllers();
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -129,8 +127,7 @@ void Drivetrain::driveDist(double distance) {
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
 
-	leftDriveController.Disable();
-	rightDriveController.Disable();
+	disableDriveControllers();
 
 	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -153,6 +150,21 @@ void Drivetrain::brake() {
 
 	leftDriveController.SetSetpoint(0);
 	rightDriveController.SetSetpoint(0);
+}
+
+void Drivetrain::disableControllers() {
+	disableDriveControllers();
+	disableGyroControllers();
+}
+
+void Drivetrain::disableDriveControllers() {
+	leftDriveController.Disable();
+	rightDriveController.Disable();
+}
+
+void Drivetrain::disableGyroControllers() {
+	leftGyroController.Disable();
+	rightGyroController.Disable();
 }
 
 Drivetrain::~Drivetrain() {

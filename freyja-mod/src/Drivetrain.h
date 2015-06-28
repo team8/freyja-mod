@@ -83,7 +83,10 @@ private:
 	};
 	State state;
 
-	void setState(State state);\
+	void disableControllers();
+	void disableGyroControllers();
+	void disableDriveControllers();
+	void setState(State state);
 	bool encodersStopped();
 	int driveControllerError();
 	int rotateControllerError();
