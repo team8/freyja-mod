@@ -41,17 +41,17 @@ void Drivetrain::update(){
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
-		if(encodersStopped() && driveControllerError() < 1) {
+		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			setState(IDLE);
 		}
 		break;
 	case AUTOMATED_ROTATE:
-		if(encodersStopped() && rotateControllerError() < 1) {
+		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
 			setState(IDLE);
 		}
 		break;
 	case BRAKING:
-		if(encodersStopped() && driveControllerError() < 1) {
+		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			setState(IDLE);
 		}
 		break;
@@ -100,18 +100,14 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	leftGyroController.Disable();
 	rightGyroController.Disable();
 
-	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
-	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
+	leftDriveController.Disable();
+	rightDriveController.Disable();
 
-	int scaledForward = std::max(std::min(SPEED_CONSTANT * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
-	int scaledTurn = std::max(std::min(TURN_CONSTANT * turnValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
+	double scaledForward = std::max(std::min(SPEED_CONSTANT * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
+	double scaledTurn = std::max(std::min(TURN_CONSTANT * turnValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
 
-
-	leftDriveController.SetSetpoint(scaledForward + scaledTurn);
-	rightDriveController.SetSetpoint(scaledForward + scaledTurn);
-
-	leftDriveController.Enable();
-	rightDriveController.Enable();
+	leftTalon.Set(-(scaledForward + scaledTurn));
+	rightTalon.Set(scaledForward - scaledTurn);
 }
 
 void Drivetrain::driveDist(double distance) {

@@ -34,6 +34,9 @@
 #define ENCODER_DRIVE_OUTPUT_RANGE 0
 #define ENCODER_GYRO_OUTPUT_RANGE 0
 
+#define ACCEPTABLE_DRIVE_ERROR 1
+#define ACCEPTABLE_ROTATE_ERROR 1
+
 /**
  * Represents Freyja's West-Coast Drivetrain
  */
