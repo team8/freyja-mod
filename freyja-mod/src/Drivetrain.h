@@ -1,4 +1,5 @@
 // TODO: Add functionality for max v, a and j
+// TODO: Add debug method
 // TODO: Implement field map system similar to 254
 
 
@@ -9,7 +10,7 @@
 #include "Subsys.h"
 #include <Ports.h>
 
-// max forward speed + max turn speed should not exceed 1
+// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 #define MAX_FORWARD_SPEED 0.0
 #define MAX_TURN_SPEED 0.0
 #define SPEED_CONSTANT 0.0
@@ -49,7 +50,7 @@ public:
 	// Inherited from Subsystem
 	void init();
 	void update();
-	 void disable();
+	void disable();
 	void idle();
 	bool isIdle();
 
