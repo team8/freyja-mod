@@ -86,6 +86,8 @@ private:
 	void disableControllers();
 	void disableGyroControllers();
 	void disableDriveControllers();
+	void enableGyroControllers();
+	void enableDriveControllers();
 	void setState(State state);
 	bool encodersStopped();
 	int driveControllerError();

@@ -96,11 +96,7 @@ int Drivetrain::rotateControllerError() {
 void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
 
-	leftGyroController.Disable();
-	rightGyroController.Disable();
-
-	leftDriveController.Disable();
-	rightDriveController.Disable();
+	disableControllers();
 
 	double scaledForward = std::max(std::min(SPEED_CONSTANT * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
 	double scaledTurn = std::max(std::min(TURN_CONSTANT * turnValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
@@ -120,8 +116,7 @@ void Drivetrain::driveDist(double distance) {
 	leftDriveController.SetSetpoint(distance);
 	rightDriveController.SetSetpoint(distance);
 
-	leftDriveController.Enable();
-	rightDriveController.Enable();
+	enableDriveControllers();
 }
 
 void Drivetrain::rotateAngle(double angle) {
@@ -135,8 +130,7 @@ void Drivetrain::rotateAngle(double angle) {
 	leftGyroController.SetSetpoint(angle);
 	rightGyroController.SetSetpoint(angle);
 
-	leftGyroController.Enable();
-	rightGyroController.Enable();
+	enableGyroControllers();
 }
 
 void Drivetrain::brake() {
@@ -150,11 +144,23 @@ void Drivetrain::brake() {
 
 	leftDriveController.SetSetpoint(0);
 	rightDriveController.SetSetpoint(0);
+
+	enableDriveControllers();
 }
 
 void Drivetrain::disableControllers() {
 	disableDriveControllers();
 	disableGyroControllers();
+}
+
+void Drivetrain::enableDriveControllers() {
+	leftDriveController.Enable();
+	rightDriveController.Enable();
+}
+
+void Drivetrain::enableGyroControllers() {
+	leftGyroController.Enable();
+	rightGyroController.Enable();
 }
 
 void Drivetrain::disableDriveControllers() {
