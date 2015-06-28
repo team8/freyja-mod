@@ -84,15 +84,16 @@ private:
 	};
 	State state;
 
-	void disableControllers();
-	void disableGyroControllers();
-	void disableDriveControllers();
-	void enableGyroControllers();
-	void enableDriveControllers();
 	void setState(State state);
 	bool encodersStopped();
 	int driveControllerError();
 	int rotateControllerError();
+	void enableGyroControllers();
+	void enableDriveControllers();
+	void disableControllers();
+	void disableGyroControllers();
+	void disableDriveControllers();
+
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */

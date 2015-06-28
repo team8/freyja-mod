@@ -75,23 +75,6 @@ bool Drivetrain::isIdle() {
 	return state == IDLE;
 }
 
-void Drivetrain::setState(State state) {
-	if(state != STOPPED) {
-		this -> state = state;
-	}
-}
-
-bool Drivetrain::encodersStopped() {
-	return leftDriveEncoder.GetStopped() && rightDriveEncoder.GetStopped();
-}
-
-int Drivetrain::driveControllerError() {
-	return std::max(leftDriveController.GetError(), rightDriveController.GetError());
-}
-
-int Drivetrain::rotateControllerError() {
-	return std::max(leftGyroController.GetError(), rightGyroController.GetError());
-}
 
 void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
@@ -147,14 +130,22 @@ void Drivetrain::brake() {
 	enableDriveControllers();
 }
 
-void Drivetrain::disableControllers() {
-	disableDriveControllers();
-	disableGyroControllers();
+void Drivetrain::setState(State state) {
+	if(state != STOPPED) {
+		this -> state = state;
+	}
 }
 
-void Drivetrain::enableDriveControllers() {
-	leftDriveController.Enable();
-	rightDriveController.Enable();
+bool Drivetrain::encodersStopped() {
+	return leftDriveEncoder.GetStopped() && rightDriveEncoder.GetStopped();
+}
+
+int Drivetrain::driveControllerError() {
+	return std::max(leftDriveController.GetError(), rightDriveController.GetError());
+}
+
+int Drivetrain::rotateControllerError() {
+	return std::max(leftGyroController.GetError(), rightGyroController.GetError());
 }
 
 void Drivetrain::enableGyroControllers() {
@@ -162,14 +153,24 @@ void Drivetrain::enableGyroControllers() {
 	rightGyroController.Enable();
 }
 
-void Drivetrain::disableDriveControllers() {
-	leftDriveController.Disable();
-	rightDriveController.Disable();
+void Drivetrain::enableDriveControllers() {
+	leftDriveController.Enable();
+	rightDriveController.Enable();
+}
+
+void Drivetrain::disableControllers() {
+	disableDriveControllers();
+	disableGyroControllers();
 }
 
 void Drivetrain::disableGyroControllers() {
 	leftGyroController.Disable();
 	rightGyroController.Disable();
+}
+
+void Drivetrain::disableDriveControllers() {
+	leftDriveController.Disable();
+	rightDriveController.Disable();
 }
 
 Drivetrain::~Drivetrain() {
