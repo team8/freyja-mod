@@ -47,26 +47,71 @@
 #define ACCEPTABLE_BRAKE_ERROR 0.01
 
 /**
- * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders; a left one and a right one.
- * The drivetrain also has a gyro and two PID controllers
+ * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
+ * The drivetrain also has two gyro PID controllers linked to one gyro. Each gyro controller controls the Talon on its side.
+ * It also has 2 drive PID controllers that control the Talons on their sides.
  *
  */
 class Drivetrain : public Subsys {
 public:
+	/**
+	 * Constructor for this drivetrain.
+	 */
 	Drivetrain();
+
+	/**
+	 * Destructor for this drivetrain
+	 */
 	virtual ~Drivetrain();
 
-	// Inherited from Subsystem
+	/**
+	 * Initializes the drivetrain and its components
+	 */
 	void init();
+
+	/**
+	 * This method is called continuously to keep the drivetrain updated
+	 */
 	void update();
+
+	/**
+	 * Disables the drivetrain
+	 */
 	void disable();
+
+	/**
+	 * Idles the drivetrain
+	 */
 	void idle();
+
+	/**
+	 * Determines if the drivetrain is idle or not
+	 * @return true if drivetrain is idling.
+	 */
 	bool isIdle();
 
-	//Not inherited from Subsystem
+	/**
+	 * Drives the robot according to the given values
+	 * @param turnValue the X value of the joystick
+	 * @param forwardValue the Y value of the joystick
+	 */
 	void drive(double turnValue, double forwardValue);
+
+	/**
+	 * Drive a set distance
+	 * @param distance how far you want to drive
+	 */
 	void driveDist(double distance);
+
+	/**
+	 * Rotates the drivetrain by an angle
+	 * @param angle how much you want to turn
+	 */
 	void rotateAngle(double angle);
+
+	/**
+	 * Gradually halts the drivetrain. Acts just like a normal brake.
+	 */
 	void brake();
 
 private:
