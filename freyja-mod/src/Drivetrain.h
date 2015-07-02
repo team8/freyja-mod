@@ -115,20 +115,59 @@ public:
 	void brake();
 
 private:
+	/**
+	 * A controller for the left wheels when driving a set distance
+	 */
 	PIDController leftDriveController;
+
+	/**
+	 * A controller for the right wheels when driving a set distance
+	 */
 	PIDController rightDriveController;
 
+	/**
+	 * A controller for the left wheels when rotating angle
+	 */
 	PIDController leftGyroController;
+
+	/**
+	 * A controller for the right wheels when rotating angle
+	 */
 	PIDController rightGyroController;
 
-	Talon leftTalon;
-	Talon rightTalon;
+	/**
+	 * The talon that controls the left wheels
+	 */
+	TalonSRX leftTalon;
+
+	/**
+	 * The talon that controls the right wheels
+	 */
+	TalonSRX rightTalon;
 
 	Gyro gyro;
 
+	/**
+	 * The encoder on the center left wheel that keeps track of rotation
+	 */
 	Encoder leftDriveEncoder;
+
+	/**
+	 * The encoder on the center right wheel that keeps track of rotation
+	 */
 	Encoder rightDriveEncoder;
 
+	/**
+	 * Keeps track of the State of the Drivetrain passively
+	 * for use in the update method
+	 *
+	 * TELEOP - Used for standard human controlled operation
+	 * AUTOMATED_DRIVE - Used when driving a set distance
+	 * AUTOMATED_ROTATE - Used when rotating a set angle
+	 * IDLE - Used when no motion is desired and no joystick controls have been made
+	 * BRAKING - Used to automatically stop the robot
+	 * STOPPED - Used for testing, no code running
+	 */
 	enum State{
 		TELEOP,
 		AUTOMATED_DRIVE,
@@ -140,7 +179,7 @@ private:
 	State state;
 
 	/**
-	 *
+	 * Sets the State of Drivetrain as long as it is not in STOPPED
 	 */
 	void setState(State state);
 
