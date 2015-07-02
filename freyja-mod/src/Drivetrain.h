@@ -146,6 +146,9 @@ private:
 	 */
 	TalonSRX rightTalon;
 
+	/**
+	 * The gyro of the robot that returns the current angle of the robot
+	 */
 	Gyro gyro;
 
 	/**
