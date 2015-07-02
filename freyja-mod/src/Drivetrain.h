@@ -70,7 +70,8 @@ public:
 	void init();
 
 	/**
-	 * This method is called continuously to keep the drivetrain updated
+	 * This method is called continuously to keep the drivetrain updated and used to passively
+	 * set the State when an automated state is done
 	 */
 	void update();
 
@@ -150,12 +151,12 @@ private:
 	/**
 	 * The encoder on the center left wheel that keeps track of rotation
 	 */
-	Encoder leftDriveEncoder;
+	Encoder leftEncoder;
 
 	/**
 	 * The encoder on the center right wheel that keeps track of rotation
 	 */
-	Encoder rightDriveEncoder;
+	Encoder rightEncoder;
 
 	/**
 	 * Keeps track of the State of the Drivetrain passively

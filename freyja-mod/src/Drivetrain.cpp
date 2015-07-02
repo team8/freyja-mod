@@ -5,20 +5,20 @@ leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
 rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
 gyro((int32_t) PORT_GYROSCOPE),
 
-leftDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
-rightDriveEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
+leftEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
+rightEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
 
 leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
 rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
-leftDriveController(LEFT_DRIVE_PROPORTIONAL, LEFT_DRIVE_INTEGRAL, LEFT_DRIVE_DERIVATIVE, &leftDriveEncoder, &leftTalon),
-rightDriveController(RIGHT_DRIVE_PROPORTIONAL, RIGHT_DRIVE_INTEGRAL, RIGHT_DRIVE_DERIVATIVE, &rightDriveEncoder, &rightTalon),
+leftDriveController(LEFT_DRIVE_PROPORTIONAL, LEFT_DRIVE_INTEGRAL, LEFT_DRIVE_DERIVATIVE, &leftEncoder, &leftTalon),
+rightDriveController(RIGHT_DRIVE_PROPORTIONAL, RIGHT_DRIVE_INTEGRAL, RIGHT_DRIVE_DERIVATIVE, &rightEncoder, &rightTalon),
 state(IDLE)
 
 {
-	leftDriveEncoder.SetDistancePerPulse(LEFT_DPP);
-	rightDriveEncoder.SetDistancePerPulse(RIGHT_DPP);
-	leftDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-	rightDriveEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	leftEncoder.SetDistancePerPulse(LEFT_DPP);
+	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
+	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
 	leftDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
 	rightDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
@@ -93,8 +93,8 @@ void Drivetrain::driveDist(double distance) {
 
 	disableGyroControllers();
 
-	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
 	leftDriveController.SetSetpoint(distance);
 	rightDriveController.SetSetpoint(distance);
@@ -107,8 +107,8 @@ void Drivetrain::rotateAngle(double angle) {
 
 	disableDriveControllers();
 
-	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
 	leftGyroController.SetSetpoint(angle);
 	rightGyroController.SetSetpoint(angle);
@@ -121,8 +121,8 @@ void Drivetrain::brake() {
 
 	disableGyroControllers();
 
-	leftDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
-	rightDriveEncoder.SetPIDSourceParameter(PIDSource::kRate);
+	leftEncoder.SetPIDSourceParameter(PIDSource::kRate);
+	rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
 	leftDriveController.SetSetpoint(0);
 	rightDriveController.SetSetpoint(0);
@@ -137,7 +137,7 @@ void Drivetrain::setState(State state) {
 }
 
 bool Drivetrain::encodersStopped() {
-	return leftDriveEncoder.GetStopped() && rightDriveEncoder.GetStopped();
+	return leftEncoder.GetStopped() && rightEncoder.GetStopped();
 }
 
 int Drivetrain::driveControllerError() {
