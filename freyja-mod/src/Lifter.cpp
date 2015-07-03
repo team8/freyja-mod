@@ -1,30 +1,143 @@
-#include <Lifter.h>
+/*
+ * Lifter.cpp
+ *
+ *  Created on: Jun 23, 2015
+ *      Author: Nihar
+ */
+#include "Lifter.h"
 
-Lifter::Lifter() {
-
+Lifter::Lifter() :
+	talon((uint32_t) PORT_LIFTER_TALON_1),
+	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
+	controller(PROPORTIONAL, INTEGRAL, DERIVATIVE, &encoder, &talon),
+	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
+	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM)
+{
+	currentLevel = 0;
+	state = IDLE;
 }
 
 void Lifter::init() {
+	//Used to vary sensitivity of lifter's speed
+	controller.SetOutputRange(-0.5, 0.5);
+	controller.SetInputRange(-9999, 9999);
 
+	//Initialize PID components
+	encoder.Reset();
+	controller.Reset();
+	encoder.SetDistancePerPulse(DPP);
+	state = IDLE;
 }
 
-void Lifter::update(){
-
+/*
+ * Constantly updates the subsystem,
+ * operating based on state machine
+ * Updates currentLevel
+ */
+void Lifter::update() {
+	switch(state) {
+	/*
+	 * Runs velocity PID to maintain position
+	 */
+	case IDLE:
+		break;
+	/*
+	 * Scales joystick input to run talon
+	 */
+	case TELEOP:
+		break;
+	/*
+	 * Runs positon PID to change level
+	 */
+	case AUTOMATED:
+		if(encoder.GetStopped() && controller.GetError() < ACCEPTABLE_PID_ERROR) {
+			idle();
+		}
+		break;
+	/*
+	 * Unoperational for testing other things
+	 */
+	case DISABLED:
+		break;
+	}
+	/*
+	 * Moves away from the side in the case of Hall effect sensor trigger
+	 */
+	if(checkBottomSensor()) {
+		setVelocity(BOUNCE_SPEED);
+	}
+	else if(checkTopSensor()) {
+		setVelocity(-BOUNCE_SPEED);
+	}
 }
 
-void Lifter::disable(){
+/*
+ * Permanently disables this subsystem for use
+ */
+void Lifter::disable() {
+	setState(DISABLED);
+}
 
+/*
+ * Changes the state, can't change from disabled
+ * Allows interrupt of automated
+ */
+void Lifter::setState(LifterState state) {
+	if(state == DISABLED) {
+		return;
+	}
+	else {
+		this -> state = state;
+	}
+}
+
+/*
+ * Passed a target level which is translated
+ * into a PID setPoint change
+ * Disables velocity PID
+ */
+void Lifter::setLevel(double level) {
+	double setpoint = level * LEVEL_HEIGHT;
+	//Switches to distance PID
+	controller.SetPIDSourceParameter(PIDSource::kDistance);
+	controller.SetSetpoint(setpoint);
+	setState(AUTOMATED);
+}
+
+/*
+ * Modifies the velocity PID targetVelocity
+ * Disables position PID
+ */
+void Lifter::setVelocity(double velocity) {
+	if(velocity > MAX_SPEED) {
+		talon.Set(MAX_SPEED);
+		return;
+	}
+	talon.Set(velocity * SPEED_SCALING);
+	setState(TELEOP);
+}
+
+bool Lifter::checkBottomSensor() {
+	return bottomSensor.Get();
+}
+
+bool Lifter::checkTopSensor() {
+	return topSensor.Get();
 }
 
 void Lifter::idle() {
+	//Change to and use velocity PID to
+	controller.SetPIDSourceParameter(PIDSource::kRate);
+	controller.SetSetpoint(0);
+	setState(IDLE);
+}
 
+void Lifter::disable() {
+	controller.Disable();
+	talon.Set(0);
+	setState(DISABLED);
 }
 
 bool Lifter::isIdle() {
-
+	return (state == IDLE);
 }
-
-Lifter::~Lifter() {
-
-}
-
