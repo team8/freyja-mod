@@ -102,8 +102,8 @@ private:
 	//Constants for regulating speed
 	const double MAX_FORWARD_SPEED = 0.0;
 	const double MAX_TURN_SPEED = 0.0;
-	const double SPEED_CONSTANT = 0.0;
-	const double TURN_CONSTANT = 0.0;
+	const double SPEED_SCALING = 0.0;
+	const double TURN_SCALING = 0.0;
 
 	//Acceptable error constants
 	const double ACCEPTABLE_DRIVE_ERROR = 1;
