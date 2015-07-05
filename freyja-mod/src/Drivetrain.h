@@ -10,23 +10,10 @@
 #include "Subsys.h"
 #include <Ports.h>
 
-// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
-//Constants for regulating speed
-#define MAX_FORWARD_SPEED 0.0
-#define MAX_TURN_SPEED 0.0
-#define SPEED_CONSTANT 0.0
-#define TURN_CONSTANT 0.0
-
-//Left PID constants
-#define LEFT_DRIVE_PROPORTIONAL 0.0
-#define LEFT_DRIVE_INTEGRAL 0.0
-#define LEFT_DRIVE_DERIVATIVE 0.0
-
-
-//Right PID constants
-#define RIGHT_DRIVE_PROPORTIONAL 0.0
-#define RIGHT_DRIVE_INTEGRAL 0.0
-#define RIGHT_DRIVE_DERIVATIVE 0.0
+//PID constants
+#define DRIVE_PROPORTIONAL 0.0
+#define DRIVE_INTEGRAL 0.0
+#define DRIVE_DERIVATIVE 0.0
 
  //Gyro PID constants
 #define GYRO_PROPORTIONAL 0.0
@@ -40,11 +27,6 @@
 #define ENCODER_INPUT_RANGE 0
 #define ENCODER_DRIVE_OUTPUT_RANGE 0
 #define ENCODER_GYRO_OUTPUT_RANGE 0
-
-//Acceptable error constants
-#define ACCEPTABLE_DRIVE_ERROR 1
-#define ACCEPTABLE_ROTATE_ERROR 1
-#define ACCEPTABLE_BRAKE_ERROR 0.01
 
 /**
  * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
@@ -116,6 +98,18 @@ public:
 	void brake();
 
 private:
+	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
+	//Constants for regulating speed
+	const double MAX_FORWARD_SPEED = 0.0;
+	const double MAX_TURN_SPEED = 0.0;
+	const double SPEED_CONSTANT = 0.0;
+	const double TURN_CONSTANT = 0.0;
+
+	//Acceptable error constants
+	const double ACCEPTABLE_DRIVE_ERROR = 1;
+	const double ACCEPTABLE_ROTATE_ERROR = 1;
+	const double ACCEPTABLE_BRAKE_ERROR = 0.01;
+
 	/**
 	 * A controller for the left wheels when driving a set distance
 	 */
