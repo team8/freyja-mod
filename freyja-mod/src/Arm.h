@@ -3,9 +3,7 @@
 
 #include <WPILib.h>
 #include "Subsys.h"
-#include <Ports.h>
-
-#define ARM_EXTEND_TIME 0.4
+#include "Ports.h"
 
 /**
  * Represents Freyja's pneumatically controlled arms
@@ -24,23 +22,25 @@ public:
 	void toggle();
 
 private:
-	Compressor comp;
-	DoubleSolenoid sol;
+	Compressor compressor;
+	DoubleSolenoid solenoid;
 	Timer timer;
+	const double ARM_EXTEND_TIME = 0.4;
+
 
 	enum State {
 		IDLE_OPEN,
 		IDLE_CLOSED,
 		OPENING,
 		CLOSING,
-		STOPPED
+		DISABLED
 	};
 	enum CompressorState {
 		ON, OFF
 	};
 
 	State state;
-	CompressorState compState;
+	CompressorState compressorState;
 
 	void setState(State);
 	void open();
