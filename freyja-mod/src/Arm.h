@@ -25,7 +25,7 @@ private:
 	Compressor compressor;
 	DoubleSolenoid solenoid;
 	Timer timer;
-	const double ARM_EXTEND_TIME = 0.4;
+	const double ARM_TRANSITION_TIME = 0.4;
 
 
 	enum State {

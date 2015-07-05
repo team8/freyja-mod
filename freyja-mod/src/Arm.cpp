@@ -21,13 +21,13 @@ void Arm::update() {
 		break;
 	case OPENING:
 		solenoid.Set(DoubleSolenoid::Value::kReverse);
-		if (timer.Get() >= ARM_EXTEND_TIME) {
+		if (timer.Get() >= ARM_TRANSITION_TIME) {
 			setState(IDLE_OPEN);
 		}
 		break;
 	case CLOSING:
 		solenoid.Set(DoubleSolenoid::Value::kForward);
-		if (timer.Get() >= ARM_EXTEND_TIME) {
+		if (timer.Get() >= ARM_TRANSITION_TIME) {
 			setState(IDLE_CLOSED);
 		}
 		break;
@@ -73,7 +73,11 @@ void Arm::toggle() {
 		close();
 		break;
 	case OPENING:
+		open();
+		break;
 	case CLOSING:
+		close();
+		break;
 	case DISABLED:
 		break;
 	default:
@@ -82,14 +86,14 @@ void Arm::toggle() {
 }
 
 void Arm::open() {
-	if (state != OPENING) {
+	if (state != OPENING && state != IDLE_OPEN) {
 		setState(OPENING);
 		timer.Start();
 	}
 }
 
 void Arm::close() {
-	if (state != CLOSING) {
+	if (state != CLOSING && state != IDLE_CLOSED) {
 		setState(CLOSING);
 		timer.Start();
 	}
