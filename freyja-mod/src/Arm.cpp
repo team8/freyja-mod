@@ -47,7 +47,7 @@ void Arm::update() {
 }
 
 void Arm::disable() {
-	setState(STOPPED);
+	setState(DISABLED);
 }
 
 void Arm::idle() {
