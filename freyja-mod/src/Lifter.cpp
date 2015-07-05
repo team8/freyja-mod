@@ -75,6 +75,8 @@ void Lifter::update() {
  * Permanently disables this subsystem for use
  */
 void Lifter::disable() {
+	controller.Disable();
+	talon.Set(0);
 	setState(DISABLED);
 }
 
@@ -82,13 +84,11 @@ void Lifter::disable() {
  * Changes the state, can't change from disabled
  * Allows interrupt of automated
  */
-void Lifter::setState(LifterState state) {
+void Lifter::setState(State state) {
 	if(state == DISABLED) {
 		return;
 	}
-	else {
 		this -> state = state;
-	}
 }
 
 /*
@@ -99,7 +99,7 @@ void Lifter::setState(LifterState state) {
 void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
 	//Switches to distance PID
-	controller.SetPIDSourceParameter(PIDSource::kDistance);
+	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	controller.SetSetpoint(setpoint);
 	setState(AUTOMATED);
 }
@@ -127,15 +127,9 @@ bool Lifter::checkTopSensor() {
 
 void Lifter::idle() {
 	//Change to and use velocity PID to
-	controller.SetPIDSourceParameter(PIDSource::kRate);
+	encoder.SetPIDSourceParameter(PIDSource::kRate);
 	controller.SetSetpoint(0);
 	setState(IDLE);
-}
-
-void Lifter::disable() {
-	controller.Disable();
-	talon.Set(0);
-	setState(DISABLED);
 }
 
 bool Lifter::isIdle() {

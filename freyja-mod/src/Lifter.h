@@ -16,7 +16,7 @@
  * Represents Freyja's chain lifter
  */
 
-class Lifter: public Subsystem {
+class Lifter: public Subsys {
 	public:
 		Lifter();
 		void init();
@@ -27,13 +27,11 @@ class Lifter: public Subsystem {
 		void setLevel(int level);
 		void setVelocity(double velocity);
 		void setLevel(double level);
-		LifterState getState();
-
 	private:
 		/*
 		 * States that lifter can be in
 		 */
-		enum LifterState {
+		enum State {
 			IDLE,
 			TELEOP,
 			AUTOMATED,
@@ -52,7 +50,7 @@ class Lifter: public Subsystem {
 		PIDController controller;
 
 		//Talon that drives the lifter
-		Talon talon;
+		TalonSRX talon;
 
 		//Hall effect sensors
 		DigitalInput topSensor;
@@ -65,8 +63,8 @@ class Lifter: public Subsystem {
 		//Joystick control related variables/constants
 		const double MAX_SPEED = 1;
 		const double SPEED_SCALING = 1;
-		LifterState state;
-		void setState(LifterState newState);
+		State state;
+		void setState(State state);
 		bool checkBottomSensor();
 		bool checkTopSensor();
 		//somehow do limit switch hall effect
