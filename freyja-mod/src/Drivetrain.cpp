@@ -1,18 +1,18 @@
 #include <Drivetrain.h>
 
 Drivetrain::Drivetrain() :
-leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
-rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
-gyro((int32_t) PORT_GYROSCOPE),
+	leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
+	rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
+	gyro((int32_t) PORT_GYROSCOPE),
 
-leftEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
-rightEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
+	leftEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
+	rightEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
 
-leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
-rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
-leftDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon),
-rightDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon),
-state(IDLE)
+	leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
+	rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
+	leftDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon),
+	rightDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon),
+	state(IDLE)
 
 {
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
@@ -32,7 +32,7 @@ void Drivetrain::init() {
 	gyro.InitGyro();
 }
 
-void Drivetrain::update(){
+void Drivetrain::update() {
 	switch(state) {
 	case IDLE:
 		break;
@@ -40,20 +40,17 @@ void Drivetrain::update(){
 		break;
 	case AUTOMATED_DRIVE:
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
-			disableControllers();
-			setState(IDLE);
+			idle();
 		}
 		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
-			disableControllers();
-			setState(IDLE);
+			idle();
 		}
 		break;
 	case BRAKING:
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_BRAKE_ERROR) {
-			disableControllers();
-			setState(IDLE);
+			idle();
 		}
 		break;
 	case STOPPED:
@@ -61,7 +58,7 @@ void Drivetrain::update(){
 	}
 }
 
-void Drivetrain::disable(){
+void Drivetrain::disable() {
 	disableControllers();
 	setState(STOPPED);
 }
