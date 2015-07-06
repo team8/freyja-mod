@@ -167,10 +167,10 @@ private:
 	 * STOPPED - Used for testing, no code running
 	 */
 	enum State{
+		IDLE,
 		TELEOP,
 		AUTOMATED_DRIVE,
 		AUTOMATED_ROTATE,
-		IDLE,
 		BRAKING,
 		STOPPED
 	};
@@ -223,6 +223,11 @@ private:
 	 * Disables the drive PIDControllers that drive and brake the robot
 	 */
 	void disableDriveControllers();
+
+	/**
+	 * Prints general debugging information
+	 */
+	void debug();
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */

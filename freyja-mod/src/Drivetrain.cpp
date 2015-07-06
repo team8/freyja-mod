@@ -29,6 +29,8 @@ Drivetrain::Drivetrain() :
 }
 
 void Drivetrain::init() {
+	leftEncoder.Reset();
+	rightEncoder.Reset();
 	gyro.InitGyro();
 }
 
@@ -169,6 +171,26 @@ void Drivetrain::disableGyroControllers() {
 void Drivetrain::disableDriveControllers() {
 	leftDriveController.Disable();
 	rightDriveController.Disable();
+}
+
+void Drivetrain::debug() {
+	std::cout << "Drivetrain State: " << (std::string) state << std::endl;
+	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
+			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
+	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
+			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
+	std::cout << "Gyro 			| Angle: " << gyro.GetAngle() << " | Rate " << gyro.GetRate() << std::endl;
+	std::cout << "Left Talon 	| Get: " << leftTalon.Get() << " | Raw " << leftTalon.GetRaw() << std::endl;
+	std::cout << "Right Talon 	| Get: " << leftTalon.Get() << " | Raw " << leftTalon.GetRaw() << std::endl;
+	std::cout << "Left Drive Controller | Enabled: " << leftDriveController.IsEnabled() << " | Setpoint: " << leftDriveController.GetSetpoint()
+		 << " | Error: " << leftDriveController.GetError() << std::endl;
+	std::cout << "Right Drive Controller | Enabled: " << rightDriveController.IsEnabled() << " | Setpoint: " << rightDriveController.GetSetpoint()
+		 << " | Error: " << rightDriveController.GetError() << std::endl;
+	std::cout << "Left Gyro Controller | Enabled: " << leftGyroController.IsEnabled() << " | Setpoint: " << leftGyroController.GetSetpoint()
+		 << " | Error: " << leftGyroController.GetError() << std::endl;
+	std::cout << "Right Gyro Controller | Enabled: " << rightGyroController.IsEnabled() << " | Setpoint: " << rightGyroController.GetSetpoint()
+		 << " | Error: " << rightGyroController.GetError() << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
 }
 
 Drivetrain::~Drivetrain() {
