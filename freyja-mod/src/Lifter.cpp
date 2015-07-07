@@ -120,12 +120,9 @@ void Lifter::zero() {
  * Disables position PID
  */
 void Lifter::setVelocity(double velocity) {
-	if(abs(velocity) > MAX_SPEED) {
-		//TODO: needs correct sign
-		talon.Set(MAX_SPEED);
-		return;
-	}
-	talon.Set(velocity * SPEED_SCALING);
+	velocity *= SPEED_SCALING;
+	velocity = std::min(std::max(velocity, -MAX_SPEED), MAX_SPEED);
+	talon.Set(velocity);
 	setState(TELEOP);
 }
 
