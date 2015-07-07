@@ -37,6 +37,7 @@ class Lifter: public Subsys {
 			AUTOMATED,
 			DISABLED
 		};
+		//Height of a level in the unit used by encoders (in.)
 		const int LEVEL_HEIGHT = 1;
 		//PID Constants
 		const double PROPORTIONAL = 1;
@@ -44,6 +45,11 @@ class Lifter: public Subsys {
 		const double DERIVATIVE = 1;
 		const double DPP = 1;
 		const double ACCEPTABLE_PID_ERROR = 1;
+		//Speed when bouncing due to Hall effect trigger
+		const double BOUNCE_SPEED = 1;
+		//Joystick control related variables/constants
+		const double MAX_SPEED = 1;
+		const double SPEED_SCALING = 1;
 
 		//Encoder and PID Controller for position/velocity
 		Encoder encoder;
@@ -58,15 +64,11 @@ class Lifter: public Subsys {
 
 		//Current level
 		double currentLevel;
-		//Speed when bouncing due to Hall effect trigger
-		const double BOUNCE_SPEED = 1;
-		//Joystick control related variables/constants
-		const double MAX_SPEED = 1;
-		const double SPEED_SCALING = 1;
 		State state;
 		void setState(State state);
-		bool checkBottomSensor();
-		bool checkTopSensor();
+		void zero();
+		bool isBottomHit();
+		bool isTopHit();
 		//somehow do limit switch hall effect
 };
 #endif /* SRC_LIFTER_H_ */

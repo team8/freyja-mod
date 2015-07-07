@@ -3,6 +3,7 @@
  *
  *  Created on: Jun 23, 2015
  *      Author: Nihar
+ *  Version 2.0
  */
 #include "Lifter.h"
 
@@ -11,10 +12,10 @@ Lifter::Lifter() :
 	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
 	controller(PROPORTIONAL, INTEGRAL, DERIVATIVE, &encoder, &talon),
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
-	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM)
+	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
+	state(IDLE),
+	currentLevel(0)
 {
-	currentLevel = 0;
-	state = IDLE;
 }
 
 void Lifter::init() {
@@ -35,6 +36,8 @@ void Lifter::init() {
  * Updates currentLevel
  */
 void Lifter::update() {
+	//Finds current level based on encoder value
+	currentLevel = encoder.GetDistance()/LEVEL_HEIGHT;
 	switch(state) {
 	/*
 	 * Runs velocity PID to maintain position
@@ -63,10 +66,10 @@ void Lifter::update() {
 	/*
 	 * Moves away from the side in the case of Hall effect sensor trigger
 	 */
-	if(checkBottomSensor()) {
+	if(isBottomHit()) {
 		setVelocity(BOUNCE_SPEED);
 	}
-	else if(checkTopSensor()) {
+	else if(isTopHit()) {
 		setVelocity(-BOUNCE_SPEED);
 	}
 }
@@ -88,7 +91,7 @@ void Lifter::setState(State state) {
 	if(state == DISABLED) {
 		return;
 	}
-		this -> state = state;
+	this -> state = state;
 }
 
 /*
@@ -105,11 +108,20 @@ void Lifter::setLevel(double level) {
 }
 
 /*
+ * Resets the lifter's zero point to its current location
+ */
+void Lifter::zero() {
+	encoder.Reset();
+	currentLevel = 0;
+}
+
+/*
  * Modifies the velocity PID targetVelocity
  * Disables position PID
  */
 void Lifter::setVelocity(double velocity) {
-	if(velocity > MAX_SPEED) {
+	if(abs(velocity) > MAX_SPEED) {
+		//TODO: needs correct sign
 		talon.Set(MAX_SPEED);
 		return;
 	}
@@ -117,11 +129,11 @@ void Lifter::setVelocity(double velocity) {
 	setState(TELEOP);
 }
 
-bool Lifter::checkBottomSensor() {
+bool Lifter::isBottomHit() {
 	return bottomSensor.Get();
 }
 
-bool Lifter::checkTopSensor() {
+bool Lifter::isTopHit() {
 	return topSensor.Get();
 }
 
