@@ -16,12 +16,13 @@ Lifter::Lifter() :
 	state(IDLE),
 	currentLevel(0)
 {
+	//Used to vary sensitivity of lifter's speed
+	controller.SetOutputRange(-MAX_SPEED, MAX_SPEED);
+	controller.SetInputRange(-9999, 9999);
 }
 
 void Lifter::init() {
-	//Used to vary sensitivity of lifter's speed
-	controller.SetOutputRange(-0.5, 0.5);
-	controller.SetInputRange(-9999, 9999);
+
 
 	//Initialize PID components
 	encoder.Reset();
@@ -112,7 +113,6 @@ void Lifter::setLevel(double level) {
  */
 void Lifter::zero() {
 	encoder.Reset();
-	currentLevel = 0;
 }
 
 /*

@@ -24,9 +24,9 @@ class Lifter: public Subsys {
 		void disable();
 		void idle();
 		bool isIdle();
-		void setLevel(int level);
 		void setVelocity(double velocity);
 		void setLevel(double level);
+		void zero();
 	private:
 		/*
 		 * States that lifter can be in
@@ -66,7 +66,6 @@ class Lifter: public Subsys {
 		double currentLevel;
 		State state;
 		void setState(State state);
-		void zero();
 		bool isBottomHit();
 		bool isTopHit();
 		//somehow do limit switch hall effect
