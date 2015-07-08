@@ -19,6 +19,7 @@ Lifter::Lifter() :
 	//Used to vary sensitivity of lifter's speed
 	controller.SetOutputRange(-MAX_SPEED, MAX_SPEED);
 	controller.SetInputRange(-9999, 9999);
+	encoder.SetDistancePerPulse(DPP);
 }
 
 void Lifter::init() {
@@ -27,8 +28,6 @@ void Lifter::init() {
 	//Initialize PID components
 	encoder.Reset();
 	controller.Reset();
-	encoder.SetDistancePerPulse(DPP);
-	state = IDLE;
 }
 
 /*
@@ -108,10 +107,22 @@ void Lifter::setLevel(double level) {
 	setState(AUTOMATED);
 }
 
+void Lifter::liftLevel(double liftAmount) {
+	double newLevel = currentLevel + liftAmount;
+	setLevel(newLevel);
+}
+
+/*
+ * Zeros the lifter
+ */
+void Lifter::zero() {
+	setLevel(0);
+}
+
 /*
  * Resets the lifter's zero point to its current location
  */
-void Lifter::zero() {
+void Lifter::resetZero() {
 	encoder.Reset();
 }
 

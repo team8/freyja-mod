@@ -26,7 +26,9 @@ class Lifter: public Subsys {
 		bool isIdle();
 		void setVelocity(double velocity);
 		void setLevel(double level);
+		void liftLevel(double liftAmount);
 		void zero();
+		void resetZero();
 	private:
 		/*
 		 * States that lifter can be in
