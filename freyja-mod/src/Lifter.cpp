@@ -21,7 +21,7 @@ void Lifter::idle() {
 }
 
 bool Lifter::isIdle() {
-
+	return true;
 }
 
 Lifter::~Lifter() {

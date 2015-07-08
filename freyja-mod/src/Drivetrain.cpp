@@ -21,7 +21,7 @@ void Drivetrain::idle() {
 }
 
 bool Drivetrain::isIdle() {
-
+	return true;
 }
 
 

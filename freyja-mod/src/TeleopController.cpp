@@ -1,6 +1,11 @@
 #include <TeleopController.h>
 
-TeleopController::TeleopController() {
+TeleopController::TeleopController() :
+	arm(),
+	drivetrain(),
+	lifter(),
+	ramp()
+{
 
 }
 
