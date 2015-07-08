@@ -26,6 +26,8 @@ public:
 	 */
 	void update(Robot *const robot);
 
+	void disable();
+
 private:
 	// The four subsystems
 	Arm *arm;
