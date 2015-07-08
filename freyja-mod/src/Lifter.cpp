@@ -33,31 +33,21 @@ void Lifter::init() {
 void Lifter::update() {
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
+
 	switch(state) {
-	/*
-	 * Runs velocity PID to maintain position
-	 */
 	case IDLE:
 		break;
-	/*
-	 * Scales joystick input to run talon
-	 */
 	case TELEOP:
 		break;
-	/*
-	 * Runs positon PID to change level
-	 */
 	case AUTOMATED:
 		if(encoder.GetStopped() && controller.GetError() < ACCEPTABLE_PID_ERROR) {
 			idle();
 		}
 		break;
-	/*
-	 * Unoperational for testing other things
-	 */
 	case DISABLED:
 		break;
 	}
+
 	/*
 	 * Moves away from the side in the case of Hall effect sensor trigger
 	 */

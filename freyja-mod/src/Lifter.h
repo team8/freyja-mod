@@ -72,10 +72,10 @@ class Lifter: public Subsys {
 		/*
 		 * States that lifter can be in
 		 *
-		 * IDLE - Lifter will PID itself to remain in position
-		 * TELEOP - Standard joystick control
-		 * AUTOMATED - Lifter will PID itself to a set position
-		 * DISABLED - No code running
+		 * IDLE - Runs velocity PID to maintain position
+		 * TELEOP - Scales joystick input to run talon
+		 * AUTOMATED - Runs positon PID to change level
+		 * DISABLED - Unoperational for testing other things
 		 */
 		enum State {
 			IDLE,
