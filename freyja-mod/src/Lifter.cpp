@@ -1,31 +1,26 @@
 /*
- * Lifter.cpp
- *
- *  Created on: Jun 23, 2015
- *      Author: Nihar
- *  Version 2.0
+ * Author: Nihar
  */
 #include "Lifter.h"
 
 Lifter::Lifter() :
 	talon((uint32_t) PORT_LIFTER_TALON_1),
 	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
+
 	controller(PROPORTIONAL, INTEGRAL, DERIVATIVE, &encoder, &talon),
+
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
-	state(IDLE),
-	currentLevel(0)
+
+	currentLevel(0),
+	state(IDLE)
 {
-	//Used to vary sensitivity of lifter's speed
 	controller.SetOutputRange(-MAX_SPEED, MAX_SPEED);
-	controller.SetInputRange(-9999, 9999);
+	controller.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(DPP);
 }
 
 void Lifter::init() {
-
-
-	//Initialize PID components
 	encoder.Reset();
 	controller.Reset();
 }
@@ -37,7 +32,7 @@ void Lifter::init() {
  */
 void Lifter::update() {
 	//Finds current level based on encoder value
-	currentLevel = encoder.GetDistance()/LEVEL_HEIGHT;
+	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
 	switch(state) {
 	/*
 	 * Runs velocity PID to maintain position
@@ -101,7 +96,6 @@ void Lifter::setState(State state) {
  */
 void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
-	//Switches to distance PID
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	controller.SetSetpoint(setpoint);
 	setState(AUTOMATED);
@@ -112,16 +106,10 @@ void Lifter::liftLevel(double liftAmount) {
 	setLevel(newLevel);
 }
 
-/*
- * Zeros the lifter
- */
 void Lifter::zero() {
 	setLevel(0);
 }
 
-/*
- * Resets the lifter's zero point to its current location
- */
 void Lifter::resetZero() {
 	encoder.Reset();
 }
@@ -146,7 +134,6 @@ bool Lifter::isTopHit() {
 }
 
 void Lifter::idle() {
-	//Change to and use velocity PID to
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
 	controller.SetSetpoint(0);
 	setState(IDLE);

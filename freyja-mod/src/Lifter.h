@@ -1,16 +1,21 @@
 /*
- * Lifter.h
- *
- *  Created on: Jun 23, 2015
- *      Author: Nihar
+ * Author: Nihar
  */
-
 #ifndef SRC_LIFTER_H_
 #define SRC_LIFTER_H_
 
 #include <WPILib.h>
 #include "Subsys.h"
 #include "Ports.h"
+
+//Height of a level in the unit used by encoders (in.)
+#define LEVEL_HEIGHT 0.0
+
+//PID Constants
+#define PROPORTIONAL 0.0
+#define INTEGRAL 0.0
+#define DERIVATIVE 0.0
+#define DPP 0.0
 
 /**
  * Represents Freyja's chain lifter
@@ -29,47 +34,58 @@ class Lifter: public Subsys {
 		void liftLevel(double liftAmount);
 		void zero();
 		void resetZero();
+
 	private:
+		// Error to define when PID is complete
+		const double ACCEPTABLE_PID_ERROR = 0;
+
+		// Speed when bouncing due to Hall effect trigger
+		const double BOUNCE_SPEED = 0;
+
+		// Maximum Lifter Speed
+		const double MAX_SPEED = 0;
+
+		// Scaling value for teleop control
+		const double SPEED_SCALING = 0;
+
+		// Bounds on PID input values
+		const double INPUT_RANGE = 0;
+
+		//Talon that drives the lifter
+		TalonSRX talon;
+
+		//Encoder on talon
+		Encoder encoder;
+
+		// Controller that acts on talon and encoder
+		PIDController controller;
+
+		// Hall effect sensors for top of the elevator
+		DigitalInput topSensor;
+
+		// Hall effect sensors for bottom of the elevator
+		DigitalInput bottomSensor;
+
+		// Current level
+		double currentLevel;
+
 		/*
 		 * States that lifter can be in
+		 *
+		 * IDLE - Lifter will PID itself to remain in position
+		 * TELEOP - Standard joystick control
+		 * AUTOMATED - Lifter will PID itself to a set position
+		 * DISABLED - No code running
 		 */
 		enum State {
 			IDLE,
 			TELEOP,
 			AUTOMATED,
 			DISABLED
-		};
-		//Height of a level in the unit used by encoders (in.)
-		const int LEVEL_HEIGHT = 1;
-		//PID Constants
-		const double PROPORTIONAL = 1;
-		const double INTEGRAL = 1;
-		const double DERIVATIVE = 1;
-		const double DPP = 1;
-		const double ACCEPTABLE_PID_ERROR = 1;
-		//Speed when bouncing due to Hall effect trigger
-		const double BOUNCE_SPEED = 1;
-		//Joystick control related variables/constants
-		const double MAX_SPEED = 1;
-		const double SPEED_SCALING = 1;
+		} state;
 
-		//Encoder and PID Controller for position/velocity
-		Encoder encoder;
-		PIDController controller;
-
-		//Talon that drives the lifter
-		TalonSRX talon;
-
-		//Hall effect sensors
-		DigitalInput topSensor;
-		DigitalInput bottomSensor;
-
-		//Current level
-		double currentLevel;
-		State state;
 		void setState(State state);
 		bool isBottomHit();
 		bool isTopHit();
-		//somehow do limit switch hall effect
 };
 #endif /* SRC_LIFTER_H_ */
