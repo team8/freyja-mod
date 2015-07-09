@@ -35,6 +35,8 @@ void Arm::update() {
 }
 
 void Arm::disable() {
+	solenoid.Set(DoubleSolenoid::Value::kOff);
+	timer.Stop();
 	setState(DISABLED);
 }
 
