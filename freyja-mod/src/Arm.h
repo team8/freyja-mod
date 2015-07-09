@@ -22,7 +22,6 @@ public:
 	void toggle();
 
 private:
-	Compressor compressor;
 	DoubleSolenoid solenoid;
 	Timer timer;
 	const double ARM_TRANSITION_TIME = 0.4;
@@ -40,7 +39,6 @@ private:
 	};
 
 	State state;
-	CompressorState compressorState;
 
 	void setState(State);
 	void open();
