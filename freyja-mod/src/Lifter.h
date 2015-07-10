@@ -100,6 +100,8 @@ private:
 
 	// Bounds on PID input values
 	const double INPUT_RANGE = 0;
+	const double MAX_PERIOD = 0;
+
 
 	//Talon that drives the lifter
 	TalonSRX talon;

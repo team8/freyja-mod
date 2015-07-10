@@ -16,12 +16,12 @@ Lifter::Lifter() :
 	controller.SetOutputRange(-MAX_SPEED, MAX_SPEED);
 	controller.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(DPP);
+	encoder.SetMaxPeriod(MAX_PERIOD);
 }
 
 void Lifter::init() {
 	resetZero();
 	encoder.Reset();
-	controller.Reset();
 }
 
 void Lifter::update() {
@@ -53,7 +53,6 @@ void Lifter::update() {
 
 void Lifter::disable() {
 	controller.Disable();
-	talon.Set(0);
 	setState(DISABLED);
 }
 
@@ -63,16 +62,15 @@ void Lifter::idle() {
 	setState(IDLE);
 }
 
+bool Lifter::isIdle() {
+	return (state == IDLE);
+}
 
 void Lifter::setVelocity(double velocity) {
 	velocity *= SPEED_SCALING;
 	velocity = std::min(std::max(velocity, -MAX_SPEED), MAX_SPEED);
 	talon.Set(velocity);
 	setState(TELEOP);
-}
-
-bool Lifter::isIdle() {
-	return (state == IDLE);
 }
 
 void Lifter::setLevel(double level) {
