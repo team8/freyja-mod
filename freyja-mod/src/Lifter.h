@@ -6,15 +6,6 @@
 #include "Subsys.h"
 #include "Ports.h"
 
-//Height of a level in the unit used by encoders (in.)
-#define LEVEL_HEIGHT 0.0
-
-//PID Constants
-#define PROPORTIONAL 0.0
-#define INTEGRAL 0.0
-#define DERIVATIVE 0.0
-#define DPP 0.0
-
 /**
  * Represents Freyja's chain lifter with one Talon, one Encoder and two
  * Hall Effect sensors. The lifter can be controlled by the joystick or move
@@ -86,6 +77,15 @@ public:
 	void resetZero();
 
 private:
+	//PID Constants
+	const double PROPORTIONAL_CONSTANT = 0.0;
+	const double INTEGRAL_CONSTANT = 0.0;
+	const double DERIVATIVE_CONSTANT = 0.0;
+	const double ENCODER_DPP = 0.0;
+
+	//Height of a level in the unit used by encoders (in.)
+	const double LEVEL_HEIGHT = 0.0;
+
 	// Error to define when PID is complete
 	const double ACCEPTABLE_PID_ERROR = 0;
 
@@ -100,7 +100,7 @@ private:
 
 	// Bounds on PID input values
 	const double INPUT_RANGE = 0;
-	const double MAX_PERIOD = 0;
+	const double ENCODER_MAX_PERIOD = 0;
 
 
 	//Talon that drives the lifter

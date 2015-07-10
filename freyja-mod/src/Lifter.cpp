@@ -5,7 +5,7 @@ Lifter::Lifter() :
 	talon((uint32_t) PORT_LIFTER_TALON_1),
 	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
 
-	controller(PROPORTIONAL, INTEGRAL, DERIVATIVE, &encoder, &talon),
+	controller(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &talon),
 
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
@@ -15,8 +15,8 @@ Lifter::Lifter() :
 {
 	controller.SetOutputRange(-MAX_SPEED, MAX_SPEED);
 	controller.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
-	encoder.SetDistancePerPulse(DPP);
-	encoder.SetMaxPeriod(MAX_PERIOD);
+	encoder.SetDistancePerPulse(ENCODER_DPP);
+	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 }
 
 void Lifter::init() {
