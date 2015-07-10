@@ -1,6 +1,4 @@
-/*
- * Author: Nihar
- */
+// Author: Nihar
 #include "Lifter.h"
 
 Lifter::Lifter() :
@@ -21,15 +19,11 @@ Lifter::Lifter() :
 }
 
 void Lifter::init() {
+	resetZero();
 	encoder.Reset();
 	controller.Reset();
 }
 
-/*
- * Constantly updates the subsystem,
- * operating based on state machine
- * Updates currentLevel
- */
 void Lifter::update() {
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
@@ -48,9 +42,6 @@ void Lifter::update() {
 		break;
 	}
 
-	/*
-	 * Moves away from the side in the case of Hall effect sensor trigger
-	 */
 	if(isBottomHit()) {
 		setVelocity(BOUNCE_SPEED);
 	}
@@ -59,31 +50,31 @@ void Lifter::update() {
 	}
 }
 
-/*
- * Permanently disables this subsystem for use
- */
+
 void Lifter::disable() {
 	controller.Disable();
 	talon.Set(0);
 	setState(DISABLED);
 }
 
-/*
- * Changes the state, can't change from disabled
- * Allows interrupt of automated
- */
-void Lifter::setState(State state) {
-	if(state == DISABLED) {
-		return;
-	}
-	this -> state = state;
+void Lifter::idle() {
+	encoder.SetPIDSourceParameter(PIDSource::kRate);
+	controller.SetSetpoint(0);
+	setState(IDLE);
 }
 
-/*
- * Passed a target level which is translated
- * into a PID setPoint change
- * Disables velocity PID
- */
+
+void Lifter::setVelocity(double velocity) {
+	velocity *= SPEED_SCALING;
+	velocity = std::min(std::max(velocity, -MAX_SPEED), MAX_SPEED);
+	talon.Set(velocity);
+	setState(TELEOP);
+}
+
+bool Lifter::isIdle() {
+	return (state == IDLE);
+}
+
 void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -104,15 +95,11 @@ void Lifter::resetZero() {
 	encoder.Reset();
 }
 
-/*
- * Modifies the velocity PID targetVelocity
- * Disables position PID
- */
-void Lifter::setVelocity(double velocity) {
-	velocity *= SPEED_SCALING;
-	velocity = std::min(std::max(velocity, -MAX_SPEED), MAX_SPEED);
-	talon.Set(velocity);
-	setState(TELEOP);
+void Lifter::setState(State state) {
+	if(state == DISABLED) {
+		return;
+	}
+	this -> state = state;
 }
 
 bool Lifter::isBottomHit() {
@@ -121,14 +108,4 @@ bool Lifter::isBottomHit() {
 
 bool Lifter::isTopHit() {
 	return topSensor.Get();
-}
-
-void Lifter::idle() {
-	encoder.SetPIDSourceParameter(PIDSource::kRate);
-	controller.SetSetpoint(0);
-	setState(IDLE);
-}
-
-bool Lifter::isIdle() {
-	return (state == IDLE);
 }
