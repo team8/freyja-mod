@@ -42,6 +42,7 @@ void Lifter::update() {
 		break;
 	}
 
+	// Sets the velocity to the bounce speed if a limit switch is triggerd
 	if(isBottomHit()) {
 		setVelocity(BOUNCE_SPEED);
 	}
@@ -59,6 +60,7 @@ void Lifter::disable() {
 void Lifter::idle() {
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
 	controller.SetSetpoint(0);
+	controller.Enable();
 	setState(IDLE);
 }
 
@@ -77,6 +79,7 @@ void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	controller.SetSetpoint(setpoint);
+	controller.Enable();
 	setState(AUTOMATED);
 }
 
