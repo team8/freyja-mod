@@ -76,12 +76,12 @@ public:
 	void liftLevel(double liftAmount);
 
 	/**
-	 * Calls setLevel with zero, returning the lifter to its original position
+	 * Calls setLevel to position zero, returning the lifter to its original position
 	 */
 	void zero();
 
 	/**
-	 * Resets the zero of the lifter to the current position.
+	 * Resets the zero of the lifter to the current position
 	 */
 	void resetZero();
 
