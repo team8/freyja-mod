@@ -4,7 +4,10 @@ TeleopController::TeleopController() :
 	arm(),
 	drivetrain(),
 	lifter(),
-	ramp()
+	ramp(),
+	driveJoystick((uint32_t) PORT_JOYSTICK_DRIVE),
+	turnJoystick((uint32_t) PORT_JOYSTICK_TURN),
+	operatorJoystick((uint32_t) PORT_JOYSTICK_OPERATOR)
 {
 
 }
@@ -17,7 +20,8 @@ void TeleopController::init() {
 }
 
 void TeleopController::update(Robot *const robot) {
-
+	drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
+	lifter->setVelocity(operatorJoystick.GetY());
 }
 
 void TeleopController::disable() {

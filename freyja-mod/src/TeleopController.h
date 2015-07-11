@@ -34,6 +34,11 @@ private:
 	Drivetrain *drivetrain;
 	Lifter *lifter;
 	Ramp *ramp;
+
+
+	Joystick driveJoystick;
+	Joystick turnJoystick;
+	Joystick operatorJoystick;
 };
 
 #endif

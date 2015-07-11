@@ -35,6 +35,7 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
+	debug();
 	switch(state) {
 	case IDLE:
 		break;
