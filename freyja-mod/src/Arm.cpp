@@ -21,7 +21,7 @@ void Arm::idle() {
 }
 
 bool Arm::isIdle() {
-
+	return true;
 }
 
 Arm::~Arm() {

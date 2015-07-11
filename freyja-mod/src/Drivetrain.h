@@ -23,7 +23,6 @@
 //Encoder constants
 #define RIGHT_DPP 0.0
 #define LEFT_DPP 0.0
-#define ENCODER_MAX_PERIOD 0
 #define ENCODER_INPUT_RANGE 0
 #define ENCODER_DRIVE_OUTPUT_RANGE 0
 #define ENCODER_GYRO_OUTPUT_RANGE 0
@@ -109,6 +108,10 @@ private:
 	const double ACCEPTABLE_DRIVE_ERROR = 1;
 	const double ACCEPTABLE_ROTATE_ERROR = 1;
 	const double ACCEPTABLE_BRAKE_ERROR = 0.01;
+
+	// Max period for which
+	const int ENCODER_MAX_PERIOD = 0;
+
 
 	/**
 	 * A controller for the left wheels when driving a set distance

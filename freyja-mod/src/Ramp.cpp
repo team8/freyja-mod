@@ -21,7 +21,7 @@ void Ramp::idle() {
 }
 
 bool Ramp::isIdle() {
-
+	return true;
 }
 
 Ramp::~Ramp() {

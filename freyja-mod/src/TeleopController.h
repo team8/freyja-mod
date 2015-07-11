@@ -4,6 +4,10 @@
 #include "WPILib.h"
 #include "Robot.h"
 #include "paths.h"
+#include "Arm.h"
+#include "Drivetrain.h"
+#include "Lifter.h"
+#include "Ramp.h"
 
 class TeleopController {
 public:
@@ -22,6 +26,14 @@ public:
 	 */
 	void update(Robot *const robot);
 
+	void disable();
+
+private:
+	// The four subsystems
+	Arm *arm;
+	Drivetrain *drivetrain;
+	Lifter *lifter;
+	Ramp *ramp;
 };
 
 #endif
