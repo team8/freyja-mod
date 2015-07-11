@@ -35,6 +35,7 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
+	debug();
 	switch(state) {
 	case IDLE:
 		break;
@@ -73,7 +74,6 @@ void Drivetrain::idle() {
 bool Drivetrain::isIdle() {
 	return state == IDLE;
 }
-
 
 void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
@@ -174,7 +174,7 @@ void Drivetrain::disableDriveControllers() {
 }
 
 void Drivetrain::debug() {
-	std::cout << "Drivetrain State: " << (std::string) state << std::endl;
+	std::cout << "Drivetrain State: " << state << std::endl;
 	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
 			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
 	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
