@@ -174,7 +174,7 @@ void Drivetrain::disableDriveControllers() {
 }
 
 void Drivetrain::debug() {
-	std::cout << "Drivetrain State: " << (std::string) state << std::endl;
+	std::cout << "Drivetrain State: " << state << std::endl;
 	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
 			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
 	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
