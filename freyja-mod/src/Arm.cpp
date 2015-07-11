@@ -1,12 +1,13 @@
 #include "Arm.h"
 
 Arm::Arm() :
-	solenoid((uint32_t) PORT_ARM_SOLENOID_A, (uint32_t) PORT_ARM_SOLENOID_B), timer() {
+	solenoid((uint32_t) PORT_ARM_SOLENOID_A, (uint32_t) PORT_ARM_SOLENOID_B), compressor(), timer() {
 	state = IDLE_OPEN;
 }
 
 void Arm::init() {
 	setState(IDLE_OPEN);
+	compressor.Start();
 }
 
 void Arm::update() {
@@ -16,14 +17,12 @@ void Arm::update() {
 	case IDLE_CLOSED:
 		break;
 	case OPENING:
-		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		if (timer.Get() >= ARM_TRANSITION_TIME) {
 			idle();
 			setState(IDLE_OPEN);
 		}
 		break;
 	case CLOSING:
-		solenoid.Set(DoubleSolenoid::Value::kForward);
 		if (timer.Get() >= ARM_TRANSITION_TIME) {
 			idle();
 			setState(IDLE_CLOSED);
@@ -37,6 +36,7 @@ void Arm::update() {
 void Arm::disable() {
 	solenoid.Set(DoubleSolenoid::Value::kOff);
 	timer.Stop();
+	compressor.Stop();
 	setState(DISABLED);
 }
 
@@ -59,19 +59,15 @@ void Arm::toggle() {
 	switch (state) {
 	case IDLE_OPEN:
 		close();
-		break;
-	case IDLE_CLOSED:
-		open();
-		break;
 	case OPENING:
 		close();
 		break;
+	case IDLE_CLOSED:
+		open();
 	case CLOSING:
 		open();
 		break;
 	case DISABLED:
-		break;
-	default:
 		break;
 	}
 }
@@ -79,6 +75,7 @@ void Arm::toggle() {
 void Arm::open() {
 	if (state != OPENING && state != IDLE_OPEN) {
 		setState(OPENING);
+		solenoid.Set(DoubleSolenoid::Value::kReverse);
 		timer.Reset();
 		timer.Start();
 	}
@@ -87,6 +84,7 @@ void Arm::open() {
 void Arm::close() {
 	if (state != CLOSING && state != IDLE_CLOSED) {
 		setState(CLOSING);
+		solenoid.Set(DoubleSolenoid::Value::kForward);
 		timer.Reset();
 		timer.Start();
 	}
