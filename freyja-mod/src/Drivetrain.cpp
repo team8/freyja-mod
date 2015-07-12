@@ -98,7 +98,7 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	leftTalon1.Set(-(scaledForward + scaledTurn));
 	leftTalon2.Set(-(scaledForward + scaledTurn));
 	rightTalon1.Set(scaledForward - scaledTurn);
-	leftTalon2.Set(-(scaledForward + scaledTurn));
+	rightTalon2.Set(scaledForward - scaledTurn);
 }
 
 void Drivetrain::driveDist(double distance) {
