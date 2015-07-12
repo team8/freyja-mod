@@ -112,36 +112,49 @@ private:
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 0;
 
-
 	/**
 	 * A controller for the left wheels when driving a set distance
 	 */
-	PIDController leftDriveController;
+	PIDController leftDriveController1;
+	PIDController leftDriveController2;
 
 	/**
 	 * A controller for the right wheels when driving a set distance
 	 */
-	PIDController rightDriveController;
+	PIDController rightDriveController1;
+	PIDController rightDriveController2;
 
 	/**
 	 * A controller for the left wheels when rotating angle
 	 */
-	PIDController leftGyroController;
+	PIDController leftGyroController1;
+	PIDController leftGyroController2;
 
 	/**
 	 * A controller for the right wheels when rotating angle
 	 */
-	PIDController rightGyroController;
+	PIDController rightGyroController1;
+	PIDController rightGyroController2;
 
 	/**
 	 * The talon that controls the left wheels
 	 */
-	TalonSRX leftTalon;
+	TalonSRX leftTalon1;
+
+	/**
+	 * The other talon that controls the left wheels
+	 */
+	TalonSRX leftTalon2;
 
 	/**
 	 * The talon that controls the right wheels
 	 */
-	TalonSRX rightTalon;
+	TalonSRX rightTalon1;
+
+	/**
+	 * The other talon that controls the right wheels
+	 */
+	TalonSRX rightTalon2;
 
 	/**
 	 * The gyro of the robot that returns the current angle of the robot
