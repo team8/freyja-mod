@@ -1,31 +1,42 @@
 #include <Drivetrain.h>
 
 Drivetrain::Drivetrain() :
-	leftTalon((uint32_t) PORT_DRIVETRAIN_TALON_LEFT),
-	rightTalon((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT),
+	leftTalon1((uint32_t) PORT_DRIVETRAIN_TALON_LEFT_1),
+	leftTalon2((uint32_t) PORT_DRIVETRAIN_TALON_LEFT_2),
+	rightTalon1((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT_1),
+	rightTalon2((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT_2),
 	gyro((int32_t) PORT_GYROSCOPE),
 
 	leftEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, true),
 	rightEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_RIGHT_B, false),
 
-	leftGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon),
-	rightGyroController(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon),
-	leftDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon),
-	rightDriveController(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon),
+	leftGyroController1(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon1),
+	rightGyroController1(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon1),
+	leftDriveController1(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon1),
+	rightDriveController1(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon1),
+	leftGyroController2(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &leftTalon2),
+	rightGyroController2(GYRO_PROPORTIONAL, GYRO_INTEGRAL, GYRO_DERIVATIVE, &gyro, &rightTalon2),
+	leftDriveController2(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon2),
+	rightDriveController2(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon2),
 	state(IDLE)
-
 {
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 	rightEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 
-	leftDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
-	rightDriveController.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
-	leftDriveController.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	rightDriveController.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	leftGyroController.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
-	rightGyroController.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	leftDriveController1.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	rightDriveController1.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	leftDriveController1.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	rightDriveController1.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	leftGyroController1.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	rightGyroController1.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	leftDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	rightDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	leftDriveController2.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	rightDriveController2.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
+	leftGyroController2.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	rightGyroController2.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
 }
 
 void Drivetrain::init() {
@@ -84,8 +95,10 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	double scaledForward = std::max(std::min(SPEED_SCALING * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
 	double scaledTurn = std::max(std::min(TURN_SCALING * turnValue, MAX_TURN_SPEED), -MAX_TURN_SPEED);
 
-	leftTalon.Set(-(scaledForward + scaledTurn));
-	rightTalon.Set(scaledForward - scaledTurn);
+	leftTalon1.Set(-(scaledForward + scaledTurn));
+	leftTalon2.Set(-(scaledForward + scaledTurn));
+	rightTalon1.Set(scaledForward - scaledTurn);
+	leftTalon2.Set(-(scaledForward + scaledTurn));
 }
 
 void Drivetrain::driveDist(double distance) {
@@ -96,8 +109,10 @@ void Drivetrain::driveDist(double distance) {
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftDriveController.SetSetpoint(distance);
-	rightDriveController.SetSetpoint(distance);
+	leftDriveController1.SetSetpoint(distance);
+	leftDriveController1.SetSetpoint(distance);
+	rightDriveController2.SetSetpoint(distance);
+	rightDriveController2.SetSetpoint(distance);
 
 	enableDriveControllers();
 }
@@ -110,8 +125,10 @@ void Drivetrain::rotateAngle(double angle) {
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftGyroController.SetSetpoint(angle);
-	rightGyroController.SetSetpoint(angle);
+	leftGyroController1.SetSetpoint(angle);
+	leftGyroController1.SetSetpoint(angle);
+	rightGyroController2.SetSetpoint(angle);
+	rightGyroController2.SetSetpoint(angle);
 
 	enableGyroControllers();
 }
@@ -124,8 +141,10 @@ void Drivetrain::brake() {
 	leftEncoder.SetPIDSourceParameter(PIDSource::kRate);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
-	leftDriveController.SetSetpoint(0);
-	rightDriveController.SetSetpoint(0);
+	leftDriveController1.SetSetpoint(0);
+	leftDriveController1.SetSetpoint(0);
+	rightDriveController2.SetSetpoint(0);
+	rightDriveController2.SetSetpoint(0);
 
 	enableDriveControllers();
 }
@@ -141,21 +160,27 @@ bool Drivetrain::encodersStopped() {
 }
 
 int Drivetrain::driveControllerError() {
-	return std::max(leftDriveController.GetError(), rightDriveController.GetError());
+	return std::max(std::max(leftDriveController1.GetError(), leftDriveController2.GetError()),
+			std::max(rightDriveController1.GetError(), rightDriveController2.GetError()));
 }
 
 int Drivetrain::rotateControllerError() {
-	return std::max(leftGyroController.GetError(), rightGyroController.GetError());
+	return std::max(std::max(leftGyroController1.GetError(), leftGyroController2.GetError()),
+			std::max(rightGyroController1.GetError(), rightGyroController2.GetError()));
 }
 
 void Drivetrain::enableGyroControllers() {
-	leftGyroController.Enable();
-	rightGyroController.Enable();
+	leftGyroController1.Enable();
+	leftGyroController2.Enable();
+	rightGyroController1.Enable();
+	rightGyroController2.Enable();
 }
 
 void Drivetrain::enableDriveControllers() {
-	leftDriveController.Enable();
-	rightDriveController.Enable();
+	leftDriveController1.Enable();
+	leftDriveController2.Enable();
+	rightDriveController1.Enable();
+	rightDriveController2.Enable();
 }
 
 
@@ -165,13 +190,17 @@ void Drivetrain::disableControllers() {
 }
 
 void Drivetrain::disableGyroControllers() {
-	leftGyroController.Disable();
-	rightGyroController.Disable();
+	leftGyroController1.Disable();
+	leftGyroController2.Disable();
+	rightGyroController1.Disable();
+	rightGyroController2.Disable();
 }
 
 void Drivetrain::disableDriveControllers() {
-	leftDriveController.Disable();
-	rightDriveController.Disable();
+	leftDriveController1.Disable();
+	leftDriveController2.Disable();
+	rightDriveController1.Disable();
+	rightDriveController2.Disable();
 }
 
 void Drivetrain::debug() {
@@ -181,16 +210,16 @@ void Drivetrain::debug() {
 	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
 			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
 	std::cout << "Gyro 			| Angle: " << gyro.GetAngle() << " | Rate " << gyro.GetRate() << std::endl;
-	std::cout << "Left Talon 	| Get: " << leftTalon.Get() << " | Raw " << leftTalon.GetRaw() << std::endl;
-	std::cout << "Right Talon 	| Get: " << leftTalon.Get() << " | Raw " << leftTalon.GetRaw() << std::endl;
-	std::cout << "Left Drive Controller | Enabled: " << leftDriveController.IsEnabled() << " | Setpoint: " << leftDriveController.GetSetpoint()
-		 << " | Error: " << leftDriveController.GetError() << std::endl;
-	std::cout << "Right Drive Controller | Enabled: " << rightDriveController.IsEnabled() << " | Setpoint: " << rightDriveController.GetSetpoint()
-		 << " | Error: " << rightDriveController.GetError() << std::endl;
-	std::cout << "Left Gyro Controller | Enabled: " << leftGyroController.IsEnabled() << " | Setpoint: " << leftGyroController.GetSetpoint()
-		 << " | Error: " << leftGyroController.GetError() << std::endl;
-	std::cout << "Right Gyro Controller | Enabled: " << rightGyroController.IsEnabled() << " | Setpoint: " << rightGyroController.GetSetpoint()
-		 << " | Error: " << rightGyroController.GetError() << std::endl;
+	std::cout << "Left Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
+	std::cout << "Right Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
+	std::cout << "Left Drive Controller | Enabled: " << leftDriveController1.IsEnabled() << " | Setpoint: " << leftDriveController1.GetSetpoint()
+		 << " | Error: " << leftDriveController1.GetError() << std::endl;
+	std::cout << "Right Drive Controller | Enabled: " << rightDriveController1.IsEnabled() << " | Setpoint: " << rightDriveController1.GetSetpoint()
+		 << " | Error: " << rightDriveController1.GetError() << std::endl;
+	std::cout << "Left Gyro Controller | Enabled: " << leftGyroController1.IsEnabled() << " | Setpoint: " << leftGyroController1.GetSetpoint()
+		 << " | Error: " << leftGyroController1.GetError() << std::endl;
+	std::cout << "Right Gyro Controller | Enabled: " << rightGyroController1.IsEnabled() << " | Setpoint: " << rightGyroController1.GetSetpoint()
+		 << " | Error: " << rightGyroController1.GetError() << std::endl;
 	std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
 }
 
