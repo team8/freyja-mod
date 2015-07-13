@@ -1,25 +1,31 @@
 #include <TeleopController.h>
 
-TeleopController::TeleopController() :
-	arm(),
-	drivetrain(),
-	lifter(),
-	ramp(),
+TeleopController::TeleopController(Robot *robot) :
+	robot(robot),
 	driveJoystick((uint32_t) PORT_JOYSTICK_DRIVE),
 	turnJoystick((uint32_t) PORT_JOYSTICK_TURN),
-	operatorJoystick((uint32_t) PORT_JOYSTICK_OPERATOR)
+	operatorJoystick((uint32_t) PORT_JOYSTICK_OPERATOR),
+	arm(&robot->arm),
+	drivetrain(&robot->drivetrain),
+	lifter(&robot->lifter),
+	ramp(&robot->ramp)
 {
 
 }
 
 void TeleopController::init() {
-	arm->init();
-	drivetrain->init();
+/*	std::cout << "TeleCtrlr Init Part 1" << std::endl;
 	lifter->init();
-	ramp->init();
+	std::cout << "TeleCtrlr Init Part 2" << std::endl;
+	arm->init();
+	std::cout << "TeleCtrlr Init Part 3" << std::endl;
+	ramp->init();*/
+	std::cout << "TeleCtrlr Init Part 1" << std::endl;
+	drivetrain->init(); // problem
+	std::cout << "TeleCtrlr Init Part 2" << std::endl;
 }
 
-void TeleopController::update(Robot *const robot) {
+void TeleopController::update() {
 	// Drivetrain controls, will drive only if brake not being called
 	// Brake will only be called if it is the first call
 	bool previouslyBraking = false;

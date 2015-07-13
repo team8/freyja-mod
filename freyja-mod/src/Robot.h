@@ -4,6 +4,10 @@
 #include <iostream>
 
 #include "paths.h"
+#include "Arm.h"
+#include "Drivetrain.h"
+#include "Lifter.h"
+#include "Ramp.h"
 
 class Robot {
 public:
@@ -57,6 +61,11 @@ public:
 
 	void setPath(const Path &newPath);
 
+	// The four subsystems
+	Arm arm;
+	Drivetrain drivetrain;
+	Lifter lifter;
+	Ramp ramp;
 };
 
 #endif

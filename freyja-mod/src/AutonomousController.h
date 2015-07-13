@@ -12,9 +12,11 @@ private:
 	 */
 	Path path;
 
+	Robot *robot;
+
 public:
 
-	AutonomousController();
+	AutonomousController(Robot *robot);
 	~AutonomousController();
 
 	/**
@@ -27,7 +29,7 @@ public:
 	 * Executes the next Cmd in path, if there is one
 	 * @param robot The pointer to the robot which will be controlled by the AutonomousController
 	 */
-	void update(Robot *const robot);
+	void update();
 };
 
 #endif //AUTO_CONTROLLER_H

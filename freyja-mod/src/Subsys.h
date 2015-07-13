@@ -35,7 +35,7 @@ public:
 	/**
 	 * @return whether the subsystem is in state IDLE
 	 */
-	virtual bool isIdle() const = 0;
+	virtual bool isIdle() = 0;
 
 
 

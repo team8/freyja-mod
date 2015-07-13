@@ -20,6 +20,7 @@ Drivetrain::Drivetrain() :
 	rightDriveController2(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &rightEncoder, &rightTalon2),
 	state(IDLE)
 {
+	std::cout << "Drivetrain constructor called" << std::endl;
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
 	leftEncoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
@@ -40,9 +41,13 @@ Drivetrain::Drivetrain() :
 }
 
 void Drivetrain::init() {
+	std::cout << "Drivetrain init part 1" << std::endl;
 	leftEncoder.Reset();
+	std::cout << "Drivetrain init part 2" << std::endl;
 	rightEncoder.Reset();
+	std::cout << "Drivetrain init part 3" << std::endl;
 	gyro.InitGyro();
+	std::cout << "Drivetrain init part 4" << std::endl;
 }
 
 void Drivetrain::update() {

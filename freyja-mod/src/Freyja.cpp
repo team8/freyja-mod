@@ -4,11 +4,9 @@
 
 
 class Freyja : public IterativeRobot {
-private:
+public:
 
-	Robot robot;
-	TeleopController telecontroller;
-	AutonomousController autocontroller;
+	Freyja();
 
 	void RobotInit();
 
@@ -24,7 +22,19 @@ private:
 
 	void DisabledPeriodic();
 
+private:
+
+	Robot robot;
+	TeleopController telecontroller;
+	AutonomousController autocontroller;
 };
+
+ Freyja::Freyja() :
+	telecontroller(&robot),
+ 	autocontroller(&robot)
+{
+
+}
 
 void Freyja::RobotInit() {
 	robot.init();
@@ -35,16 +45,18 @@ void Freyja::AutonomousInit() {
 }
 
 void Freyja::AutonomousPeriodic() {
-	autocontroller.update(&robot);
+	autocontroller.update();
 	robot.update();
 }
 
 void Freyja::TeleopInit() {
-	telecontroller.init();
+	std::cout << "TeleopInit in Freyja.cpp called" << std::endl;
+	telecontroller.init(); // problem
+	std::cout << "RobotInit in Freyja.cpp finished" << std::endl;
 }
 
 void Freyja::TeleopPeriodic() {
-	telecontroller.update(&robot);
+	telecontroller.update();
 	robot.update();
 }
 

@@ -1,7 +1,11 @@
 #include "Robot.h"
 
 Robot::Robot():
-	state{NOTHING},
+	arm(),
+	drivetrain(),
+	lifter(),
+	ramp(),
+	state(NOTHING),
 	path(paths::NOTHING)
 {
 

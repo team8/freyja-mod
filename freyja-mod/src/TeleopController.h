@@ -12,7 +12,7 @@
 class TeleopController {
 public:
 
-	TeleopController();
+	TeleopController(Robot *const robot);
 	~TeleopController();
 
 	/**
@@ -24,21 +24,20 @@ public:
 	 * Commands the robot's actions based on human input
 	 * @param robot The pointer to the robot which will be controlled by the TeleController
 	 */
-	void update(Robot *const robot);
+	void update();
 
 	void disable();
 
 private:
-	// The four subsystems
+	Joystick driveJoystick;
+	Joystick turnJoystick;
+	Joystick operatorJoystick;
+
+	Robot *robot;
 	Arm *arm;
 	Drivetrain *drivetrain;
 	Lifter *lifter;
 	Ramp *ramp;
-
-
-	Joystick driveJoystick;
-	Joystick turnJoystick;
-	Joystick operatorJoystick;
 };
 
 #endif
