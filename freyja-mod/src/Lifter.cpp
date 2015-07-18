@@ -21,7 +21,6 @@ Lifter::Lifter() :
 
 void Lifter::init() {
 	resetZero();
-	encoder.Reset();
 }
 
 void Lifter::update() {

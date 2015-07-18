@@ -14,15 +14,8 @@ TeleopController::TeleopController(Robot *robot) :
 }
 
 void TeleopController::init() {
-/*	std::cout << "TeleCtrlr Init Part 1" << std::endl;
-	lifter->init();
-	std::cout << "TeleCtrlr Init Part 2" << std::endl;
-	arm->init();
-	std::cout << "TeleCtrlr Init Part 3" << std::endl;
-	ramp->init();*/
-	std::cout << "TeleCtrlr Init Part 1" << std::endl;
 	drivetrain->init(); // problem
-	std::cout << "TeleCtrlr Init Part 2" << std::endl;
+	lifter->init();
 }
 
 void TeleopController::update() {
