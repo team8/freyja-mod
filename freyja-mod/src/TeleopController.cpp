@@ -14,7 +14,7 @@ TeleopController::TeleopController(Robot *robot) :
 }
 
 void TeleopController::init() {
-	drivetrain->init(); // problem
+	drivetrain->init();
 	lifter->init();
 }
 

@@ -47,10 +47,10 @@ void Lifter::update() {
 
 	// Sets the velocity to the bounce speed if a limit switch is triggerd
 	if(isBottomHit()) {
-		setVelocity(BOUNCE_SPEED);
+		//setVelocity(BOUNCE_SPEED);
 	}
 	else if(isTopHit()) {
-		setVelocity(-BOUNCE_SPEED);
+		//setVelocity(-BOUNCE_SPEED);
 	}
 }
 
@@ -75,10 +75,11 @@ bool Lifter::isIdle() {
 }
 
 void Lifter::setVelocity(double velocity) {
-	velocity *= SPEED_SCALING;
-	velocity = std::min(std::max(velocity, -MAX_SPEED), MAX_SPEED);
-	victor1.Set(velocity);
-	victor2.Set(velocity);
+	std::cout << "velocity: " << velocity << std::endl;
+	double computedVelocity = std::min(std::max(velocity * SPEED_SCALING, -MAX_SPEED), MAX_SPEED);
+	std::cout << "computedVelocity: " << computedVelocity << std::endl;
+	victor1.Set(-computedVelocity);
+	victor2.Set(-computedVelocity);
 	setState(TELEOP);
 }
 
