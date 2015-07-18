@@ -91,7 +91,6 @@ bool Drivetrain::isIdle() {
 	return state == IDLE;
 }
 
-
 void Drivetrain::drive(double turnValue, double forwardValue) {
 	setState(TELEOP);
 
