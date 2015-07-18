@@ -1,17 +1,20 @@
 #include <Arm.h>
 
-Arm::Arm() : comp(), sol((uint32_t) 0), timer() {
+Arm::Arm() : comp(), sol((uint32_t) 0), timer(), state(IDLE_OPEN) {
 
 }
 
 void Arm::init() {
-	compState = ON;
-	setState(IDLE_OPEN);
+	comp.Start();
 }
 
 void Arm::update(){
 	switch(state) {
 		case IDLE_OPEN:
+			sol.Set(DoubleSolenoid::Value::kOff);
+			timer.Stop();
+			timer.Reset();
+			break;
 		case IDLE_CLOSED:
 			sol.Set(DoubleSolenoid::Value::kOff);
 			timer.Stop();
@@ -31,14 +34,6 @@ void Arm::update(){
 			break;
 	}
 
-	switch(compState) {
-		case ON:
-			comp.Start();
-			break;
-		case OFF:
-			comp.Stop();
-			break;
-	}
 }
 
 void Arm::disable(){
@@ -62,12 +57,16 @@ void Arm::setState(State newState) {
 void Arm::toggle() {
 	switch(state) {
 		case IDLE_OPEN:
+			close();
+			break;
 		case OPENING:
-			open();
+			close();
 			break;
 		case IDLE_CLOSED:
+			open();
+			break;
 		case CLOSING:
-
+			open();
 			break;
 	}
 }

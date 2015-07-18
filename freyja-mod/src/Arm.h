@@ -35,13 +35,8 @@ private:
 		CLOSING,
 		STOPPED
 	};
-	enum CompressorState {
-		ON, OFF
-	};
 
 	State state;
-	CompressorState compState;
-
 	void setState(State);
 	void open();
 	void close();
