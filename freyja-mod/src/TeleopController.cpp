@@ -33,6 +33,8 @@ void TeleopController::update() {
 		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
 	}
 
+	lifter->setVelocity(operatorJoystick.GetY());
+
 	arm->update();
 	drivetrain->update();
 	lifter->update();

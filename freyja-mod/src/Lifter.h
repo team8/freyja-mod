@@ -7,7 +7,7 @@
 #include "Ports.h"
 
 /**
- * Represents Freyja's chain lifter with one Talon, one Encoder and two
+ * Represents Freyja's chain lifter with one Victor, one Encoder and two
  * Hall Effect sensors. The lifter can be controlled by the joystick or move
  * to specific levels.
  */
@@ -78,39 +78,46 @@ public:
 
 private:
 	//PID Constants
-	const double PROPORTIONAL_CONSTANT = 0.0;
+	const double PROPORTIONAL_CONSTANT = 1.2;
 	const double INTEGRAL_CONSTANT = 0.0;
 	const double DERIVATIVE_CONSTANT = 0.0;
-	const double ENCODER_DPP = 0.0;
+	const double ENCODER_DPP = 0.05;
 
 	//Height of a level in the unit used by encoders (in.)
-	const double LEVEL_HEIGHT = 0.0;
+	const double LEVEL_HEIGHT = 12.0;
 
 	// Error to define when PID is complete
-	const double ACCEPTABLE_PID_ERROR = 0;
+	const double ACCEPTABLE_PID_ERROR = 1;
 
 	// Speed when bouncing due to Hall effect trigger
-	const double BOUNCE_SPEED = 0;
+	const double BOUNCE_SPEED = 0.2;
 
 	// Maximum Lifter Speed
-	const double MAX_SPEED = 0;
+	const double MAX_SPEED = 1;
 
 	// Scaling value for teleop control
-	const double SPEED_SCALING = 0;
+	const double SPEED_SCALING = 1;
 
 	// Bounds on PID input values
-	const double INPUT_RANGE = 0;
-	const double ENCODER_MAX_PERIOD = 0;
+	const double INPUT_RANGE = 9999;
+	const double ENCODER_MAX_PERIOD = 100;
 
 
-	//Talon that drives the lifter
-	TalonSRX talon;
+	// Victor that drives the lifter
+	Victor victor1;
 
-	//Encoder on talon
+	// Other victor that drives the lifter
+	Victor victor2;
+
+	//Encoder on victor
 	Encoder encoder;
 
-	// Controller that acts on talon and encoder
-	PIDController controller;
+	// Controller that acts on victor and encoder
+	PIDController controller1;
+
+
+	// Controller that acts on other victor and encoder
+	PIDController controller2;
 
 	// Hall effect sensors for top of the elevator
 	DigitalInput topSensor;
