@@ -29,15 +29,23 @@ public:
 	void disable();
 
 private:
+	Robot *robot;
+
 	Joystick driveJoystick;
 	Joystick turnJoystick;
 	Joystick operatorJoystick;
 
-	Robot *robot;
 	Arm *arm;
 	Drivetrain *drivetrain;
 	Lifter *lifter;
 	Ramp *ramp;
+
+	//Stores if lifter is locked (joystick controls disabled)
+	bool lifterLocked;
+
+	// Runs the lifter according to Joystick input
+	void operateLifter();
+	void operateDrivetrain();
 };
 
 #endif
