@@ -42,7 +42,7 @@ private:
 
 	//Stores if lifter is locked (joystick controls disabled)
 	bool lifterLocked;
-
+	bool wasOperatorTriggerPressed;
 	//Runs the lifter according to joystick input
 	void operateLifter();
 	//Runs the drivetrain using joystick input

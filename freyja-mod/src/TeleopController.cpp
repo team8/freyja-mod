@@ -9,7 +9,8 @@ TeleopController::TeleopController(Robot *robot) :
 	drivetrain(&robot->drivetrain),
 	lifter(&robot->lifter),
 	ramp(&robot->ramp),
-	lifterLocked(false)
+	lifterLocked(false),
+	wasOperatorTriggerPressed(false)
 {
 
 }
@@ -87,22 +88,21 @@ void TeleopController::operateLifter() {
 }
 
 void TeleopController::operateDrivetrain() {
-	bool previouslyBraking = false;
 	if(driveJoystick.GetTrigger()) {
-		if(!previouslyBraking) {
-			drivetrain->brake();
-		}
-		previouslyBraking = true;
+		drivetrain->brake();
+		return;
 	}
-	else {
-		previouslyBraking = false;
-		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
-	}
+	drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
 }
 
 void TeleopController::operateArm() {
-	if(operatorJoystick.GetTrigger()) {
+	//Prevents pressing and holding repeatedly calling
+	if(operatorJoystick.GetTrigger() && !wasOperatorTriggerPressed) {
+		wasOperatorTriggerPressed = true;
 		//arm->toggle();
+	}
+	else if(!operatorJoystick.GetTrigger()) {
+		wasOperatorTriggerPressed = false;
 	}
 }
 
