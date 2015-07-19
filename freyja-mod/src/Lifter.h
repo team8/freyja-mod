@@ -160,5 +160,10 @@ private:
 	 * @return true if the top limit switch is being triggered
 	 */
 	bool isTopHit();
+
+	/**
+	 * Prints out debug
+	 */
+	void debug();
 };
 #endif /* SRC_LIFTER_H_ */

@@ -24,10 +24,13 @@ Lifter::Lifter() :
 }
 
 void Lifter::init() {
+	encoder.Reset();
 	resetZero();
 }
 
 void Lifter::update() {
+	debug();
+
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
 
@@ -75,9 +78,9 @@ bool Lifter::isIdle() {
 }
 
 void Lifter::setVelocity(double velocity) {
-	std::cout << "velocity: " << velocity << std::endl;
+	//std::cout << "velocity: " << velocity << std::endl;
 	double computedVelocity = std::min(std::max(velocity * SPEED_SCALING, -MAX_SPEED), MAX_SPEED);
-	std::cout << "computedVelocity: " << computedVelocity << std::endl;
+	//std::cout << "computedVelocity: " << computedVelocity << std::endl;
 	victor1.Set(-computedVelocity);
 	victor2.Set(-computedVelocity);
 	setState(TELEOP);
@@ -111,6 +114,16 @@ void Lifter::setState(State state) {
 		return;
 	}
 	this -> state = state;
+}
+
+void Lifter::debug() {
+//	std::cout << "Lifter State: " << state << std::endl;
+	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance()
+			<< " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
+	//std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
+	//std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()
+	//	 << " | Error: " << controller1.GetError() << std::endl;
+	//std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
 }
 
 bool Lifter::isBottomHit() {

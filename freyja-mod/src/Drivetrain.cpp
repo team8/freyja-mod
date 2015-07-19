@@ -47,12 +47,10 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
-	debug();
 	switch(state) {
 	case IDLE:
 		break;
 	case TELEOP:
-		std::cout << "IN TELEOP" << std::endl;
 		break;
 	case AUTOMATED_DRIVE:
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
@@ -96,7 +94,6 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	double scaledForward = std::max(std::min(SPEED_SCALING * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
 	double scaledTurn = std::max(std::min(TURN_SCALING * turnValue, MAX_TURN_SPEED), -MAX_TURN_SPEED);
 
-	std::cout << "SETTING THE TALONS NOW" << std::endl;
 	leftTalon1.Set(-(scaledForward + scaledTurn));
 	leftTalon2.Set(-(scaledForward + scaledTurn));
 	rightTalon1.Set(scaledForward - scaledTurn);
