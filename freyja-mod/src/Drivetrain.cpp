@@ -99,10 +99,10 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	double scaledForward = std::max(std::min(SPEED_SCALING * forwardValue, MAX_FORWARD_SPEED), -MAX_FORWARD_SPEED);
 	double scaledTurn = std::max(std::min(TURN_SCALING * turnValue, MAX_TURN_SPEED), -MAX_TURN_SPEED);
 
-	leftTalon1.Set(-(scaledForward + scaledTurn));
-	leftTalon2.Set(-(scaledForward + scaledTurn));
-	rightTalon1.Set(scaledForward - scaledTurn);
-	rightTalon2.Set(scaledForward - scaledTurn);
+	leftTalon1.Set(-(scaledForward - scaledTurn));
+	leftTalon2.Set(-(scaledForward - scaledTurn));
+	rightTalon1.Set(scaledForward + scaledTurn);
+	rightTalon2.Set(scaledForward + scaledTurn);
 }
 
 void Drivetrain::driveDist(double distance) {

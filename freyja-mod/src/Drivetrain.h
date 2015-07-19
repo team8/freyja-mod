@@ -11,21 +11,21 @@
 #include <Ports.h>
 
 //PID constants
-#define DRIVE_PROPORTIONAL 0.0
+#define DRIVE_PROPORTIONAL 0.12
 #define DRIVE_INTEGRAL 0.0
-#define DRIVE_DERIVATIVE 0.0
+#define DRIVE_DERIVATIVE 0.1
 
  //Gyro PID constants
-#define GYRO_PROPORTIONAL 0.0
+#define GYRO_PROPORTIONAL 0.12
 #define GYRO_INTEGRAL 0.0
-#define GYRO_DERIVATIVE 0.0
+#define GYRO_DERIVATIVE 0.1
 
 //Encoder constants
-#define RIGHT_DPP 0.0
-#define LEFT_DPP 0.0
-#define ENCODER_INPUT_RANGE 0
-#define ENCODER_DRIVE_OUTPUT_RANGE 0
-#define ENCODER_GYRO_OUTPUT_RANGE 0
+#define RIGHT_DPP 0.1545595
+#define LEFT_DPP 0.1577287
+#define ENCODER_INPUT_RANGE 999
+#define ENCODER_DRIVE_OUTPUT_RANGE 999
+#define ENCODER_GYRO_OUTPUT_RANGE 999
 
 /**
  * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
@@ -99,10 +99,10 @@ public:
 private:
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
-	const double MAX_FORWARD_SPEED = 0.0;
-	const double MAX_TURN_SPEED = 0.0;
-	const double SPEED_SCALING = 0.0;
-	const double TURN_SCALING = 0.0;
+	const double MAX_FORWARD_SPEED = 0.5;
+	const double MAX_TURN_SPEED = 0.3;
+	const double SPEED_SCALING = 1.0;
+	const double TURN_SCALING = 1.0;
 
 	//Acceptable error constants
 	const double ACCEPTABLE_DRIVE_ERROR = 1;
@@ -110,7 +110,7 @@ private:
 	const double ACCEPTABLE_BRAKE_ERROR = 0.01;
 
 	// Max period for which
-	const int ENCODER_MAX_PERIOD = 0;
+	const int ENCODER_MAX_PERIOD = 100;
 
 	/**
 	 * A controller for the left wheels when driving a set distance
