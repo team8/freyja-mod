@@ -1,87 +1,96 @@
-#include <Arm.h>
+#include "Arm.h"
 
-Arm::Arm() : comp(), sol((uint32_t) 0), timer(), state(IDLE_OPEN) {
 
+Arm::Arm() :
+	sol((uint32_t) PORT_ARM_SOLENOID_A, (uint32_t) PORT_ARM_SOLENOID_B), compressor(), timer() {
+	setState(IDLE_OPEN);
 }
 
 void Arm::init() {
-	comp.Start();
+	compressor.Start();
 }
 
-void Arm::update(){
-	switch(state) {
-		case IDLE_OPEN:
-			sol.Set(DoubleSolenoid::Value::kOff);
-			timer.Stop();
-			timer.Reset();
-			break;
-		case IDLE_CLOSED:
-			sol.Set(DoubleSolenoid::Value::kOff);
-			timer.Stop();
-			timer.Reset();
-			break;
-		case OPENING:
-			sol.Set(DoubleSolenoid::Value::kReverse);
-			if(timer.Get() >= ARM_EXTEND_TIME) {
-				setState(IDLE_OPEN);
-			}
-			break;
-		case CLOSING:
-			sol.Set(DoubleSolenoid::Value::kForward);
-			if(timer.Get() >= ARM_EXTEND_TIME) {
-				setState(IDLE_CLOSED);
-			}
-			break;
+void Arm::update() {
+	switch (state) {
+	case IDLE_OPEN:
+		break;
+	case IDLE_CLOSED:
+		break;
+	case OPENING:
+		if (timer.Get() >= ARM_TRANSITION_TIME) {
+			idle();
+			setState(IDLE_OPEN);
+		}
+		break;
+	case CLOSING:
+		if (timer.Get() >= ARM_TRANSITION_TIME) {
+			idle();
+			setState(IDLE_CLOSED);
+		}
+		break;
+	case DISABLED:
+		break;
 	}
 
 }
 
-void Arm::disable(){
-	setState(STOPPED);
+void Arm::disable() {
+	sol.Set(DoubleSolenoid::Value::kOff);
+	timer.Stop();
+	compressor.Stop();
+	setState(DISABLED);
 }
 
 void Arm::idle() {
-	//do nothing
+	sol.Set(DoubleSolenoid::Value::kOff);
+	timer.Stop();
 }
 
 bool Arm::isIdle() {
 	return (state == IDLE_OPEN || state == IDLE_CLOSED);
 }
 
-void Arm::setState(State newState) {
-	if(state!=STOPPED) {
-		state = newState;
+void Arm::setState(State state) {
+	if (state != DISABLED) {
+		this -> state = state;
 	}
 }
 
 void Arm::toggle() {
-	switch(state) {
-		case IDLE_OPEN:
-			close();
-			break;
-		case OPENING:
-			close();
-			break;
-		case IDLE_CLOSED:
-			open();
-			break;
-		case CLOSING:
-			open();
-			break;
+	switch (state) {
+	case IDLE_OPEN:
+		close();
+	case OPENING:
+		close();
+		break;
+	case IDLE_CLOSED:
+		open();
+	case CLOSING:
+		open();
+		break;
+	case DISABLED:
+		break;
 	}
 }
 
 void Arm::open() {
-	setState(OPENING);
-	timer.Start();
+	if (state != OPENING && state != IDLE_OPEN) {
+		setState(OPENING);
+		sol.Set(DoubleSolenoid::Value::kReverse);
+		timer.Reset();
+		timer.Start();
+	}
 }
 
 void Arm::close() {
-	setState(CLOSING);
-	timer.Start();
+	if (state != CLOSING && state != IDLE_CLOSED) {
+		setState(CLOSING);
+		sol.Set(DoubleSolenoid::Value::kForward);
+		timer.Reset();
+		timer.Start();
+	}
 }
 
 Arm::~Arm() {
 
 }
-
