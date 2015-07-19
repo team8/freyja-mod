@@ -14,7 +14,7 @@ TeleopController::TeleopController(Robot *robot) :
 }
 
 void TeleopController::init() {
-	drivetrain->init(); // problem
+	drivetrain->init();
 	lifter->init();
 }
 
@@ -32,6 +32,8 @@ void TeleopController::update() {
 		previouslyBraking = false;
 		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
 	}
+
+	lifter->setVelocity(operatorJoystick.GetY());
 
 	arm->update();
 	drivetrain->update();

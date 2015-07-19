@@ -41,17 +41,12 @@ Drivetrain::Drivetrain() :
 }
 
 void Drivetrain::init() {
-	std::cout << "Drivetrain init part 1" << std::endl;
 	leftEncoder.Reset();
-	std::cout << "Drivetrain init part 2" << std::endl;
 	rightEncoder.Reset();
-	std::cout << "Drivetrain init part 3" << std::endl;
 	gyro.InitGyro();
-	std::cout << "Drivetrain init part 4" << std::endl;
 }
 
 void Drivetrain::update() {
-	debug();
 	switch(state) {
 	case IDLE:
 		break;
