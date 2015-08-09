@@ -6,8 +6,8 @@ Lifter::Lifter() :
 	victor2((uint32_t) PORT_LIFTER_VICTOR_2),
 	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
 
-	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
-	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
+	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1, true),
+	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2, true),
 
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
@@ -25,6 +25,8 @@ Lifter::Lifter() :
 
 void Lifter::init() {
 	encoder.Reset();
+	controller1.Disable();
+	controller2.Disable();
 	resetZero();
 	setState(IDLE);
 }
@@ -62,6 +64,7 @@ void Lifter::update() {
 void Lifter::disable() {
 	controller1.Disable();
 	controller2.Disable();
+	encoder.Reset();
 	setState(DISABLED);
 }
 
@@ -91,8 +94,8 @@ void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	controller1.SetSetpoint(setpoint);
-	controller1.SetSetpoint(setpoint);
-	controller2.Enable();
+	controller2.SetSetpoint(setpoint);
+	controller1.Enable();
 	controller2.Enable();
 	setState(AUTOMATED);
 }
@@ -118,13 +121,13 @@ void Lifter::setState(State state) {
 }
 
 void Lifter::debug() {
-//	std::cout << "Lifter State: " << state << std::endl;
+	std::cout << "Lifter State: " << state << std::endl;
 	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance()
 			<< " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
-	//std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
-	//std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()
-	//	 << " | Error: " << controller1.GetError() << std::endl;
-	//std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
+	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
+	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()
+		 << " | Error: " << controller1.GetError() << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
 }
 
 bool Lifter::isBottomHit() {

@@ -82,7 +82,7 @@ void TeleopController::operateLifter() {
 //		lifter->levelDown();
 	}
 	if(lifterLocked) {
-		break;
+		//break;
 	}
 	else {
 		lifter->setVelocity(operatorJoystick.GetY());

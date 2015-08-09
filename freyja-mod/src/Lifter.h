@@ -78,10 +78,10 @@ public:
 
 private:
 	//PID Constants
-	const double PROPORTIONAL_CONSTANT = 1.2;
+	const double PROPORTIONAL_CONSTANT = 0.5;
 	const double INTEGRAL_CONSTANT = 0.0;
 	const double DERIVATIVE_CONSTANT = 0.0;
-	const double ENCODER_DPP = 0.05;
+	const double ENCODER_DPP = 0.022441;
 
 	//Height of a level in the unit used by encoders (in.)
 	const double LEVEL_HEIGHT = 12.0;
@@ -93,7 +93,7 @@ private:
 	const double BOUNCE_SPEED = 0.2;
 
 	// Maximum Lifter Speed
-	const double MAX_SPEED = 1;
+	const double MAX_SPEED = 0.3;
 
 	// Scaling value for teleop control
 	const double SPEED_SCALING = 1;
