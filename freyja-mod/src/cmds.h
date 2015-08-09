@@ -4,8 +4,12 @@
 #include <functional>
 #include <list>
 
-//forward declaring Robot
+//forward declaring Robot and subsystems
 class Robot;
+class Drivetrain;
+class Lifter;
+class Ramp;
+class Arm;
 
 //aliases the function to Cmd
 using Cmd = std::function<void(Robot *const)>;
@@ -25,6 +29,11 @@ namespace cmds {
 	 * Disables the robot
 	 */
 	void STOP(Robot *const robot);
+
+	/**
+	 * Drives the robot a set distance
+	 */
+	void DRIVE_DIST(Drivetrain *const drivetrain, int distance);
 }
 
 
