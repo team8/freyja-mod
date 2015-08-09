@@ -8,32 +8,32 @@ TeleopController::TeleopController(Robot *robot) :
 	arm(&robot->arm),
 	drivetrain(&robot->drivetrain),
 	lifter(&robot->lifter),
-	ramp(&robot->ramp)
+	ramp(&robot->ramp),
+	lifterLocked(false),
+	wasOperatorTriggerPressed(false),
+	wasDrivetrainTriggerPressed(false)
 {
 
 }
 
 void TeleopController::init() {
-	drivetrain->init();
+	std::cout << "Lifter Init" << std::endl;
 	lifter->init();
+	std::cout << "Arm init" << std::endl;
+	arm->init();
+//	ramp->init();
+	std::cout << "DT Init" << std::endl;
+	drivetrain->init(); // problem
+	std::cout << "Init finished" << std::endl;
 }
 
 void TeleopController::update() {
-	// Drivetrain controls, will drive only if brake not being called
+	// DRIVETRAIN CONTROLS, will drive only if brake not being called
 	// Brake will only be called if it is the first call
-	bool previouslyBraking = false;
-	if(driveJoystick.GetRawButton(1)) {
-		if(!previouslyBraking) {
-			drivetrain->brake();
-		}
-		previouslyBraking = true;
-	}
-	else {
-		previouslyBraking = false;
-		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
-	}
+	operateDrivetrain();
 
-	lifter->setVelocity(operatorJoystick.GetY());
+	// LIFTER CONTROLS
+	operateLifter();
 
 	arm->update();
 	drivetrain->update();
@@ -46,6 +46,70 @@ void TeleopController::disable() {
 	drivetrain->disable();
 	lifter->disable();
 	ramp->disable();
+}
+
+void TeleopController::operateLifter() {
+	//Unlocks the lifter
+	if(operatorJoystick.GetRawButton(9)) {
+		lifterLocked = false;
+	}
+	//Locks the lifter
+	if(operatorJoystick.GetRawButton(8)) {
+		lifterLocked = true;
+	}
+	//Zeroes the lifter
+	if(operatorJoystick.GetRawButton(7)) {
+		lifter->zero();
+	}
+	//Resets the zero
+	else if(operatorJoystick.GetRawButton(6)) {
+		lifter->resetZero();
+	}
+	//Moves up 1 level
+	else if(operatorJoystick.GetRawButton(3)) {
+		lifter->liftLevel(1);
+	}
+	//Moves down 1 level
+	else if(operatorJoystick.GetRawButton(2)) {
+		lifter->liftLevel(-1);
+	}
+	//Moves up to nearest level
+	else if(operatorJoystick.GetRawButton(5)) {
+//		lifter->levelUp();
+	}
+	//Moves down to nearest level 4
+	else if(operatorJoystick.GetRawButton(4)) {
+//		lifter->levelDown();
+	}
+	if(lifterLocked) {
+		break;
+	}
+	else {
+		lifter->setVelocity(operatorJoystick.GetY());
+	}
+}
+
+void TeleopController::operateDrivetrain() {
+	if(driveJoystick.GetTrigger() && !wasDrivetrainTriggerPressed) {
+		drivetrain->brake();
+		wasDrivetrainTriggerPressed = true;
+		return;
+	}
+	if(!driveJoystick.GetTrigger()) {
+		wasDrivetrainTriggerPressed = false;
+		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
+	}
+}
+
+void TeleopController::operateArm() {
+	//Prevents pressing and holding repeatedly calling
+	if(operatorJoystick.GetTrigger() && !wasOperatorTriggerPressed) {
+		wasOperatorTriggerPressed = true;
+		//arm->toggle();
+	}
+	else if(!operatorJoystick.GetTrigger()) {
+		wasOperatorTriggerPressed = false;
+	}
 }
 
 TeleopController::~TeleopController() {
