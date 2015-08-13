@@ -119,6 +119,9 @@ private:
 	// Controller that acts on other victor and encoder
 	PIDController controller2;
 
+	//Built in Accelerometer for the robot
+	BuiltInAccelerometer lifterAccel;
+
 	// Hall effect sensors for top of the elevator
 	DigitalInput topSensor;
 

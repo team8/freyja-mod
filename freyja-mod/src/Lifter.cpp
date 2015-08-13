@@ -8,7 +8,7 @@ Lifter::Lifter() :
 
 	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
 	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
-
+	lifterAccel(),
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
 
@@ -32,6 +32,17 @@ void Lifter::init() {
 }
 
 void Lifter::update() {
+
+	//Makes sure robot doesn't flip
+	encoder.SetPIDSourceParameter(PIDSource::kRate);
+
+	if(lifterAccel.GetY() - 1 > 0.2 && encoder.Get() < 0) {
+//		victor1.Set(0.2);
+//		victor2.Set(0.2);
+		std::cout << "STOPPED" << std::endl;
+	}
+	encoder.SetPIDSourceParameter(PIDSource::kDistance);
+
 	debug();
 
 	//Finds current level based on encoder value
@@ -121,13 +132,14 @@ void Lifter::setState(State state) {
 }
 
 void Lifter::debug() {
-	std::cout << "Lifter State: " << state << std::endl;
-	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance()
-			<< " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
-	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
-	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()
-		 << " | Error: " << controller1.GetError() << std::endl;
-	std::cout << "--------------------------------------------------------------------------------------------------" << std::endl << std::endl;
+//	std::cout << "Lifter State: " << state << std::endl;
+//	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
+//	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
+//	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
+//	std::cout << "X-Axis   " << lifterAccel.GetX() << "\n";
+	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
+//	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
+	std::cout << "--------------------- \n";
 }
 
 bool Lifter::isBottomHit() {
