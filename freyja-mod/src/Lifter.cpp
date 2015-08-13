@@ -4,10 +4,10 @@
 Lifter::Lifter() :
 	victor1((uint32_t) PORT_LIFTER_VICTOR_1),
 	victor2((uint32_t) PORT_LIFTER_VICTOR_2),
-	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B),
+	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B, true),
 
-	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1, true),
-	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2, true),
+	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
+	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
 
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
@@ -85,8 +85,8 @@ void Lifter::setVelocity(double velocity) {
 	//std::cout << "velocity: " << velocity << std::endl;
 	double computedVelocity = std::min(std::max(velocity * SPEED_SCALING, -MAX_SPEED), MAX_SPEED);
 	//std::cout << "computedVelocity: " << computedVelocity << std::endl;
-	victor1.Set(-computedVelocity);
-	victor2.Set(-computedVelocity);
+	victor1.Set(computedVelocity);
+	victor2.Set(computedVelocity);
 	setState(TELEOP);
 }
 
