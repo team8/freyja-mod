@@ -102,6 +102,8 @@ private:
 	const double INPUT_RANGE = 9999;
 	const double ENCODER_MAX_PERIOD = 100;
 
+	//
+	double predictedSpeed;
 
 	// Victor that drives the lifter
 	Victor victor1;

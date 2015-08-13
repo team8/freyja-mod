@@ -33,12 +33,15 @@ void Lifter::init() {
 
 void Lifter::update() {
 
+	if(predictedSpeed < 0 && predictedSpeed > victor1.Get()) {
+		std::cout << "ohi" << std::endl;
+	}
+
 	//Makes sure robot doesn't flip
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
 
 	if(lifterAccel.GetY() - 1 > 0.2 && encoder.Get() < 0) {
-//		victor1.Set(0.2);
-//		victor2.Set(0.2);
+//		setVelocity(0.2);
 		std::cout << "STOPPED" << std::endl;
 	}
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -95,6 +98,7 @@ bool Lifter::isIdle() {
 void Lifter::setVelocity(double velocity) {
 	//std::cout << "velocity: " << velocity << std::endl;
 	double computedVelocity = std::min(std::max(velocity * SPEED_SCALING, -MAX_SPEED), MAX_SPEED);
+	predictedSpeed = computedVelocity;
 	//std::cout << "computedVelocity: " << computedVelocity << std::endl;
 	victor1.Set(computedVelocity);
 	victor2.Set(computedVelocity);
