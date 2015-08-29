@@ -126,6 +126,14 @@ void Lifter::liftLevel(double liftAmount) {
 	setLevel(newLevel);
 }
 
+void Lifter::levelUp() {
+	setLevel((int) (currentLevel + 1));
+}
+
+void Lifter::levelDown() {
+	setLevel((int) currentLevel);
+}
+
 void Lifter::zero() {
 	setLevel(0);
 }

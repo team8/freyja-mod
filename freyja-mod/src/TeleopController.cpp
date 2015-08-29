@@ -74,12 +74,12 @@ void TeleopController::operateLifter() {
 		lifter->liftLevel(-1);
 	}
 	//Moves up to nearest level
-	else if(operatorJoystick.GetRawButton(5)) {
-//		lifter->levelUp();
+	else if(operatorJoystick.GetRawButton(11)) {
+		lifter->levelUp();
 	}
-	//Moves down to nearest level 4
-	else if(operatorJoystick.GetRawButton(4)) {
-//		lifter->levelDown();
+	//Moves down to nearest level
+	else if(operatorJoystick.GetRawButton(10)) {
+		lifter->levelDown();
 	}
 	if(lifterLocked) {
 		//break;

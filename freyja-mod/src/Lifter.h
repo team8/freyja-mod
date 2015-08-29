@@ -61,10 +61,20 @@ public:
 	void setLevel(double level);
 
 	/**
-	 * Uses PID to lift the lifter an ammount of levels. Calls setLevel()
+	 * Uses PID to lift the lifter an amount of levels. Calls setLevel()
 	 * @param liftAmount levels to be lifted
 	 */
 	void liftLevel(double liftAmount);
+
+	/**
+	 * Uses PID to move the lifter to the closest upper level
+	 */
+	void levelUp();
+
+	/**
+	 * Uses PID to move the lifter to the closest lower level
+	 */
+	void levelDown();
 
 	/**
 	 * Calls setLevel to position zero, returning the lifter to its original position
