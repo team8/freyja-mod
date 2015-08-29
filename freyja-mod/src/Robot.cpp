@@ -1,10 +1,8 @@
 #include "Robot.h"
 
 Robot::Robot():
-	arm(),
 	drivetrain(),
 	lifter(),
-	ramp(),
 	state(NOTHING),
 	path(paths::NOTHING)
 {

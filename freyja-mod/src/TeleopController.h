@@ -4,10 +4,8 @@
 #include "WPILib.h"
 #include "Robot.h"
 #include "paths.h"
-#include "Arm.h"
 #include "Drivetrain.h"
 #include "Lifter.h"
-#include "Ramp.h"
 
 class TeleopController {
 public:
@@ -35,10 +33,8 @@ private:
 	Joystick turnJoystick;
 	Joystick operatorJoystick;
 
-	Arm *arm;
 	Drivetrain *drivetrain;
 	Lifter *lifter;
-	Ramp *ramp;
 
 	//Stores if lifter is locked (joystick controls disabled)
 	bool lifterLocked;
@@ -48,8 +44,6 @@ private:
 	void operateLifter();
 	//Runs the drivetrain using joystick input
 	void operateDrivetrain();
-	//Runs the arm using joystick input
-	void operateArm();
 };
 
 #endif
