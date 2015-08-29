@@ -16,9 +16,6 @@
 #define PORT_LIFTER_VICTOR_1 8
 #define PORT_LIFTER_VICTOR_2 9
 
-#define PORT_ARM_SOLENOID_A 6
-#define PORT_ARM_SOLENOID_B 7
-
 
 // Digital Input/Output
 #define PORT_DRIVETRAIN_ENCODER_LEFT_A 0

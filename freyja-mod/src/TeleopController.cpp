@@ -5,10 +5,8 @@ TeleopController::TeleopController(Robot *robot) :
 	driveJoystick((uint32_t) PORT_JOYSTICK_DRIVE),
 	turnJoystick((uint32_t) PORT_JOYSTICK_TURN),
 	operatorJoystick((uint32_t) PORT_JOYSTICK_OPERATOR),
-	arm(&robot->arm),
 	drivetrain(&robot->drivetrain),
 	lifter(&robot->lifter),
-	ramp(&robot->ramp),
 	lifterLocked(false),
 	wasOperatorTriggerPressed(false),
 	wasDrivetrainTriggerPressed(false)
@@ -19,9 +17,6 @@ TeleopController::TeleopController(Robot *robot) :
 void TeleopController::init() {
 	std::cout << "Lifter Init" << std::endl;
 	lifter->init();
-	std::cout << "Arm init" << std::endl;
-	arm->init();
-//	ramp->init();
 	std::cout << "DT Init" << std::endl;
 	drivetrain->init(); // problem
 	std::cout << "Init finished" << std::endl;
@@ -35,17 +30,13 @@ void TeleopController::update() {
 	// LIFTER CONTROLS
 	operateLifter();
 
-	arm->update();
 	drivetrain->update();
 	lifter->update();
-	ramp->update();
 }
 
 void TeleopController::disable() {
-	arm->disable();
 	drivetrain->disable();
 	lifter->disable();
-	ramp->disable();
 }
 
 void TeleopController::operateLifter() {
@@ -82,7 +73,7 @@ void TeleopController::operateLifter() {
 		lifter->levelDown();
 	}
 	if(lifterLocked) {
-		//break;
+		return;
 	}
 	else {
 		lifter->setVelocity(operatorJoystick.GetY());
@@ -98,17 +89,6 @@ void TeleopController::operateDrivetrain() {
 	if(!driveJoystick.GetTrigger()) {
 		wasDrivetrainTriggerPressed = false;
 		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
-	}
-}
-
-void TeleopController::operateArm() {
-	//Prevents pressing and holding repeatedly calling
-	if(operatorJoystick.GetTrigger() && !wasOperatorTriggerPressed) {
-		wasOperatorTriggerPressed = true;
-		//arm->toggle();
-	}
-	else if(!operatorJoystick.GetTrigger()) {
-		wasOperatorTriggerPressed = false;
 	}
 }
 
