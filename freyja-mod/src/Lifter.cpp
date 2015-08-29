@@ -9,8 +9,10 @@ Lifter::Lifter() :
 	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
 	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
 	lifterAccel(),
-	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
-	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
+//	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
+//	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
+	topAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_TOP),
+	bottomAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_BOTTOM),
 
 	currentLevel(0),
 	state(IDLE)
@@ -21,6 +23,8 @@ Lifter::Lifter() :
 	controller2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+	bottomAnalogSensor.SetLimitsVoltage(0.25, 3);
+	topAnalogSensor.SetLimitsVoltage(0.25, 3);
 }
 
 void Lifter::init() {
@@ -33,20 +37,22 @@ void Lifter::init() {
 
 void Lifter::update() {
 
-	if(predictedSpeed < 0 && predictedSpeed > victor1.Get()) {
-		std::cout << "ohi" << std::endl;
-	}
 
-	//Makes sure robot doesn't flip
-	encoder.SetPIDSourceParameter(PIDSource::kRate);
+//
+//	if(predictedSpeed < 0 && predictedSpeed > victor1.Get()) {
+//		std::cout << "ohi" << std::endl;
+//	}
+//
+//	//Makes sure robot doesn't flip
+//	encoder.SetPIDSourceParameter(PIDSource::kRate);
+//
+//	if(lifterAccel.GetY() - 1 > 0.2 && encoder.Get() < 0) {
+////		setVelocity(0.2);
+//		std::cout << "STOPPED" << std::endl;
+//	}
+//	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	if(lifterAccel.GetY() - 1 > 0.2 && encoder.Get() < 0) {
-//		setVelocity(0.2);
-		std::cout << "STOPPED" << std::endl;
-	}
-	encoder.SetPIDSourceParameter(PIDSource::kDistance);
-
-	debug();
+//	debug();
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
@@ -140,16 +146,17 @@ void Lifter::debug() {
 //	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
+	std::cout << "Hall Effect Sensor | Bottom: " << bottomAnalogSensor.GetTriggerState() << " | Top: " << topAnalogSensor.GetTriggerState() << std::endl;
 //	std::cout << "X-Axis   " << lifterAccel.GetX() << "\n";
-	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
+//	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
-	std::cout << "--------------------- \n";
+//	std::cout << "--------------------- " << std::endl;
 }
 
 bool Lifter::isBottomHit() {
-	return bottomSensor.Get();
+	return bottomAnalogSensor.GetTriggerState();
 }
 
 bool Lifter::isTopHit() {
-	return topSensor.Get();
+	return topAnalogSensor.GetTriggerState();
 }
