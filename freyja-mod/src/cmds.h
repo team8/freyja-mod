@@ -30,10 +30,6 @@ namespace cmds {
 	 */
 	void STOP(Robot *const robot);
 
-	/**
-	 * Drives the robot a set distance
-	 */
-	void DRIVE_DIST(Drivetrain *const drivetrain, int distance);
 }
 
 
