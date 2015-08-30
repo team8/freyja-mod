@@ -59,9 +59,16 @@ public:
 
 	void setPath(const Path &newPath);
 
-	// The four subsystems
+	// The two subsystems
 	Drivetrain drivetrain;
 	Lifter lifter;
+private:
+	//The BuiltInAccelerometer used to prevent flipping
+	BuiltInAccelerometer accel;
+
+	const double ACCELEROMETER_FLIP_LIMIT = 5;
+
+	const double LIFTER_FLIP_LIMIT = -10;
 };
 
 #endif

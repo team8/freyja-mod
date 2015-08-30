@@ -8,7 +8,6 @@ Lifter::Lifter() :
 
 	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
 	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
-	lifterAccel(),
 //	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 //	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
 	topAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_TOP),
@@ -140,6 +139,10 @@ void Lifter::zero() {
 
 void Lifter::resetZero() {
 	encoder.Reset();
+}
+
+double Lifter::getVelocity() {
+	return encoder.GetRate();
 }
 
 void Lifter::setState(State state) {

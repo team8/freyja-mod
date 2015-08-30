@@ -86,6 +86,13 @@ public:
 	 */
 	void resetZero();
 
+	/**
+	 *Returns the velocity of the lifter
+	 *
+	 *@return the velocity of the lifter
+	 */
+	double getVelocity();
+
 private:
 	//PID Constants
 	const double PROPORTIONAL_CONSTANT = 0.5;
@@ -130,9 +137,6 @@ private:
 
 	// Controller that acts on other victor and encoder
 	PIDController controller2;
-
-	//Built in Accelerometer for the robot
-	BuiltInAccelerometer lifterAccel;
 
 	// Hall effect sensors for top of the elevator
 //	DigitalInput topSensor;
