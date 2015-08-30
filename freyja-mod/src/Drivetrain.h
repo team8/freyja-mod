@@ -99,8 +99,8 @@ public:
 private:
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
-	const double MAX_FORWARD_SPEED = 0.5;
-	const double MAX_TURN_SPEED = 0.3;
+	const double MAX_FORWARD_SPEED = 0.25;
+	const double MAX_TURN_SPEED = 0.15;
 	const double SPEED_SCALING = 1.0;
 	const double TURN_SCALING = 1.0;
 

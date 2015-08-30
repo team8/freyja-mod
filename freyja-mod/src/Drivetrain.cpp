@@ -112,8 +112,8 @@ void Drivetrain::driveDist(double distance) {
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
 	leftDriveController1.SetSetpoint(distance);
-	leftDriveController1.SetSetpoint(distance);
-	rightDriveController2.SetSetpoint(distance);
+	leftDriveController2.SetSetpoint(distance);
+	rightDriveController1.SetSetpoint(distance);
 	rightDriveController2.SetSetpoint(distance);
 
 	enableDriveControllers();
@@ -128,8 +128,8 @@ void Drivetrain::rotateAngle(double angle) {
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
 	leftGyroController1.SetSetpoint(angle);
-	leftGyroController1.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
+	leftGyroController2.SetSetpoint(angle);
+	rightGyroController1.SetSetpoint(angle);
 	rightGyroController2.SetSetpoint(angle);
 
 	enableGyroControllers();
@@ -144,8 +144,8 @@ void Drivetrain::brake() {
 	rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
 	leftDriveController1.SetSetpoint(0);
-	leftDriveController1.SetSetpoint(0);
-	rightDriveController2.SetSetpoint(0);
+	leftDriveController2.SetSetpoint(0);
+	rightDriveController1.SetSetpoint(0);
 	rightDriveController2.SetSetpoint(0);
 
 	enableDriveControllers();
