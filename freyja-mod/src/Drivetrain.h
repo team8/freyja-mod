@@ -99,8 +99,8 @@ public:
 private:
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
-	const double MAX_FORWARD_SPEED = 1.0;//0.5;
-	const double MAX_TURN_SPEED = 1.0;//0.3;
+	const double MAX_FORWARD_SPEED = 0.5;
+	const double MAX_TURN_SPEED = 0.3;
 	const double SPEED_SCALING = 1.0;
 	const double TURN_SCALING = 1.0;
 
@@ -111,30 +111,6 @@ private:
 
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 100;
-
-	/**
-	 * A controller for the left wheels when driving a set distance
-	 */
-	PIDController leftDriveController1;
-	PIDController leftDriveController2;
-
-	/**
-	 * A controller for the right wheels when driving a set distance
-	 */
-	PIDController rightDriveController1;
-	PIDController rightDriveController2;
-
-	/**
-	 * A controller for the left wheels when rotating angle
-	 */
-	PIDController leftGyroController1;
-	PIDController leftGyroController2;
-
-	/**
-	 * A controller for the right wheels when rotating angle
-	 */
-	PIDController rightGyroController1;
-	PIDController rightGyroController2;
 
 	/**
 	 * The talon that controls the left wheels
@@ -170,6 +146,30 @@ private:
 	 * The encoder on the center right wheel that keeps track of rotation
 	 */
 	Encoder rightEncoder;
+
+	/**
+	 * A controller for the left wheels when driving a set distance
+	 */
+	PIDController leftDriveController1;
+	PIDController leftDriveController2;
+
+	/**
+	 * A controller for the right wheels when driving a set distance
+	 */
+	PIDController rightDriveController1;
+	PIDController rightDriveController2;
+
+	/**
+	 * A controller for the left wheels when rotating angle
+	 */
+	PIDController leftGyroController1;
+	PIDController leftGyroController2;
+
+	/**
+	 * A controller for the right wheels when rotating angle
+	 */
+	PIDController rightGyroController1;
+	PIDController rightGyroController2;
 
 	/**
 	 * Keeps track of the State of the Drivetrain passively
