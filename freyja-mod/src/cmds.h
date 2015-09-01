@@ -30,6 +30,16 @@ namespace cmds {
 	 */
 	void STOP(Robot *const robot);
 
+	/**
+	 * Drives the robot a set distance
+	 * Example 1:
+	 * 	Path path {DRIVE_DIST<10>}
+	 *
+	 * Example 2:
+	 * 	Cmd DRIVE10 = DRIVE_DIST<10>; //name the cmd something related to the function of driving that specific distance
+	 * 	Path path { DRIVE10 };
+	 */
+	template<int N> void DRIVE_DIST(Robot *const robot);
 }
 
 
