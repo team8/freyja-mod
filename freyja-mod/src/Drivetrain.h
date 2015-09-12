@@ -201,9 +201,28 @@ private:
 	State state;
 
 	/**
+	 *
+	 */
+	int sampleTick = 0;
+	int sumTick = 0;
+	double nextVelSum = 0;
+	double velSum;
+	double prevVelSum;
+
+	/**
 	 * Sets the State of Drivetrain as long as it is not in STOPPED
 	 */
 	void setState(State state);
+
+	/**
+	 * Gets the left acceleration
+	 */
+	double getLeftAcceleration();
+
+	/**
+	 * Gets the right acceleration
+	 */
+	double getLeftAcceleration();
 
 	/**
 	 * Returns true if the encoders are stopped

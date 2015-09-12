@@ -50,6 +50,11 @@ void Drivetrain::init() {
 
 void Drivetrain::update() {
 	debug();
+	if(sampleTick == 5) {
+		nextVelSum +=
+		sumTick++;
+	}
+	sampleTick++;
 	switch(state) {
 	case IDLE:
 		break;
@@ -161,6 +166,10 @@ void Drivetrain::setState(State state) {
 	if(state != STOPPED) {
 		this -> state = state;
 	}
+}
+
+double Drivetrain::getAcceleration() {
+	return velSum - prevVelSum;
 }
 
 bool Drivetrain::encodersStopped() {
