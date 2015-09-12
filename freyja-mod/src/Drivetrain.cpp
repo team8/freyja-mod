@@ -104,51 +104,57 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 }
 
 void Drivetrain::driveDist(double distance) {
-	setState(AUTOMATED_DRIVE);
+	if(encodersOnline()) {
+		setState(AUTOMATED_DRIVE);
 
-	disableGyroControllers();
+		disableGyroControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+		leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+		rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftDriveController1.SetSetpoint(distance);
-	leftDriveController2.SetSetpoint(distance);
-	rightDriveController1.SetSetpoint(distance);
-	rightDriveController2.SetSetpoint(distance);
+		leftDriveController1.SetSetpoint(distance);
+		leftDriveController2.SetSetpoint(distance);
+		rightDriveController1.SetSetpoint(distance);
+		rightDriveController2.SetSetpoint(distance);
 
-	enableDriveControllers();
+		enableDriveControllers();
+	}
 }
 
 void Drivetrain::rotateAngle(double angle) {
-	setState(AUTOMATED_ROTATE);
+	if(encodersOnline()) {
+		setState(AUTOMATED_ROTATE);
 
-	disableDriveControllers();
+		disableDriveControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+		leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+		rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftGyroController1.SetSetpoint(angle);
-	leftGyroController2.SetSetpoint(angle);
-	rightGyroController1.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
+		leftGyroController1.SetSetpoint(angle);
+		leftGyroController2.SetSetpoint(angle);
+		rightGyroController1.SetSetpoint(angle);
+		rightGyroController2.SetSetpoint(angle);
 
-	enableGyroControllers();
+		enableGyroControllers();
+	}
 }
 
 void Drivetrain::brake() {
-	setState(BRAKING);
+	if(encodersOnline()) {
+		setState(BRAKING);
 
-	disableGyroControllers();
+		disableGyroControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kRate);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
+		leftEncoder.SetPIDSourceParameter(PIDSource::kRate);
+		rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
 
-	leftDriveController1.SetSetpoint(0);
-	leftDriveController2.SetSetpoint(0);
-	rightDriveController1.SetSetpoint(0);
-	rightDriveController2.SetSetpoint(0);
+		leftDriveController1.SetSetpoint(0);
+		leftDriveController2.SetSetpoint(0);
+		rightDriveController1.SetSetpoint(0);
+		rightDriveController2.SetSetpoint(0);
 
-	enableDriveControllers();
+		enableDriveControllers();
+	}
 }
 
 void Drivetrain::setState(State state) {
@@ -203,6 +209,19 @@ void Drivetrain::disableDriveControllers() {
 	leftDriveController2.Disable();
 	rightDriveController1.Disable();
 	rightDriveController2.Disable();
+}
+
+bool Drivetrain::encodersOnline() {
+	bool retVal = true;
+	if(leftEncoder.StatusIsFatal()) {
+		std::cout << "WARNING: LEFT ENCODER FATAL - PID, Brakes and SmartDrive Disabled" << std::endl;
+		retVal = false;
+	}
+	if(rightEncoder.StatusIsFatal()) {
+		std::cout << "WARNING: RIGHT ENCODER FATAL - PID, Brakes and SmartDrive Disabled" << std::endl;
+		retVal = false;
+	}
+	return retVal;
 }
 
 void Drivetrain::debug() {

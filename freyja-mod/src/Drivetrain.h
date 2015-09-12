@@ -27,6 +27,9 @@
 #define ENCODER_DRIVE_OUTPUT_RANGE 999
 #define ENCODER_GYRO_OUTPUT_RANGE 999
 
+// The maximum change in the power over 1 cycle provided to the robot that will not tip
+#define MAXIMUM_POWER_CHANGE 0
+
 /**
  * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
  * The drivetrain also has two gyro PID controllers linked to one gyro. Each gyro controller controls the Talon on its side.
@@ -172,6 +175,11 @@ private:
 	PIDController rightGyroController2;
 
 	/**
+	 * A boolean to check if the encoders are returning values
+	 * If they are then PID, braking and SmartDrive will run, otherwise just simple drive
+	 */
+
+	/**
 	 * Keeps track of the State of the Drivetrain passively
 	 * for use in the update method
 	 *
@@ -244,6 +252,13 @@ private:
 	 * Prints general debugging information
 	 */
 	void debug();
+
+
+	/**
+	 * Returns true if all encoders are returning values
+	 * If this is not true then SmartDrive, PID and braking will be disabled
+	 */
+	bool encodersOnline();
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
