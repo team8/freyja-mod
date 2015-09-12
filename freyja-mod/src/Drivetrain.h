@@ -115,6 +115,10 @@ private:
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 100;
 
+	//Constants for sampling velocities
+	const int CYCLES_PER_SAMPLE = 5;
+	const int SAMPLES_PER_CALC = 5;
+
 	/**
 	 * The talon that controls the left wheels
 	 */
@@ -201,13 +205,24 @@ private:
 	State state;
 
 	/**
-	 *
+	 * Tick counts for sampling velocities and adding them
 	 */
 	int sampleTick = 0;
 	int sumTick = 0;
-	double nextVelSum = 0;
-	double velSum;
-	double prevVelSum;
+
+	/**
+	 * Sums of velocity readings of left encoder
+	 */
+	double nextLeftVelSum = 0;
+	double leftVelSum;
+	double prevLeftVelSum;
+
+	/**
+	 * Sums of velocity readings of right encoder
+	 */
+	double nextRightVelSum = 0;
+	double rightVelSum;
+	double prevRightVelSum;
 
 	/**
 	 * Sets the State of Drivetrain as long as it is not in STOPPED
@@ -222,7 +237,12 @@ private:
 	/**
 	 * Gets the right acceleration
 	 */
-	double getLeftAcceleration();
+	double getRightAcceleration();
+
+	/**
+	 * Samples a velocity from both encoders
+	 */
+	void sampleVelocities();
 
 	/**
 	 * Returns true if the encoders are stopped

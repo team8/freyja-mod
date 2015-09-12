@@ -50,11 +50,7 @@ void Drivetrain::init() {
 
 void Drivetrain::update() {
 	debug();
-	if(sampleTick == 5) {
-		nextVelSum +=
-		sumTick++;
-	}
-	sampleTick++;
+	sampleVelocities();
 	switch(state) {
 	case IDLE:
 		break;
@@ -168,8 +164,36 @@ void Drivetrain::setState(State state) {
 	}
 }
 
-double Drivetrain::getAcceleration() {
-	return velSum - prevVelSum;
+double Drivetrain::getLeftAcceleration() {
+	return leftVelSum - prevLeftVelSum;
+}
+
+double Drivetrain::getRightAcceleration() {
+	return rightVelSum - prevRightVelSum;
+}
+
+void Drivetrain::sampleVelocities() {
+	if(sampleTick == CYCLES_PER_SAMPLE) {
+			nextLeftVelSum += leftEncoder.GetRate();
+			nextRightVelSum += leftEncoder.GetRate();
+
+			if(sumTick == SAMPLES_PER_CALC) {
+				prevLeftVelSum = leftVelSum;
+				prevRightVelSum = rightVelSum;
+
+				leftVelSum = nextLeftVelSum/SAMPLES_PER_CALC;
+				rightVelSum = nextRightVelSum/SAMPLES_PER_CALC;
+
+				nextLeftVelSum = 0;
+				nextRightVelSum = 0;
+
+				sumTick = 0;
+			}
+
+			sumTick++;
+			sampleTick = 0;
+		}
+		sampleTick++;
 }
 
 bool Drivetrain::encodersStopped() {
