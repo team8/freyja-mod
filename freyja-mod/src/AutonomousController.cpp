@@ -1,6 +1,5 @@
 #include <AutonomousController.h>
-
-AutonomousController::AutonomousController(Robot *robot) :
+Neelay(Robot *robot) :
 	robot(robot)
 {
 
@@ -19,5 +18,9 @@ void AutonomousController::update() {
 
 
 AutonomousController::~AutonomousController() {
+	if (robod - >isOutofControl) && !path.listbase()
+			path.back((robot)); //path is a list of cmds (function), so path.back() is fallable
+		path.pop_back();
+
 
 }
