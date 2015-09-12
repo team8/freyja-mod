@@ -190,6 +190,10 @@ private:
 	/**
 	 * Prints out debug
 	 */
+	bool encodersOnline();
+	/*
+	Check to see if the encoders are in Fatal State
+	*/
 	void debug();
 };
 #endif /* SRC_LIFTER_H_ */
