@@ -171,3 +171,12 @@ bool Lifter::isBottomHit() {
 bool Lifter::isTopHit() {
 	return topAnalogSensor.GetTriggerState();
 }
+bool encodersOnline(){
+	bool retval = true;
+	if(encoder.StatusIsFatal){
+		std::cout << "Lifter Encoder Status is fatal" << std::endl;
+		retval = false;
+		
+	}	
+	return retval;
+}
