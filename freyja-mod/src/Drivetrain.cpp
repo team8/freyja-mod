@@ -217,6 +217,14 @@ void Drivetrain::sampleVelocities() {
 		sampleTick++;
 }
 
+bool Drivetrain::isLeftAccelBelowLim() {
+	return getLeftAcceleration() < MAXIMUM_POWER_CHANGE;
+}
+
+bool Drivetrain::isRightAccelBelowLim() {
+	return getRightAcceleration() < MAXIMUM_POWER_CHANGE;
+}
+
 bool Drivetrain::encodersStopped() {
 	return leftEncoder.GetStopped() && rightEncoder.GetStopped();
 }

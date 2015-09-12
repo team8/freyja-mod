@@ -244,6 +244,16 @@ private:
 	void sampleVelocities();
 
 	/**
+	 * Checks to see if the left acceleration is below the maximum acceleration limit
+	 */
+	bool isLeftAccelBelowLim();
+
+	/**
+	 * Checks to see if the right acceleration is below the maximum acceleration limit
+	 */
+	bool isRightAccelBelowLim();
+
+	/**
 	 * Returns true if the encoders are stopped
 	 * @return if both encoders are stopped
 	 */
