@@ -1,4 +1,3 @@
-// TODO: Add functionality for max v, a and j
 // TODO: Add debug method
 // TODO: Implement field map system similar to 254
 
@@ -287,6 +286,10 @@ private:
 	 */
 	void disableDriveControllers();
 
+	void simpleDrive(int leftPower, int rightPower);
+
+	void smartDrive(int leftPower, int rightPower);
+
 	/**
 	 * Prints general debugging information
 	 */
@@ -298,6 +301,8 @@ private:
 	 * If this is not true then SmartDrive, PID and braking will be disabled
 	 */
 	bool encodersOnline();
+
+
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
