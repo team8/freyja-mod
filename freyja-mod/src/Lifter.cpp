@@ -88,12 +88,14 @@ void Lifter::disable() {
 }
 
 void Lifter::idle() {
+	if(encodersOnline()){
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
 	controller1.SetSetpoint(0);
 	controller2.SetSetpoint(0);
 	controller1.Enable();
 	controller2.Enable();
 	setState(IDLE);
+	}
 }
 
 bool Lifter::isIdle() {
@@ -111,6 +113,7 @@ void Lifter::setVelocity(double velocity) {
 }
 
 void Lifter::setLevel(double level) {
+	if(encodersOnline()){
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	controller1.SetSetpoint(setpoint);
@@ -118,6 +121,7 @@ void Lifter::setLevel(double level) {
 	controller1.Enable();
 	controller2.Enable();
 	setState(AUTOMATED);
+	}
 }
 
 void Lifter::liftLevel(double liftAmount) {
