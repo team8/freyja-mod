@@ -10,21 +10,21 @@
 #include <Ports.h>
 
 //PID constants
-#define DRIVE_PROPORTIONAL 0.12
+#define DRIVE_PROPORTIONAL 0.1
 #define DRIVE_INTEGRAL 0.0
-#define DRIVE_DERIVATIVE 0.1
+#define DRIVE_DERIVATIVE 0.0
 
  //Gyro PID constants
-#define GYRO_PROPORTIONAL 0.12
+#define GYRO_PROPORTIONAL 0.1
 #define GYRO_INTEGRAL 0.0
-#define GYRO_DERIVATIVE 0.1
+#define GYRO_DERIVATIVE 0.0
 
 //Encoder constants
 #define RIGHT_DPP 0.1545595
 #define LEFT_DPP 0.1577287
 #define ENCODER_INPUT_RANGE 999
-#define ENCODER_DRIVE_OUTPUT_RANGE 999
-#define ENCODER_GYRO_OUTPUT_RANGE 999
+#define ENCODER_DRIVE_OUTPUT_RANGE 0.5
+#define ENCODER_GYRO_OUTPUT_RANGE 0.5
 
 // The maximum change in the power over 1 cycle provided to the robot that will not tip
 #define MAXIMUM_POWER_CHANGE 0
