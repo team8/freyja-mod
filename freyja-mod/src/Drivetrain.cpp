@@ -123,6 +123,12 @@ void Drivetrain::simpleDrive(int leftPower, int rightPower) {
 
 void Drivetrain::smartDrive(int leftPower, int rightPower) {
 	//implement me
+	//if power > current power + MAXIMUM_POWER_CHANGE or power < currentpower - MAXIMUM_POWER_CHANGE
+	//	power = current power + MAXIMUM_POWER_CHANGE or power = current power - MAXIMUM_POWER_CHANGE
+	leftTalon1.Set(limitPower(leftPower, prevLeftPower));
+	leftTalon2.Set(limitPower(leftPower, prevLeftPower));
+	rightTalon1.Set(limitPower(rightPower, prevRightPower));
+	rightTalon2.Set(limitPower(rightPower, prevRightPower));
 }
 
 void Drivetrain::driveDist(double distance) {
@@ -185,6 +191,16 @@ void Drivetrain::setState(State state) {
 	}
 }
 
+int Drivetrain::limitPower(int power, int prevPower) {
+	if(power > prevPower + MAXIMUM_POWER_CHANGE) {
+		return prevPower + MAXIMUM_POWER_CHANGE;
+	}
+	if(power < prevPower - MAXIMUM_POWER_CHANGE) {
+		return prevPower - MAXIMUM_POWER_CHANGE;
+	}
+	return power;
+}
+
 double Drivetrain::getLeftAcceleration() {
 	return leftVelSum - prevLeftVelSum;
 }
@@ -217,7 +233,6 @@ void Drivetrain::sampleVelocities() {
 		sampleTick++;
 }
 
-bool Drivetrain::isLeftAccelBelowLim() {
 	return getLeftAcceleration() < MAXIMUM_POWER_CHANGE;
 }
 

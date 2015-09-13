@@ -204,6 +204,12 @@ private:
 	State state;
 
 	/**
+	 * Previous power values for smart drive
+	 */
+	int prevLeftPower = 0;
+	int prevRightPower = 0;
+
+	/**
 	 * Tick counts for sampling velocities and adding them
 	 */
 	int sampleTick = 0;
@@ -227,6 +233,11 @@ private:
 	 * Sets the State of Drivetrain as long as it is not in STOPPED
 	 */
 	void setState(State state);
+
+	/**
+	 * Limits the drive power to a range based on MAXIMUM_POWER_CHANGE
+	 */
+	int limitPower(int power, int prevPower);
 
 	/**
 	 * Gets the left acceleration
