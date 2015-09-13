@@ -307,7 +307,7 @@ private:
 	 */
 	void disableDriveControllers();
 
-	void simpleDrive(int leftPower, int rightPower);
+	void simpleDrive(double leftPower, double rightPower);
 
 	void smartDrive(int leftPower, int rightPower);
 

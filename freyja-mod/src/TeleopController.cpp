@@ -81,7 +81,10 @@ void TeleopController::operateLifter() {
 }
 
 void TeleopController::operateDrivetrain() {
-	if(driveJoystick.GetTrigger() && !wasDrivetrainTriggerPressed) {
+	if(driveJoystick.GetRawButton(10) && operatorJoystick.GetRawButton(10)) {
+		drivetrain->driveDist(100);
+	}
+	/*if(driveJoystick.GetTrigger() && !wasDrivetrainTriggerPressed) {
 		drivetrain->brake();
 		wasDrivetrainTriggerPressed = true;
 		return;
@@ -89,7 +92,7 @@ void TeleopController::operateDrivetrain() {
 	if(!driveJoystick.GetTrigger()) {
 		wasDrivetrainTriggerPressed = false;
 		drivetrain->drive(turnJoystick.GetX(), driveJoystick.GetY());
-	}
+	}*/
 }
 
 TeleopController::~TeleopController() {
