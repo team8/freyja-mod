@@ -233,11 +233,12 @@ void Drivetrain::sampleVelocities() {
 		sampleTick++;
 }
 
-	return getLeftAcceleration() < MAXIMUM_POWER_CHANGE;
+bool Drivetrain::isLeftAccelBelowLim() {
+	return std::abs(getLeftAcceleration()) < MAXIMUM_POWER_CHANGE;
 }
 
 bool Drivetrain::isRightAccelBelowLim() {
-	return getRightAcceleration() < MAXIMUM_POWER_CHANGE;
+	return std::abs(getRightAcceleration()) < MAXIMUM_POWER_CHANGE;
 }
 
 bool Drivetrain::encodersStopped() {
