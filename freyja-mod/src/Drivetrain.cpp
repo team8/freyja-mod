@@ -298,6 +298,15 @@ bool Drivetrain::encodersOnline() {
 	return retVal;
 }
 
+bool Drivetrain::gyroOnline(){
+	bool retval = true;
+	if(gyro.StatusIsFatal()){
+		std::cout << "Gyro Fatal" << std::endl;
+		retval = false;
+	}
+	return retval;
+}
+
 void Drivetrain::debug() {
 	std::cout << "Drivetrain State: " << state << std::endl;
 	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
