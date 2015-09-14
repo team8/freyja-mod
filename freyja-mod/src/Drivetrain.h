@@ -322,6 +322,10 @@ private:
 	 * If this is not true then SmartDrive, PID and braking will be disabled
 	 */
 	bool encodersOnline();
+	/**
+	 * Returns true if gyro online.
+	 */
+	bool gyroOnline();
 
 
 };
