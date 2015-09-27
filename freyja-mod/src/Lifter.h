@@ -98,7 +98,7 @@ private:
 	const double PROPORTIONAL_CONSTANT = 0.5;
 	const double INTEGRAL_CONSTANT = 0.0;
 	const double DERIVATIVE_CONSTANT = 0.0;
-	const double ENCODER_DPP = 0.022441;
+	const double ENCODER_DPP = 0.00534521;
 
 	//Height of a level in the unit used by encoders (in.)
 	const double LEVEL_HEIGHT = 12.0;

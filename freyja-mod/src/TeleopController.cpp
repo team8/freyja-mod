@@ -58,11 +58,11 @@ void TeleopController::operateLifter() {
 	}
 	//Moves up 1 level
 	else if(operatorJoystick.GetRawButton(3)) {
-		lifter->liftLevel(1);
+		lifter->liftLevel(0.1);
 	}
 	//Moves down 1 level
 	else if(operatorJoystick.GetRawButton(2)) {
-		lifter->liftLevel(-1);
+		lifter->liftLevel(-0.1);
 	}
 	//Moves up to nearest level
 	else if(operatorJoystick.GetRawButton(11)) {
@@ -76,7 +76,7 @@ void TeleopController::operateLifter() {
 		return;
 	}
 	else {
-		lifter->setVelocity(operatorJoystick.GetY());
+//		lifter->setVelocity(operatorJoystick.GetY());
 	}
 }
 
