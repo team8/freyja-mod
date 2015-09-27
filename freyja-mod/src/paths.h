@@ -31,8 +31,6 @@ namespace paths {
 	 */
 
 	const Path NOTHING = {cmds::STOP};
-	const Path DRIVE_FORWARD = {cmds::DRIVE_DIST};
-
 }
 
 

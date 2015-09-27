@@ -51,7 +51,7 @@ void Lifter::update() {
 //	}
 //	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-//	debug();
+	debug();
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
@@ -88,14 +88,14 @@ void Lifter::disable() {
 }
 
 void Lifter::idle() {
-	if(encodersOnline()){
-	encoder.SetPIDSourceParameter(PIDSource::kRate);
-	controller1.SetSetpoint(0);
-	controller2.SetSetpoint(0);
-	controller1.Enable();
-	controller2.Enable();
-	setState(IDLE);
-	}
+//	if(encodersOnline()){
+//	encoder.SetPIDSourceParameter(PIDSource::kRate);
+//	controller1.SetSetpoint(0);
+//	controller2.SetSetpoint(0);
+//	controller1.Enable();
+//	controller2.Enable();
+//	setState(IDLE);
+//	}
 }
 
 bool Lifter::isIdle() {
@@ -113,15 +113,15 @@ void Lifter::setVelocity(double velocity) {
 }
 
 void Lifter::setLevel(double level) {
-	if(encodersOnline()){
-	double setpoint = level * LEVEL_HEIGHT;
-	encoder.SetPIDSourceParameter(PIDSource::kDistance);
-	controller1.SetSetpoint(setpoint);
-	controller2.SetSetpoint(setpoint);
-	controller1.Enable();
-	controller2.Enable();
-	setState(AUTOMATED);
-	}
+//	if(encodersOnline()){
+//	double setpoint = level * LEVEL_HEIGHT;
+//	encoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	controller1.SetSetpoint(setpoint);
+//	controller2.SetSetpoint(setpoint);
+//	controller1.Enable();
+//	controller2.Enable();
+//	setState(AUTOMATED);
+//	}
 }
 
 void Lifter::liftLevel(double liftAmount) {
@@ -157,11 +157,11 @@ void Lifter::setState(State state) {
 }
 
 void Lifter::debug() {
-//	std::cout << "Lifter State: " << state << std::endl;
-//	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
+	std::cout << "Lifter State: " << state << std::endl;
+	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
-	std::cout << "Hall Effect Sensor | Bottom: " << bottomAnalogSensor.GetTriggerState() << " | Top: " << topAnalogSensor.GetTriggerState() << std::endl;
+//	std::cout << "Hall Effect Sensor | Bottom: " << bottomAnalogSensor.GetTriggerState() << " | Top: " << topAnalogSensor.GetTriggerState() << std::endl;
 //	std::cout << "X-Axis   " << lifterAccel.GetX() << "\n";
 //	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
