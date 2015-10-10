@@ -31,7 +31,6 @@ namespace paths {
 	 */
 
 	const Path NOTHING = {cmds::STOP};
-
 }
 
 

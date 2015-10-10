@@ -1,4 +1,3 @@
-// TODO: Add functionality for max v, a and j
 // TODO: Add debug method
 // TODO: Implement field map system similar to 254
 
@@ -11,21 +10,24 @@
 #include <Ports.h>
 
 //PID constants
-#define DRIVE_PROPORTIONAL 0.12
+#define DRIVE_PROPORTIONAL 0.1
 #define DRIVE_INTEGRAL 0.0
-#define DRIVE_DERIVATIVE 0.1
+#define DRIVE_DERIVATIVE 0.0
 
  //Gyro PID constants
-#define GYRO_PROPORTIONAL 0.12
+#define GYRO_PROPORTIONAL 0.1
 #define GYRO_INTEGRAL 0.0
-#define GYRO_DERIVATIVE 0.1
+#define GYRO_DERIVATIVE 0.0
 
 //Encoder constants
 #define RIGHT_DPP 0.1545595
 #define LEFT_DPP 0.1577287
 #define ENCODER_INPUT_RANGE 999
-#define ENCODER_DRIVE_OUTPUT_RANGE 0.1
-#define ENCODER_GYRO_OUTPUT_RANGE 0.1
+#define ENCODER_DRIVE_OUTPUT_RANGE 0.5
+#define ENCODER_GYRO_OUTPUT_RANGE 0.5
+
+// The maximum change in the power over 1 cycle provided to the robot that will not tip
+#define MAXIMUM_POWER_CHANGE 0
 
 /**
  * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
@@ -99,8 +101,8 @@ public:
 private:
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
-	const double MAX_FORWARD_SPEED = 0.3;//0.5;
-	const double MAX_TURN_SPEED = 0.3;//0.3;
+	const double MAX_FORWARD_SPEED = 0.25;
+	const double MAX_TURN_SPEED = 0.15;
 	const double SPEED_SCALING = 1.0;
 	const double TURN_SCALING = 1.0;
 
@@ -112,29 +114,9 @@ private:
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 100;
 
-	/**
-	 * A controller for the left wheels when driving a set distance
-	 */
-	PIDController leftDriveController1;
-	PIDController leftDriveController2;
-
-	/**
-	 * A controller for the right wheels when driving a set distance
-	 */
-	PIDController rightDriveController1;
-	PIDController rightDriveController2;
-
-	/**
-	 * A controller for the left wheels when rotating angle
-	 */
-	PIDController leftGyroController1;
-	PIDController leftGyroController2;
-
-	/**
-	 * A controller for the right wheels when rotating angle
-	 */
-	PIDController rightGyroController1;
-	PIDController rightGyroController2;
+	//Constants for sampling velocities
+	const int CYCLES_PER_SAMPLE = 5;
+	const int SAMPLES_PER_CALC = 5;
 
 	/**
 	 * The talon that controls the left wheels
@@ -172,6 +154,35 @@ private:
 	Encoder rightEncoder;
 
 	/**
+	 * A controller for the left wheels when driving a set distance
+	 */
+	PIDController leftDriveController1;
+	PIDController leftDriveController2;
+
+	/**
+	 * A controller for the right wheels when driving a set distance
+	 */
+	PIDController rightDriveController1;
+	PIDController rightDriveController2;
+
+	/**
+	 * A controller for the left wheels when rotating angle
+	 */
+	PIDController leftGyroController1;
+	PIDController leftGyroController2;
+
+	/**
+	 * A controller for the right wheels when rotating angle
+	 */
+	PIDController rightGyroController1;
+	PIDController rightGyroController2;
+
+	/**
+	 * A boolean to check if the encoders are returning values
+	 * If they are then PID, braking and SmartDrive will run, otherwise just simple drive
+	 */
+
+	/**
 	 * Keeps track of the State of the Drivetrain passively
 	 * for use in the update method
 	 *
@@ -193,9 +204,65 @@ private:
 	State state;
 
 	/**
+	 * Previous power values for smart drive
+	 */
+	int prevLeftPower = 0;
+	int prevRightPower = 0;
+
+	/**
+	 * Tick counts for sampling velocities and adding them
+	 */
+	int sampleTick = 0;
+	int sumTick = 0;
+
+	/**
+	 * Sums of velocity readings of left encoder
+	 */
+	double nextLeftVelSum = 0;
+	double leftVelSum;
+	double prevLeftVelSum;
+
+	/**
+	 * Sums of velocity readings of right encoder
+	 */
+	double nextRightVelSum = 0;
+	double rightVelSum;
+	double prevRightVelSum;
+
+	/**
 	 * Sets the State of Drivetrain as long as it is not in STOPPED
 	 */
 	void setState(State state);
+
+	/**
+	 * Limits the drive power to a range based on MAXIMUM_POWER_CHANGE
+	 */
+	int limitPower(int power, int prevPower);
+
+	/**
+	 * Gets the left acceleration
+	 */
+	double getLeftAcceleration();
+
+	/**
+	 * Gets the right acceleration
+	 */
+	double getRightAcceleration();
+
+	/**
+	 * Samples a velocity from both encoders
+	 */
+	void sampleVelocities();
+
+	/**
+	 * Checks to see if the left acceleration is below the maximum acceleration limit
+	 */
+	bool isLeftAccelBelowLim();
+
+	/**
+	 * Checks to see if the right acceleration is below the maximum acceleration limit
+	 */
+	bool isRightAccelBelowLim();
 
 	/**
 	 * Returns true if the encoders are stopped
@@ -240,10 +307,27 @@ private:
 	 */
 	void disableDriveControllers();
 
+	void simpleDrive(double leftPower, double rightPower);
+
+	void smartDrive(int leftPower, int rightPower);
+
 	/**
 	 * Prints general debugging information
 	 */
 	void debug();
+
+
+	/**
+	 * Returns true if all encoders are returning values
+	 * If this is not true then SmartDrive, PID and braking will be disabled
+	 */
+	bool encodersOnline();
+	/**
+	 * Returns true if gyro online.
+	 */
+	bool gyroOnline();
+
+
 };
 
 #endif /* SRC_DRIVETRAIN_H_ */
