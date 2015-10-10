@@ -8,10 +8,10 @@ Lifter::Lifter() :
 
 	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
 	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
-//	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
-//	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
-	topAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_TOP),
-	bottomAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_BOTTOM),
+	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
+	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
+//	topAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_TOP),
+//	bottomAnalogSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_BOTTOM),
 
 	currentLevel(0),
 	state(IDLE)
@@ -22,8 +22,6 @@ Lifter::Lifter() :
 	controller2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-	bottomAnalogSensor.SetLimitsVoltage(0.25, 3);
-	topAnalogSensor.SetLimitsVoltage(0.25, 3);
 }
 
 void Lifter::init() {
@@ -73,9 +71,11 @@ void Lifter::update() {
 	// Sets the velocity to the bounce speed if a limit switch is triggerd
 	if(isBottomHit()) {
 		//setVelocity(BOUNCE_SPEED);
+		std::cout << "BOTTOM WAS HIT" << std::endl;
 	}
 	else if(isTopHit()) {
 		//setVelocity(-BOUNCE_SPEED);
+		std::cout << "TOP WAS HIT" << std::endl;
 	}
 }
 
@@ -161,7 +161,7 @@ void Lifter::debug() {
 	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
-//	std::cout << "Hall Effect Sensor | Bottom: " << bottomAnalogSensor.GetTriggerState() << " | Top: " << topAnalogSensor.GetTriggerState() << std::endl;
+	std::cout << "Hall Effect Sensor | Bottom: " << bottomSensor.Get() << " | Top: " << topSensor.Get() << std::endl;
 //	std::cout << "X-Axis   " << lifterAccel.GetX() << "\n";
 //	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
@@ -169,11 +169,11 @@ void Lifter::debug() {
 }
 
 bool Lifter::isBottomHit() {
-	return bottomAnalogSensor.GetTriggerState();
+	return bottomSensor.Get();
 }
 
 bool Lifter::isTopHit() {
-	return topAnalogSensor.GetTriggerState();
+	return topSensor.Get();
 }
 
 bool Lifter::encodersOnline(){

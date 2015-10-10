@@ -139,16 +139,16 @@ private:
 	PIDController controller2;
 
 	// Hall effect sensors for top of the elevator
-//	DigitalInput topSensor;
+	DigitalInput topSensor;
 
 	// Hall effect sensors for bottom of the elevator
-//	DigitalInput bottomSensor;
+	DigitalInput bottomSensor;
 
 	// Analog hall effect sensor for top of the elevator
-	AnalogTrigger topAnalogSensor;
+	//AnalogTrigger topAnalogSensor;
 
 	// Analog hall effect sensor for bottom of the elevator
-	AnalogTrigger bottomAnalogSensor;
+	//AnalogTrigger bottomAnalogSensor;
 
 
 	// Current level

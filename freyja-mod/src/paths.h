@@ -31,7 +31,9 @@ namespace paths {
 	 */
 
 	const Path NOTHING = {cmds::STOP};
+
 }
 
 
 #endif //AUTO_PATHS
+
