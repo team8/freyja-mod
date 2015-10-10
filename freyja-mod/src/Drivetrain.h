@@ -24,7 +24,7 @@
 #define RIGHT_DPP 0.1545595
 #define LEFT_DPP 0.1577287
 #define ENCODER_INPUT_RANGE 999
-#define ENCODER_DRIVE_OUTPUT_RANGE 999
+#define ENCODER_DRIVE_OUTPUT_RANGE 0.3
 #define ENCODER_GYRO_OUTPUT_RANGE 999
 
 /**
@@ -99,8 +99,8 @@ public:
 private:
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
-	const double MAX_FORWARD_SPEED = 1.0;//0.5;
-	const double MAX_TURN_SPEED = 1.0;//0.3;
+	const double MAX_FORWARD_SPEED = 0.5;//0.5;
+	const double MAX_TURN_SPEED = 0.3;//0.3;
 	const double SPEED_SCALING = 1.0;
 	const double TURN_SCALING = 1.0;
 

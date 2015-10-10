@@ -6,6 +6,7 @@
 #include "paths.h"
 #include "Drivetrain.h"
 #include "Lifter.h"
+#include "Ramp.h"
 
 class Robot {
 public:
@@ -62,6 +63,7 @@ public:
 	// The four subsystems
 	Drivetrain drivetrain;
 	Lifter lifter;
+	Ramp ramp;
 };
 
 #endif

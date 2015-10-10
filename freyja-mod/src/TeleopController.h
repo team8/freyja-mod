@@ -6,6 +6,7 @@
 #include "paths.h"
 #include "Drivetrain.h"
 #include "Lifter.h"
+#include "Ramp.h"
 
 class TeleopController {
 public:
@@ -35,6 +36,7 @@ private:
 
 	Drivetrain *drivetrain;
 	Lifter *lifter;
+	Ramp *ramp;
 
 	//Stores if lifter is locked (joystick controls disabled)
 	bool lifterLocked;
@@ -44,6 +46,8 @@ private:
 	void operateLifter();
 	//Runs the drivetrain using joystick input
 	void operateDrivetrain();
+	//Runs the ramp using joystick input
+	void operateRamp();
 };
 
 #endif

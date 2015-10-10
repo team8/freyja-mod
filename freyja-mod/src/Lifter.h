@@ -103,7 +103,7 @@ private:
 	const double BOUNCE_SPEED = 0.2;
 
 	// Maximum Lifter Speed
-	const double MAX_SPEED = 1.0;//0.3;
+	const double MAX_SPEED = 0.3;//0.3;
 
 	// Scaling value for teleop control
 	const double SPEED_SCALING = 1;
@@ -135,16 +135,10 @@ private:
 	BuiltInAccelerometer lifterAccel;
 
 	// Hall effect sensors for top of the elevator
-//	DigitalInput topSensor;
+	DigitalInput topSensor;
 
 	// Hall effect sensors for bottom of the elevator
-//	DigitalInput bottomSensor;
-
-	// Analog hall effect sensor for top of the elevator
-	AnalogTrigger topAnalogSensor;
-
-	// Analog hall effect sensor for bottom of the elevator
-	AnalogTrigger bottomAnalogSensor;
+	DigitalInput bottomSensor;
 
 
 	// Current level
