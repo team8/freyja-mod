@@ -89,6 +89,8 @@ void TeleopController::operateDrivetrain() {
 	if(driveJoystick.GetRawButton(11)) {
 		drivetrain->drive(0, 0);
 	}
+
+	drivetrain -> drive(turnJoystick.GetX(), driveJoystick.GetY());
 	/*if(driveJoystick.GetTrigger() && !wasDrivetrainTriggerPressed) {
 		drivetrain->brake();
 		wasDrivetrainTriggerPressed = true;
