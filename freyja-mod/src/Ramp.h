@@ -10,8 +10,11 @@
 
 #define LEFT_SPEED 1.0
 #define RIGHT_SPEED 1.0
-#import <WPILib.h>
-#import "Subsys.h"
+
+#define DEPLOY_TIME 1.0
+
+#include <WPILib.h>
+#include "Subsys.h"
 
 /**
  * The ramp is a subsystem of freyja-mod intended to allow the use of the chutedoor
@@ -29,11 +32,15 @@ private:
 	/** Boolean determining the ramp state for toggling **/
 	bool rampToggled;
 
+	/** The timer used to measure deploy time **/
+	Timer deployTimer;
+
 	/** The boolean determing whether or not the wheels are running **/
 	enum State{
 		IDLE,
 		RUNNING,
-		SLOWING
+		SLOWING,
+		DEPLOYING
 	};
 	State state;
 public:
@@ -60,7 +67,7 @@ public:
 	/**
 	 * Toggles the state of the ramp
 	 */
-	void toggleRampStart();
+	void toggleRampDeploy();
 
 	/**
 	 * Toggles the state of the ramp
@@ -86,6 +93,11 @@ public:
 	 * Stops the turning of the wheels and
 	 */
 	void stop();
+
+	/**
+	 * Stops the turning of the wheels and
+	 */
+	void deploy();
 
 	/**
 	 * Sets the state of the ramp

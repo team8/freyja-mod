@@ -49,7 +49,7 @@ void TeleopController::disable() {
 void TeleopController::operateRamp() {
 	//Toggles the ramp state
 	if(operatorJoystick.GetRawButton(1)) {
-		ramp->toggleRampStart();
+		ramp->toggleRampDeploy();
 		return;
 	}
 	if(operatorJoystick.GetRawButton(2)) {
@@ -81,7 +81,7 @@ void TeleopController::operateLifter() {
 		lifter->liftLevel(1);
 	}
 	//Moves down 1 level
-	else if(operatorJoystick.GetRawButton(2)) {
+	else if(operatorJoystick.GetRawButton(4)) {
 		lifter->liftLevel(-1);
 	}
 	//Moves up to nearest level
