@@ -34,6 +34,11 @@ namespace cmds {
 	 * Drives the robot a set distance
 	 */
 	void DRIVE_DIST(Drivetrain *const drivetrain, int distance);
+
+	/**
+	 * Deploys a tote from the ramp
+	 */
+	void RAMP_DEPLOY(Robot *const robot);
 }
 
 

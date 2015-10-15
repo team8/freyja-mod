@@ -33,14 +33,14 @@ private:
 	bool rampToggled;
 
 	/** The timer used to measure deploy time **/
-	Timer deployTimer;
+	Timer runTime;
 
 	/** The boolean determing whether or not the wheels are running **/
 	enum State{
 		IDLE,
 		RUNNING,
 		SLOWING,
-		DEPLOYING
+//		DEPLOYING
 	};
 	State state;
 public:
@@ -67,7 +67,7 @@ public:
 	/**
 	 * Toggles the state of the ramp
 	 */
-	void toggleRampDeploy();
+//	void toggleRampDeploy();
 
 	/**
 	 * Toggles the state of the ramp
@@ -113,6 +113,11 @@ public:
 	 * Determines whether or not the ramp is idle
 	 */
 	bool isIdle();
+
+	/**
+	 * Returns whether or not the ramp has been running long enough to deploy
+	 */
+	bool hasDeployed();
 };
 
 #endif /* SRC_RAMP_H_ */

@@ -8,3 +8,10 @@ void cmds::STOP(Robot *const robot) {
 void cmds::DRIVE_DIST(Drivetrain *const drivetrain, int distance) {
 	drivetrain->driveDist(distance);
 }
+
+void cmds::RAMP_DEPLOY(Robot *const robot) {
+	robot->ramp.start();
+	if(robot->ramp.hasDeployed()) {
+		robot->ramp.stop();
+	}
+}
