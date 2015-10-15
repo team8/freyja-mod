@@ -66,7 +66,7 @@ void Lifter::update() {
 		break;
 	}
 
-	// Sets the velocity to the bounce speed if a limit switch is triggerd
+	// Sets the velocity to the bounce speed if a limit switch is triggered
 	if(isBottomHit()) {
 		setVelocity(-BOUNCE_SPEED);
 		std::cout << "BOTTOM WAS HIT" << std::endl;
