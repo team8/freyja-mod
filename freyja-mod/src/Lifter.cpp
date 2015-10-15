@@ -33,8 +33,6 @@ void Lifter::init() {
 }
 
 void Lifter::update() {
-
-	std::cout << "lifter is updating" << std::endl;
 //
 //	if(predictedSpeed < 0 && predictedSpeed > victor1.Get()) {
 //		std::cout << "ohi" << std::endl;
@@ -70,11 +68,11 @@ void Lifter::update() {
 
 	// Sets the velocity to the bounce speed if a limit switch is triggerd
 	if(isBottomHit()) {
-		//setVelocity(BOUNCE_SPEED);
+		setVelocity(-BOUNCE_SPEED);
 		std::cout << "BOTTOM WAS HIT" << std::endl;
 	}
-	else if(isTopHit()) {
-		//setVelocity(-BOUNCE_SPEED);
+	if(isTopHit()) {
+		setVelocity(BOUNCE_SPEED);
 		std::cout << "TOP WAS HIT" << std::endl;
 	}
 }
@@ -157,8 +155,8 @@ void Lifter::setState(State state) {
 }
 
 void Lifter::debug() {
-	std::cout << "Lifter State: " << state << std::endl;
-	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
+//	std::cout << "Lifter State: " << state << std::endl;
+//	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
 	std::cout << "Hall Effect Sensor | Bottom: " << bottomSensor.Get() << " | Top: " << topSensor.Get() << std::endl;
@@ -169,11 +167,11 @@ void Lifter::debug() {
 }
 
 bool Lifter::isBottomHit() {
-	return bottomSensor.Get();
+	return !bottomSensor.Get();
 }
 
 bool Lifter::isTopHit() {
-	return topSensor.Get();
+	return !topSensor.Get();
 }
 
 bool Lifter::encodersOnline(){

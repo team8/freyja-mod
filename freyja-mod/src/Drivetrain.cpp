@@ -50,7 +50,7 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
-	debug();
+	//debug();
 	sampleVelocities();
 	switch(state) {
 	case IDLE:
