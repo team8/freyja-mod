@@ -34,6 +34,11 @@ namespace cmds {
 	 * Drives the robot a set distance
 	 */
 	void DRIVE_DIST(Drivetrain *const drivetrain, int distance);
+
+	/**
+	 * Lifts one tote for stacking
+	 */
+	void LIFT_ONE(Robot *const robot);
 }
 
 
