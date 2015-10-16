@@ -30,7 +30,9 @@ namespace paths {
 	 * Paths
 	 */
 
-	const Path NOTHING = {cmds::STOP};
+	//const Path NOTHING = {cmds::STOP};
+
+	const Path DRIVE_FORWARD = {cmds::DRIVE_DIST<10>};
 }
 
 
