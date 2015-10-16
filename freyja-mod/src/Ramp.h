@@ -11,7 +11,7 @@
 #define LEFT_SPEED 1.0
 #define RIGHT_SPEED 1.0
 
-#define DEPLOY_TIME 1.0
+#define DEPLOY_TIME 0.8
 
 #include <WPILib.h>
 #include "Subsys.h"
@@ -33,14 +33,14 @@ private:
 	bool rampToggled;
 
 	/** The timer used to measure deploy time **/
-	Timer runTime;
+	Timer deployTimer;
 
 	/** The boolean determing whether or not the wheels are running **/
 	enum State{
 		IDLE,
 		RUNNING,
 		SLOWING,
-//		DEPLOYING
+		DEPLOYING
 	};
 	State state;
 public:
@@ -67,7 +67,7 @@ public:
 	/**
 	 * Toggles the state of the ramp
 	 */
-//	void toggleRampDeploy();
+	void toggleRampDeploy();
 
 	/**
 	 * Toggles the state of the ramp

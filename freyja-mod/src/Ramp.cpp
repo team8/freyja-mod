@@ -14,7 +14,7 @@
 Ramp::Ramp():
 	rightVic((uint32_t) PORT_RAMP_RIGHT_VIC),
 	leftVic((uint32_t) PORT_RAMP_LEFT_VIC),
-	runTime()
+	deployTimer()
 {
 	state = State::IDLE;
 	rampToggled = false;
@@ -48,15 +48,15 @@ void Ramp::update() {
 		rightVic.Set(0);
 		leftVic.Set(0);
 		break;
-//	case(State::DEPLOYING):
-//		rightVic.Set(-RIGHT_SPEED);
-//		leftVic.Set(LEFT_SPEED);
-//		if(deployTimer.Get() > DEPLOY_TIME) {
-//			setState(IDLE);
-//			deployTimer.Stop();
-//			deployTimer.Reset();
-//		}
-//		break;
+	case(State::DEPLOYING):
+		rightVic.Set(-RIGHT_SPEED);
+		leftVic.Set(LEFT_SPEED);
+		if(deployTimer.Get() > DEPLOY_TIME) {
+			setState(IDLE);
+			deployTimer.Stop();
+			deployTimer.Reset();
+		}
+		break;
 	}
 }
 
@@ -72,17 +72,17 @@ void Ramp::disable() {
 /**
  * Toggles the ramp state
  */
-//void Ramp::toggleRampDeploy() {
-//	if(!rampToggled) {
-//		if(state != State::IDLE) {
-//			stop();
-//		}
-//		else {
-//			deploy();
-//		}
-//		rampToggled = true;
-//	}
-//}
+void Ramp::toggleRampDeploy() {
+	if(!rampToggled) {
+		if(state != State::IDLE) {
+			stop();
+		}
+		else {
+			deploy();
+		}
+		rampToggled = true;
+	}
+}
 
 /**
  * Toggles the ramp state
@@ -111,8 +111,8 @@ void Ramp::toggleRampReset() {
  */
 void Ramp::start() {
 	setState(RUNNING);
-	runTime.Reset();
-	runTime.Start();
+	deployTimer.Reset();
+	deployTimer.Start();
 }
 
 /**
@@ -125,17 +125,17 @@ void Ramp::slow() {
 /**
  * Starts turning the wheels and manages their spin
  */
-//void Ramp::deploy() {
-//	setState(DEPLOYING);
-//	deployTimer.Reset();
-//	deployTimer.Start();
-//}
+void Ramp::deploy() {
+	setState(DEPLOYING);
+	deployTimer.Reset();
+	deployTimer.Start();
+}
 
 /**
  * Stops the turning of the wheels and
  */
 void Ramp::stop() {
-	runTime.Stop();
+	deployTimer.Stop();
 	setState(IDLE);
 }
 
@@ -164,5 +164,5 @@ bool Ramp::isIdle() {
  * Returns whether or not the ramp has been running long enough to deploy
  */
 bool Ramp::hasDeployed() {
-	return runTime.Get() > DEPLOY_TIME;
+	return deployTimer.Get() > DEPLOY_TIME;
 }
