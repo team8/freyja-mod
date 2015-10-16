@@ -3,8 +3,8 @@
 Robot::Robot():
 	drivetrain(),
 	lifter(),
-	state(NOTHING),
-	path(paths::NOTHING)
+	state(TROUT),
+	path(paths::DRIVE_FORWARD)
 {
 
 }
