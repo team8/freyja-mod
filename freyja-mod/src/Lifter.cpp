@@ -17,9 +17,9 @@ Lifter::Lifter() :
 	currentLevel(0),
 	state(IDLE)
 {
-	controller1.SetOutputRange(-MAX_SPEED, MAX_SPEED);
+	controller1.SetOutputRange(-0.001, 0.001);
 	controller1.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
-	controller2.SetOutputRange(-MAX_SPEED, MAX_SPEED);
+	controller2.SetOutputRange(-0.001, 0.001);
 	controller2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);

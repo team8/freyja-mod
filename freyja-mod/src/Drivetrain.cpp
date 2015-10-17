@@ -205,12 +205,12 @@ void Drivetrain::disableDriveControllers() {
 }
 
 void Drivetrain::debug() {
-//	std::cout << "Drivetrain State: " << state << std::endl;
-//	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
-//			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
-//	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
-//			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
-//	std::cout << "Gyro 			| Angle: " << gyro.GetAngle() << " | Rate " << gyro.GetRate() << std::endl;
+	std::cout << "Drivetrain State: " << state << std::endl;
+	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
+			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
+	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
+			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
+	std::cout << "Gyro 			| Angle: " << gyro.GetAngle() << " | Rate " << gyro.GetRate() << std::endl;
 //	std::cout << "Left Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
 //	std::cout << "Right Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
 //	std::cout << "Left Drive Controller | Enabled: " << leftDriveController1.IsEnabled() << " | Setpoint: " << leftDriveController1.GetSetpoint()

@@ -103,7 +103,7 @@ private:
 	const double BOUNCE_SPEED = 0.2;
 
 	// Maximum Lifter Speed
-	const double MAX_SPEED = 0.3;//0.3;
+	const double MAX_SPEED = 0.8; //0.3;
 
 	// Scaling value for teleop control
 	const double SPEED_SCALING = 1;
