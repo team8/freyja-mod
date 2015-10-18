@@ -26,9 +26,9 @@ void Robot::update() {
 			//update Subsystems here
 			break;
 		case TROUT: //Teleoperated Routines
-			if (isIdle() && !path.empty()) {
-				path.front()(this);
-				path.pop_front();
+			if (isIdle() && !path.empty() && !troutRunning) {
+				troutThread(path.front(), this);
+				troutRunning = true;
 			}
 
 			//update Subsystems here
@@ -61,4 +61,9 @@ void Robot::setState(const State &newState) {
 
 void Robot::setPath(const Path &newPath) {
 	path = newPath;
+}
+
+void Robot::endTrout() {
+	troutRunning = false;
+	path.pop_front();
 }

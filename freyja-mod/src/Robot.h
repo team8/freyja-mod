@@ -2,6 +2,7 @@
 #define ROBOT_H
 
 #include <iostream>
+#include <thread>
 
 #include "paths.h"
 #include "Drivetrain.h"
@@ -59,9 +60,24 @@ public:
 
 	void setPath(const Path &newPath);
 
+	/**
+	 * Called when trout finishes
+	 */
+	void endTrout();
+
 	// The four subsystems
 	Drivetrain drivetrain;
 	Lifter lifter;
+private:
+	/**
+	 * True if a trout is currently running
+	 */
+	bool troutRunning;
+
+	/**
+	 * Thread that trouts run on
+	 */
+	std::thread troutThread;
 };
 
 #endif
