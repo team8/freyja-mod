@@ -3,9 +3,11 @@
 
 #include <functional>
 #include <list>
+#include <vector>
 
 //forward declaring Robot and subsystems
 class Robot;
+class Subsys;
 class Drivetrain;
 class Lifter;
 class Ramp;
@@ -34,6 +36,14 @@ namespace cmds {
 	 * Drives the robot a set distance
 	 */
 	void DRIVE_DIST(Drivetrain *const drivetrain, int distance);
+
+	/**
+	 * Wait for a subsystem (task) to become idle before performing next task
+	 * Also interrupts trout if any subsytem in "endable" activates manually
+	 * Called by trouts
+	 */
+	bool wait(Subsys *const task);
+	bool wait(Subsys *const task, std::vector<Subsys> *endable);
 }
 
 

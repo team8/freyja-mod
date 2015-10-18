@@ -37,8 +37,20 @@ public:
 	 */
 	virtual bool isIdle() = 0;
 
+	/**
+	 * This subsystem will now be used in a trout
+	 */
+	void startTrouting();
 
-
+	/**
+	 * Returns true if trout is manually stopped
+	 */
+	bool endTrout();
+private:
+	/**
+	 * Whether or not this subsystem is currently being run in a trout
+	 */
+	bool trouting = false;
 };
 
 #endif
