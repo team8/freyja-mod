@@ -5,8 +5,8 @@ void cmds::STOP(Robot *const robot) {
 	robot->disable();
 }
 
-void cmds::DRIVE_DIST(Drivetrain *const drivetrain, int distance) {
-	drivetrain->driveDist(distance);
+void cmds::DRIVE_DIST(Robot *const robot) {
+	robot->drivetrain.driveDist(100);
 }
 
 void cmds::RAMP_DEPLOY(Robot *const robot) {

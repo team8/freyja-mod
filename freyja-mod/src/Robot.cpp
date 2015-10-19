@@ -4,7 +4,7 @@ Robot::Robot():
 	drivetrain(),
 	lifter(),
 	state(NOTHING),
-	path(paths::NOTHING)
+	path(paths::DRIVE)
 {
 
 }
