@@ -136,12 +136,14 @@ private:
 	//Encoder on victor
 	Encoder encoder;
 
-	// Controller that acts on victor and encoder
-	PIDController controller1;
+	// Distance PID Controller that acts on victor and encoder
+	PIDController distanceController1;
+	// Acts on other victor and encoder
+	PIDController distanceController2;
 
-
-	// Controller that acts on other victor and encoder
-	PIDController controller2;
+	// Velocity PID Controller
+	PIDController velocityController1;
+	PIDController velocityController2;
 
 	//Built in Accelerometer for the robot
 	BuiltInAccelerometer lifterAccel;

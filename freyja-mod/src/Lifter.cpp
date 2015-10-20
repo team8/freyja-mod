@@ -6,8 +6,8 @@ Lifter::Lifter() :
 	victor2((uint32_t) PORT_LIFTER_VICTOR_2),
 	encoder((uint32_t) PORT_LIFTER_ENCODER_A, (uint32_t) PORT_LIFTER_ENCODER_B, true),
 
-	controller1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
-	controller2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
+	distanceController1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
+	distanceController2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
 	lifterAccel(),
 //	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 //	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
@@ -17,10 +17,10 @@ Lifter::Lifter() :
 	currentLevel(0),
 	state(IDLE)
 {
-	controller1.SetOutputRange(-0.7, 0.7);
-	controller1.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
-	controller2.SetOutputRange(-0.7, 0.7);
-	controller2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
+	distanceController1.SetOutputRange(-0.7, 0.7);
+	distanceController1.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
+	distanceController2.SetOutputRange(-0.7, 0.7);
+	distanceController2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 //	bottomSensor.SetLimitsVoltage(0.25, 3);
@@ -62,7 +62,7 @@ void Lifter::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED:
-		if(encoder.GetStopped() && controller1.GetError() < ACCEPTABLE_PID_ERROR && controller2.GetError() < ACCEPTABLE_PID_ERROR) {
+		if(encoder.GetStopped() && distanceController1.GetError() < ACCEPTABLE_PID_ERROR && distanceController2.GetError() < ACCEPTABLE_PID_ERROR) {
 			disableControllers();
 			setState(TELEOP);
 		}
@@ -82,18 +82,18 @@ void Lifter::update() {
 
 
 void Lifter::disable() {
-	controller1.Disable();
-	controller2.Disable();
+	distanceController1.Disable();
+	distanceController2.Disable();
 	encoder.Reset();
 	setState(DISABLED);
 }
 
 void Lifter::idle() {
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
-	controller1.SetSetpoint(0);
-	controller2.SetSetpoint(0);
-	controller1.Enable();
-	controller2.Enable();
+	distanceController1.SetSetpoint(0);
+	distanceController2.SetSetpoint(0);
+	distanceController1.Enable();
+	distanceController2.Enable();
 	setState(IDLE);
 }
 
@@ -112,17 +112,17 @@ void Lifter::setVelocity(double velocity) {
 }
 
 void Lifter::disableControllers() {
-	controller1.Disable();
-	controller2.Disable();
+	distanceController1.Disable();
+	distanceController2.Disable();
 }
 
 void Lifter::setLevel(double level) {
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
-	controller1.SetSetpoint(setpoint);
-	controller2.SetSetpoint(setpoint);
-	controller1.Enable();
-	controller2.Enable();
+	distanceController1.SetSetpoint(setpoint);
+	distanceController2.SetSetpoint(setpoint);
+	distanceController1.Enable();
+	distanceController2.Enable();
 	setState(AUTOMATED);
 }
 
@@ -164,7 +164,7 @@ void Lifter::debug() {
 //	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
 //	std::cout << "--------------------- " << std::endl;
-	std::cout << "Controller error" << controller1.GetError() <<std::endl;
+	std::cout << "Controller error" << distanceController1.GetError() <<std::endl;
 }
 
 bool Lifter::isBottomHit() {
