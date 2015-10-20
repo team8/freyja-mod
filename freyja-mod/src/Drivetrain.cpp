@@ -204,17 +204,17 @@ void Drivetrain::disableDriveControllers() {
 
 void Drivetrain::debug() {
 //	std::cout << "Drivetrain State: " << state << std::endl;
-	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
-			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
-	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
-			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
+//	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
+//			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
+//	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()
+//			<< " | Rate: " << rightEncoder.GetRate() << " | Stopped: " << rightEncoder.GetStopped() << std::endl;
 //	std::cout << "Gyro 			| Angle: " << gyro.GetAngle() << " | Rate " << gyro.GetRate() << std::endl;
 //	std::cout << "Left Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
 //	std::cout << "Right Talon 	| Get: " << leftTalon1.Get() << " | Raw " << leftTalon1.GetRaw() << std::endl;
-	std::cout << "Left Drive Controller | Enabled: " << leftDriveController1.IsEnabled() << " | Setpoint: " << leftDriveController1.GetSetpoint()
-		 << " | Error: " << leftDriveController1.GetError() << std::endl;
-	std::cout << "Right Drive Controller | Enabled: " << rightDriveController1.IsEnabled() << " | Setpoint: " << rightDriveController1.GetSetpoint()
-		 << " | Error: " << rightDriveController1.GetError() << std::endl;
+//	std::cout << "Left Drive Controller | Enabled: " << leftDriveController1.IsEnabled() << " | Setpoint: " << leftDriveController1.GetSetpoint()
+//		 << " | Error: " << leftDriveController1.GetError() << std::endl;
+//	std::cout << "Right Drive Controller | Enabled: " << rightDriveController1.IsEnabled() << " | Setpoint: " << rightDriveController1.GetSetpoint()
+//		 << " | Error: " << rightDriveController1.GetError() << std::endl;
 //	std::cout << "Left Gyro Controller | Enabled: " << leftGyroController1.IsEnabled() << " | Setpoint: " << leftGyroController1.GetSetpoint()
 //		 << " | Error: " << leftGyroController1.GetError() << std::endl;
 //	std::cout << "Right Gyro Controller | Enabled: " << rightGyroController1.IsEnabled() << " | Setpoint: " << rightGyroController1.GetSetpoint()

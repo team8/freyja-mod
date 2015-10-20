@@ -17,9 +17,9 @@ Lifter::Lifter() :
 	currentLevel(0),
 	state(IDLE)
 {
-	controller1.SetOutputRange(-0.001, 0.001);
+	controller1.SetOutputRange(-0.7, 0.7);
 	controller1.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
-	controller2.SetOutputRange(-0.001, 0.001);
+	controller2.SetOutputRange(-0.7, 0.7);
 	controller2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
@@ -52,7 +52,7 @@ void Lifter::update() {
 //	}
 //	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-//	debug();
+	debug();
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
@@ -154,11 +154,12 @@ void Lifter::debug() {
 	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
-	std::cout << "Hall Effect Sensor | Bottom: " << bottomSensor.Get() << " | Top: " << topSensor.Get() << std::endl;
+	//std::cout << "Hall Effect Sensor | Bottom: " << bottomSensor.Get() << " | Top: " << topSensor.Get() << std::endl;
 //	std::cout << "X-Axis   " << lifterAccel.GetX() << "\n";
 //	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
 //	std::cout << "--------------------- " << std::endl;
+	std::cout << "Controller error" << controller1.GetError() <<std::endl;
 }
 
 bool Lifter::isBottomHit() {

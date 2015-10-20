@@ -88,16 +88,22 @@ public:
 
 private:
 	//PID Constants
-	const double PROPORTIONAL_CONSTANT = 0.5;
+	const double PROPORTIONAL_CONSTANT = 0.12;
 	const double INTEGRAL_CONSTANT = 0.0;
-	const double DERIVATIVE_CONSTANT = 0.0;
+	const double DERIVATIVE_CONSTANT = 0.1;
+
+	//PID Constants - Velocity
+	const double VELOCITY_PROPORTIONAL_CONSTANT = 0.00012;
+	const double VELOCITY_INTEGRAL_CONSTANT = 0.0000;
+	const double VELOCITY_DERIVATIVE_CONSTANT = 0.0001;
+
 	const double ENCODER_DPP = 0.022441;
 
 	//Height of a level in the unit used by encoders (in.)
 	const double LEVEL_HEIGHT = 12.0;
 
 	// Error to define when PID is complete
-	const double ACCEPTABLE_PID_ERROR = 1;
+	const double ACCEPTABLE_PID_ERROR = 5;
 
 	// Speed when bouncing due to Hall effect trigger
 	const double BOUNCE_SPEED = 0.2;
