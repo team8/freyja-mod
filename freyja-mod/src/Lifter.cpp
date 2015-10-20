@@ -29,8 +29,7 @@ Lifter::Lifter() :
 
 void Lifter::init() {
 	encoder.Reset();
-	controller1.Disable();
-	controller2.Disable();
+	disableControllers();
 	resetZero();
 	setState(IDLE);
 }
@@ -64,7 +63,8 @@ void Lifter::update() {
 		break;
 	case AUTOMATED:
 		if(encoder.GetStopped() && controller1.GetError() < ACCEPTABLE_PID_ERROR && controller2.GetError() < ACCEPTABLE_PID_ERROR) {
-			idle();
+			disableControllers();
+			setState(TELEOP);
 		}
 		break;
 	case DISABLED:
@@ -109,6 +109,11 @@ void Lifter::setVelocity(double velocity) {
 	victor1.Set(computedVelocity);
 	victor2.Set(computedVelocity);
 	setState(TELEOP);
+}
+
+void Lifter::disableControllers() {
+	controller1.Disable();
+	controller2.Disable();
 }
 
 void Lifter::setLevel(double level) {

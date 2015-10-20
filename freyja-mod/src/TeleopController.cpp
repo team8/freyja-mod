@@ -63,10 +63,12 @@ void TeleopController::operateLifter() {
 	//Unlocks the lifter
 	if(operatorJoystick.GetRawButton(9)) {
 		lifterLocked = false;
+		lifter->disableControllers();
 	}
 	//Locks the lifter
 	if(operatorJoystick.GetRawButton(8)) {
 		lifterLocked = true;
+		lifter->disableControllers();
 	}
 	//Zeroes the lifter
 	if(operatorJoystick.GetRawButton(7)) {

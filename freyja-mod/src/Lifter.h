@@ -86,6 +86,12 @@ public:
 	 */
 	void resetZero();
 
+	/**
+	 * Disables all PID controllers
+	 */
+	void disableControllers();
+
+
 private:
 	//PID Constants
 	const double PROPORTIONAL_CONSTANT = 0.12;
