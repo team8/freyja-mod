@@ -8,6 +8,8 @@ Lifter::Lifter() :
 
 	distanceController1(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor1),
 	distanceController2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
+	velocityController1(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor1),
+	velocityController2(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor2),
 	lifterAccel(),
 //	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 //	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
@@ -36,12 +38,6 @@ void Lifter::init() {
 
 void Lifter::update() {
 
-
-//
-//	if(predictedSpeed < 0 && predictedSpeed > victor1.Get()) {
-//		std::cout << "ohi" << std::endl;
-//	}
-//
 //	//Makes sure robot doesn't flip
 //	encoder.SetPIDSourceParameter(PIDSource::kRate);
 //
@@ -62,7 +58,7 @@ void Lifter::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED:
-		if(encoder.GetStopped() && distanceController1.GetError() < ACCEPTABLE_PID_ERROR && distanceController2.GetError() < ACCEPTABLE_PID_ERROR) {
+		if(encoder.GetStopped() && distanceController1.GetError() < ACCEPTABLE_PID_ERROR && distanceController2.GetError() < ACCEPTABLE_PID_ERROR && distanceController1.IsEnabled() && distanceController2.IsEnabled()){
 			disableControllers();
 			setState(TELEOP);
 		}
@@ -82,18 +78,18 @@ void Lifter::update() {
 
 
 void Lifter::disable() {
-	distanceController1.Disable();
-	distanceController2.Disable();
+	disableControllers();
 	encoder.Reset();
 	setState(DISABLED);
 }
 
 void Lifter::idle() {
+	disableControllers();
 	encoder.SetPIDSourceParameter(PIDSource::kRate);
-	distanceController1.SetSetpoint(0);
-	distanceController2.SetSetpoint(0);
-	distanceController1.Enable();
-	distanceController2.Enable();
+	velocityController1.SetSetpoint(0);
+	velocityController2.SetSetpoint(0);
+	velocityController1.Enable();
+	velocityController2.Enable();
 	setState(IDLE);
 }
 
@@ -114,9 +110,12 @@ void Lifter::setVelocity(double velocity) {
 void Lifter::disableControllers() {
 	distanceController1.Disable();
 	distanceController2.Disable();
+	velocityController1.Disable();
+	velocityController2.Disable();
 }
 
 void Lifter::setLevel(double level) {
+	disableControllers();
 	double setpoint = level * LEVEL_HEIGHT;
 	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 	distanceController1.SetSetpoint(setpoint);
