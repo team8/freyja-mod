@@ -141,6 +141,12 @@ private:
 	// Acts on other victor and encoder
 	PIDController distanceController2;
 
+	// Hall effect sensors for top of the elevator
+	DigitalInput topSensor;
+
+	// Hall effect sensors for bottom of the elevator
+	DigitalInput bottomSensor;
+
 	// Velocity PID Controller
 	PIDController velocityController1;
 	PIDController velocityController2;
@@ -153,7 +159,6 @@ private:
 
 	// Hall effect sensors for bottom of the elevator
 	DigitalInput bottomSensor;
-
 
 	// Current level
 	double currentLevel;

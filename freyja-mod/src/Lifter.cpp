@@ -11,10 +11,8 @@ Lifter::Lifter() :
 	velocityController1(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor1),
 	velocityController2(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor2),
 	lifterAccel(),
-//	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
-//	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
-	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_TOP),
-	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_ANALOG_BOTTOM),
+	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
+	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
 
 	currentLevel(0),
 	state(IDLE)
@@ -25,9 +23,6 @@ Lifter::Lifter() :
 	distanceController2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
-//	bottomSensor.SetLimitsVoltage(0.25, 3);
-//	topSensor.SetLimitsVoltage(0.25, 3);
-}
 
 void Lifter::init() {
 	encoder.Reset();
@@ -67,12 +62,14 @@ void Lifter::update() {
 		break;
 	}
 
-	// Sets the velocity to the bounce speed if a limit switch is triggerd
+	// Sets the velocity to the bounce speed if a limit switch is triggered
 	if(isBottomHit()) {
-		//setVelocity(BOUNCE_SPEED);
+		setVelocity(-BOUNCE_SPEED);
+		std::cout << "BOTTOM WAS HIT" << std::endl;
 	}
-	else if(isTopHit()) {
-		//setVelocity(-BOUNCE_SPEED);
+	if(isTopHit()) {
+		setVelocity(BOUNCE_SPEED);
+		std::cout << "TOP WAS HIT" << std::endl;
 	}
 }
 
