@@ -17,7 +17,5 @@ void cmds::RAMP_DEPLOY(Robot *const robot) {
 }
 
 void cmds::LIFT_UP(Robot *const robot) {
-	if(robot->drivetrain.isIdle()) {
-		robot->lifter.liftLevel(2.5);
-	}
+	robot->lifter.liftLevel(2.5);
 }
