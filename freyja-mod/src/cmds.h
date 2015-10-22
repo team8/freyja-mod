@@ -39,6 +39,8 @@ namespace cmds {
 	 * Deploys a tote from the ramp
 	 */
 	void RAMP_DEPLOY(Robot *const robot);
+
+	void LIFT_UP(Robot *const robot);
 }
 
 

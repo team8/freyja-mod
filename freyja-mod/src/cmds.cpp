@@ -15,3 +15,7 @@ void cmds::RAMP_DEPLOY(Robot *const robot) {
 		robot->ramp.stop();
 	}
 }
+
+void cmds::LIFT_UP(Robot *const robot) {
+	robot->lifter.liftLevel(4);
+}
