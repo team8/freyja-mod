@@ -4,7 +4,7 @@ Robot::Robot():
 	drivetrain(),
 	lifter(),
 	state(NOTHING),
-	path(paths::DRIVE)
+	path(paths::AUTONOMOUS)
 {
 
 }
@@ -15,6 +15,8 @@ Robot::~Robot() {
 
 void Robot::init() {
 	state = TELEOP;
+	drivetrain.init();
+	lifter.init();
 }
 
 void Robot::update() {

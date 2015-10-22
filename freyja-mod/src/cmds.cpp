@@ -17,5 +17,5 @@ void cmds::RAMP_DEPLOY(Robot *const robot) {
 }
 
 void cmds::LIFT_UP(Robot *const robot) {
-	robot->lifter.liftLevel(4);
+	robot->lifter.liftLevel(2.5);
 }

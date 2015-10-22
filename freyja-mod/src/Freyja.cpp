@@ -51,7 +51,7 @@ void Freyja::AutonomousPeriodic() {
 
 void Freyja::TeleopInit() {
 	std::cout << "TeleopInit in Freyja.cpp called" << std::endl;
-	telecontroller.init(); // problem
+	telecontroller.init();
 	std::cout << "RobotInit in Freyja.cpp finished" << std::endl;
 }
 

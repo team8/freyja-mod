@@ -40,9 +40,10 @@ Drivetrain::Drivetrain() :
 }
 
 void Drivetrain::init() {
+	disableControllers();
 	leftEncoder.Reset();
 	rightEncoder.Reset();
-	gyro.InitGyro();
+	//gyro.InitGyro();
 }
 
 void Drivetrain::update() {

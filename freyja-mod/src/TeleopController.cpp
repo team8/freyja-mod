@@ -20,8 +20,9 @@ void TeleopController::init() {
 	lifter->init();
 	std::cout << "DT Init" << std::endl;
 	drivetrain->init(); // problem
-	std::cout << "Init finished" << std::endl;
+	std::cout << "Ramp Init" << std::endl;
 	ramp->init();
+	std::cout << "Init Over" << std::endl;
 }
 
 void TeleopController::update() {
