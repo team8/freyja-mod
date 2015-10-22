@@ -10,7 +10,6 @@ Lifter::Lifter() :
 	distanceController2(PROPORTIONAL_CONSTANT, INTEGRAL_CONSTANT, DERIVATIVE_CONSTANT, &encoder, &victor2),
 	velocityController1(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor1),
 	velocityController2(VELOCITY_PROPORTIONAL_CONSTANT, VELOCITY_INTEGRAL_CONSTANT, VELOCITY_DERIVATIVE_CONSTANT, &encoder, &victor2),
-	lifterAccel(),
 	topSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_TOP),
 	bottomSensor((uint32_t) PORT_LIFTER_HALL_EFFECT_BOTTOM),
 
@@ -23,6 +22,7 @@ Lifter::Lifter() :
 	distanceController2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
+}
 
 void Lifter::init() {
 	encoder.Reset();

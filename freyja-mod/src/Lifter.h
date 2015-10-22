@@ -151,14 +151,6 @@ private:
 	PIDController velocityController1;
 	PIDController velocityController2;
 
-	//Built in Accelerometer for the robot
-	BuiltInAccelerometer lifterAccel;
-
-	// Hall effect sensors for top of the elevator
-	DigitalInput topSensor;
-
-	// Hall effect sensors for bottom of the elevator
-	DigitalInput bottomSensor;
 
 	// Current level
 	double currentLevel;
