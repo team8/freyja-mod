@@ -94,9 +94,23 @@ public:
 
 private:
 	//PID Constants
-	const double PROPORTIONAL_CONSTANT = 0.12;
-	const double INTEGRAL_CONSTANT = 0.0;
-	const double DERIVATIVE_CONSTANT = 0.1;
+	// The ultimate gain is 2.07
+	// Oscillation period is 0.03
+	// Do not change the PID values
+
+	// Minimal Overshoot Values:
+	// P: 0.414
+	// I: 0.015
+	// D: 0.010
+
+	// Quarter Wave Decay Values
+	// P: 1.242
+	// I: 0.015
+	// D: 0.00375
+
+	const double PROPORTIONAL_CONSTANT = 1.242;
+	const double INTEGRAL_CONSTANT = 0.015;
+	const double DERIVATIVE_CONSTANT = 0.00375;
 
 	//PID Constants - Velocity
 	const double VELOCITY_PROPORTIONAL_CONSTANT = 0.00012;
@@ -109,7 +123,7 @@ private:
 	const double LEVEL_HEIGHT = 12.0;
 
 	// Error to define when PID is complete
-	const double ACCEPTABLE_PID_ERROR = 5;
+	const double ACCEPTABLE_PID_ERROR = 0.5;
 
 	// Speed when bouncing due to Hall effect trigger
 	const double BOUNCE_SPEED = 0.4;

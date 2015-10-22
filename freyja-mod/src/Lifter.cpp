@@ -48,6 +48,8 @@ void Lifter::update() {
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
+	std::cout << "Current Level: " << currentLevel << std::endl;
+	std:: cout << "Setpoint: " << distanceController1.GetSetpoint() << std::endl;
 
 	switch(state) {
 	case IDLE:
@@ -55,7 +57,7 @@ void Lifter::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED:
-		if(encoder.GetStopped() && distanceController1.GetError() < ACCEPTABLE_PID_ERROR && distanceController2.GetError() < ACCEPTABLE_PID_ERROR && distanceController1.IsEnabled() && distanceController2.IsEnabled()){
+		if(encoder.GetStopped() && std::abs(distanceController1.GetError()) < ACCEPTABLE_PID_ERROR && std::abs(distanceController2.GetError()) < ACCEPTABLE_PID_ERROR && distanceController1.IsEnabled() && distanceController2.IsEnabled()){
 			disableControllers();
 			setState(TELEOP);
 		}
@@ -154,7 +156,7 @@ void Lifter::setState(State state) {
 
 void Lifter::debug() {
 	std::cout << "Lifter State: " << state << std::endl;
-	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
+//	std::cout << "Encoder  | Raw: " << encoder.GetRaw() << " | Distance: " << encoder.GetDistance() << " | Rate: " << encoder.GetRate() << " | Stopped: " << encoder.GetStopped() << std::endl;
 //	std::cout << "Victor 	| Get: " << victor1.Get() << " | Raw " << victor1.GetRaw() << std::endl;
 //	std::cout << "Controller | Enabled: " <<  controller1.IsEnabled() << " | Setpoint: " << controller1.GetSetpoint()<< " | Error: " << controller1.GetError() << std::endl;
 	//std::cout << "Hall Effect Sensor | Bottom: " << bottomSensor.Get() << " | Top: " << topSensor.Get() << std::endl;
@@ -162,7 +164,7 @@ void Lifter::debug() {
 //	std::cout << "Y-Axis   " << lifterAccel.GetY() -1 << "\n";
 //	std::cout << "Z-Axis   " << lifterAccel.GetZ() << "\n";
 //	std::cout << "--------------------- " << std::endl;
-	std::cout << "Controller error" << distanceController1.GetError() <<std::endl;
+//	std::cout << "Controller error: " << distanceController1.GetError() <<std::endl;
 }
 
 bool Lifter::isBottomHit() {
