@@ -33,7 +33,8 @@ namespace paths {
 	const Path NOTHING = {cmds::STOP};
 	const Path RAMP_DEPLOY = {cmds::RAMP_DEPLOY};
 	const Path DRIVE = {cmds::DRIVE_DIST};
-	const Path AUTONOMOUS = {cmds::DRIVE_DIST, cmds::LIFT_UP};
+	const Path LIFT = {cmds::LIFT_UP};
+	const Path AUTONOMOUS = combinePaths(DRIVE, LIFT);
 }
 
 
