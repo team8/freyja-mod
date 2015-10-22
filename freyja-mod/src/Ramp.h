@@ -11,7 +11,7 @@
 #define LEFT_SPEED 1.0
 #define RIGHT_SPEED 1.0
 
-#define DEPLOY_TIME 0.8
+#define DEPLOY_TIME 0.6
 
 #include <WPILib.h>
 #include "Subsys.h"

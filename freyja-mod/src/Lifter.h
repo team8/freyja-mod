@@ -112,10 +112,12 @@ private:
 	const double ACCEPTABLE_PID_ERROR = 5;
 
 	// Speed when bouncing due to Hall effect trigger
-	const double BOUNCE_SPEED = 0.2;
+	const double BOUNCE_SPEED = 0.4;
 
 	// Maximum Lifter Speed
 	const double MAX_SPEED = 0.8; //0.3;
+
+	const double PID_MAX_SPEED = 0.3;
 
 	// Scaling value for teleop control
 	const double SPEED_SCALING = 1;

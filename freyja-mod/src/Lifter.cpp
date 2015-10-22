@@ -16,10 +16,12 @@ Lifter::Lifter() :
 	currentLevel(0),
 	state(IDLE)
 {
-	distanceController1.SetOutputRange(-0.7, 0.7);
+	distanceController1.SetOutputRange(-PID_MAX_SPEED, PID_MAX_SPEED);
 	distanceController1.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
-	distanceController2.SetOutputRange(-0.7, 0.7);
+	distanceController2.SetOutputRange(-PID_MAX_SPEED, PID_MAX_SPEED);
 	distanceController2.SetInputRange(-INPUT_RANGE, INPUT_RANGE);
+	velocityController1.SetOutputRange(-PID_MAX_SPEED, PID_MAX_SPEED);
+	velocityController2.SetOutputRange(-PID_MAX_SPEED, PID_MAX_SPEED);
 	encoder.SetDistancePerPulse(ENCODER_DPP);
 	encoder.SetMaxPeriod(ENCODER_MAX_PERIOD);
 }
@@ -164,9 +166,9 @@ void Lifter::debug() {
 }
 
 bool Lifter::isBottomHit() {
-	return bottomSensor.Get();
+	return !bottomSensor.Get();
 }
 
 bool Lifter::isTopHit() {
-	return topSensor.Get();
+	return !topSensor.Get();
 }
