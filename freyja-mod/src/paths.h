@@ -34,7 +34,9 @@ namespace paths {
 	const Path RAMP_DEPLOY = {cmds::RAMP_DEPLOY};
 	const Path DRIVE = {cmds::DRIVE_DIST};
 	const Path LIFT = {cmds::LIFT_UP};
-	const Path AUTONOMOUS = combinePaths(DRIVE, LIFT);
+	const Path SECOND_PORTION = combinePaths(LIFT, DRIVE);
+	const Path FIRST_PORTION = {cmds::DRIVE_SHORT_DIST};
+	const Path AUTO = combinePaths(FIRST_PORTION, SECOND_PORTION);
 }
 
 

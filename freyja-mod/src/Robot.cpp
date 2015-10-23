@@ -4,7 +4,7 @@ Robot::Robot():
 	drivetrain(),
 	lifter(),
 	state(NOTHING),
-	path(paths::AUTONOMOUS)
+	path(paths::AUTO)
 {
 
 }
@@ -48,9 +48,9 @@ void Robot::disable() {
 	//disable Subsystems here
 }
 
-bool Robot::isIdle() const {
+bool Robot::isIdle() {
 	//return whether all Subsystems are idle here
-	return true;
+	return (drivetrain.isIdle() && lifter.isIdle());
 }
 
 void Robot::setState(const State &newState) {

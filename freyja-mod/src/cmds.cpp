@@ -6,7 +6,11 @@ void cmds::STOP(Robot *const robot) {
 }
 
 void cmds::DRIVE_DIST(Robot *const robot) {
-	robot->drivetrain.driveDist(100);
+	robot->drivetrain.driveDist(50);
+}
+
+void cmds::DRIVE_SHORT_DIST(Robot *const robot) {
+	robot->drivetrain.driveDist(15);
 }
 
 void cmds::RAMP_DEPLOY(Robot *const robot) {
@@ -17,5 +21,14 @@ void cmds::RAMP_DEPLOY(Robot *const robot) {
 }
 
 void cmds::LIFT_UP(Robot *const robot) {
-	robot->lifter.liftLevel(2.5);
+//
+//	while(true) {
+//		if(robot->isIdle()) {
+			robot->lifter.liftLevel(2.5);
+//			if(robot->lifter.isIdle()) {
+//				break;
+//			}
+//		}
+//	}
+
 }

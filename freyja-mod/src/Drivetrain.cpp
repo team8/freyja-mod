@@ -27,19 +27,20 @@ Drivetrain::Drivetrain() :
 
 	leftDriveController1.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
 	rightDriveController1.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
-	leftDriveController1.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	rightDriveController1.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	leftGyroController1.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
-	rightGyroController1.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	leftDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	rightDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	leftGyroController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	rightGyroController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 	leftDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
 	rightDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
-	leftDriveController2.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	rightDriveController2.SetOutputRange(-ENCODER_DRIVE_OUTPUT_RANGE, ENCODER_DRIVE_OUTPUT_RANGE);
-	leftGyroController2.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
-	rightGyroController2.SetOutputRange(-ENCODER_GYRO_OUTPUT_RANGE, ENCODER_GYRO_OUTPUT_RANGE);
+	leftDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	rightDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	leftGyroController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+	rightGyroController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 }
 
 void Drivetrain::init() {
+	idle();
 	disableControllers();
 	leftEncoder.Reset();
 	rightEncoder.Reset();
@@ -54,9 +55,11 @@ void Drivetrain::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
+		std::cout << "Drivetrain State: " << state << std::endl;
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			idle();
 		}
+		std::cout << "Drivetrain State: " << state << std::endl;
 		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
@@ -204,7 +207,7 @@ void Drivetrain::disableDriveControllers() {
 }
 
 void Drivetrain::debug() {
-//	std::cout << "Drivetrain State: " << state << std::endl;
+//std::cout << "Drivetrain State: " << state << std::endl;
 //	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
 //			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
 //	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()

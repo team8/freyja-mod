@@ -35,6 +35,8 @@ namespace cmds {
 	 */
 	void DRIVE_DIST(Robot *const robot);
 
+	void DRIVE_SHORT_DIST(Robot *const robot);
+
 	/**
 	 * Deploys a tote from the ramp
 	 */

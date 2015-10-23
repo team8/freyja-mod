@@ -59,7 +59,7 @@ void Lifter::update() {
 	case AUTOMATED:
 		if(encoder.GetStopped() && std::abs(distanceController1.GetError()) < ACCEPTABLE_PID_ERROR && std::abs(distanceController2.GetError()) < ACCEPTABLE_PID_ERROR && distanceController1.IsEnabled() && distanceController2.IsEnabled()){
 			disableControllers();
-			setState(TELEOP);
+			idle();
 		}
 		break;
 	case DISABLED:

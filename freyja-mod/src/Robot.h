@@ -51,7 +51,7 @@ public:
 	/**
 	 * @return Returns whether all subsystems are idle
 	 */
-	bool isIdle() const;
+	bool isIdle();
 
 	/**
 	 * If a Teleop Routine is given by TeleCtrlr, path stores the Path given
