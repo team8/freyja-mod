@@ -34,11 +34,24 @@ namespace paths {
 	const Path RAMP_DEPLOY = {cmds::RAMP_DEPLOY};
 	const Path DRIVE = {cmds::DRIVE_DIST};
 	const Path LIFT = {cmds::LIFT_UP};
-	const Path SECOND_PORTION = combinePaths(LIFT, DRIVE);
-	const Path FIRST_PORTION = {cmds::DRIVE_SHORT_DIST};
-	const Path AUTO = combinePaths(FIRST_PORTION, SECOND_PORTION);
+
 	const Path TURN_LEFT = {cmds::TURN_LEFT};
 	const Path TURN_RIGHT = {cmds::TURN_RIGHT};
+
+	//Position for can pickup
+	const Path POSITION = {cmds::DRIVE_SHORT_DIST};
+	const Path PICKUP_CAN = combinePaths(LIFT, DRIVE);
+	//Lifts can in front of robot then drives forward
+	const Path AUTO = combinePaths(POSITION, PICKUP_CAN);
+
+	//Drive into auto zone from landfill
+	const Path DRIVE_LANDFILL= {cmds::DRIVE_LANDFILL};
+	//Move into auto zone then turn
+	const Path ROTATE_AUTO_ZONE = combinePaths(DRIVE_LANDFILL, TURN_RIGHT);
+	//Cross the autozone
+	const Path DRIVE_AUTO_ZONE = {cmds::DRIVE_AUTO_ZONE};
+	//Starting in landfill, enter auto zone, end away from step
+	const Path LANDFILL_AUTO = buildPath(ROTATE_AUTO_ZONE, DRIVE_AUTO_ZONE);
 }
 
 
