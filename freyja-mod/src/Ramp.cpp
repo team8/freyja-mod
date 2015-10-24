@@ -49,6 +49,9 @@ void Ramp::update() {
 		leftVic.Set(0);
 		break;
 	case(State::DEPLOYING):
+		if(deployTimer.Get() == 0) {
+			deployTimer.Start();
+		}
 		rightVic.Set(-RIGHT_SPEED);
 		leftVic.Set(LEFT_SPEED);
 		if(deployTimer.Get() > DEPLOY_TIME) {
