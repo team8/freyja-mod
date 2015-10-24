@@ -43,6 +43,12 @@ namespace cmds {
 	void RAMP_DEPLOY(Robot *const robot);
 
 	void LIFT_UP(Robot *const robot);
+
+	/**
+	 * Turns left/right 90 deg
+	 */
+	void TURN_LEFT(Robot *const robot);
+	void TURN_RIGHT(Robot *const robot);
 }
 
 

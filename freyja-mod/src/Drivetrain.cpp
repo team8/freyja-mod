@@ -120,18 +120,35 @@ void Drivetrain::driveDist(double distance) {
 	enableDriveControllers();
 }
 
+//void Drivetrain::rotateAngle(double angle) {
+//	setState(AUTOMATED_ROTATE);
+//
+//	disableDriveControllers();
+//
+//	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//
+//	leftGyroController1.SetSetpoint(angle);
+//	leftGyroController1.SetSetpoint(angle);
+//	rightGyroController2.SetSetpoint(angle);
+//	rightGyroController2.SetSetpoint(angle);
+//
+//	enableGyroControllers();
+//}
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
 
-	disableDriveControllers();
+	double scaledAngle = angle * DEGREES_TO_DIST;
+
+	disableGyroControllers();
 
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftGyroController1.SetSetpoint(angle);
-	leftGyroController1.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
+	leftDriveController1.SetSetpoint(scaledAngle);
+	leftDriveController1.SetSetpoint(scaledAngle);
+	rightDriveController2.SetSetpoint(-scaledAngle);
+	rightDriveController2.SetSetpoint(-scaledAngle);
 
 	enableGyroControllers();
 }

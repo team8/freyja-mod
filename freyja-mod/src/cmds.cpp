@@ -32,3 +32,11 @@ void cmds::LIFT_UP(Robot *const robot) {
 //	}
 
 }
+
+void cmds::TURN_LEFT(Robot *const robot) {
+	robot->drivetrain.rotateAngle(-90);
+}
+
+void cmds::TURN_RIGHT(Robot *const robot) {
+	robot->drivetrain.rotateAngle(90);
+}
