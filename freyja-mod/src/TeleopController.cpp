@@ -71,10 +71,7 @@ void TeleopController::operateLifter() {
 		lifterLocked = true;
 		lifter->disableControllers();
 	}
-	//Zeroes the lifter
-	if(operatorJoystick.GetRawButton(7)) {
-		lifter->zero();
-	}
+
 	//Resets the zero
 //	else if(operatorJoystick.GetRawButton()) {
 //		lifter->resetZero();
