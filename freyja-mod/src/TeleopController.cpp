@@ -49,7 +49,6 @@ void TeleopController::disable() {
 }
 
 void TeleopController::operateRamp() {
-	std::cout << rampDelay.Get() << std::endl;
 	//Toggles the ramp state
 	if(operatorJoystick.GetRawButton(2)) {
 		ramp->toggleRampSlow();
@@ -57,10 +56,11 @@ void TeleopController::operateRamp() {
 		rampDelay.Start();
 		return;
 	}
+	//Deploys a prepared tote
 	if(operatorJoystick.GetRawButton(1) && rampDelay.Get() > DELAY_TIME) {
 		ramp->toggleRampDeploy();
 		rampDelay.Stop();
-		//Do not reset otherwise you can't go forward consectively
+		//Do not reset otherwise you can't go forward consecutively repeatedly
 		return;
 	}
 	ramp->toggleRampReset();
