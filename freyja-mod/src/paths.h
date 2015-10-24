@@ -37,6 +37,8 @@ namespace paths {
 	const Path SECOND_PORTION = combinePaths(LIFT, DRIVE);
 	const Path FIRST_PORTION = {cmds::DRIVE_SHORT_DIST};
 	const Path AUTO = combinePaths(FIRST_PORTION, SECOND_PORTION);
+	const Path TURN_LEFT = {cmds::TURN_LEFT};
+	const Path TURN_RIGHT = {cmds::TURN_RIGHT};
 }
 
 
