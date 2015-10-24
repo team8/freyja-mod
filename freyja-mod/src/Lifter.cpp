@@ -71,6 +71,7 @@ void Lifter::update() {
 		//setVelocity(-BOUNCE_SPEED);
 		std::cout << "BOTTOM WAS HIT" << std::endl;
 	}
+
 	if(isTopHit()) {
 		//setVelocity(BOUNCE_SPEED);
 		std::cout << "TOP WAS HIT" << std::endl;

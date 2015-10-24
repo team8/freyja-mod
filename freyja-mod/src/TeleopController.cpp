@@ -62,12 +62,12 @@ void TeleopController::operateRamp() {
 
 void TeleopController::operateLifter() {
 	//Unlocks the lifter
-	if(operatorJoystick.GetRawButton(9)) {
+	if(operatorJoystick.GetRawButton(8)) {
 		lifterLocked = false;
 		lifter->disableControllers();
 	}
 	//Locks the lifter
-	if(operatorJoystick.GetRawButton(10)) {
+	if(operatorJoystick.GetRawButton(9)) {
 		lifterLocked = true;
 		lifter->disableControllers();
 	}
@@ -80,21 +80,21 @@ void TeleopController::operateLifter() {
 //		lifter->resetZero();
 //	}
 	//Moves up 1 level
-	else if(operatorJoystick.GetRawButton(3)) {
+	else if(operatorJoystick.GetRawButton(7)) {
 		lifter->liftLevel(-1.0);
 	}
 	//Moves down 1 level
-	else if(operatorJoystick.GetRawButton(4)) {
+	else if(operatorJoystick.GetRawButton(6)) {
 		lifter->liftLevel(1.0);
 	}
 	//Moves up to nearest level
-	else if(operatorJoystick.GetRawButton(6)) {
-		lifter->levelUp();
-	}
-	//Moves down to nearest level
-	else if(operatorJoystick.GetRawButton(5)) {
-		lifter->levelDown();
-	}
+//	else if(operatorJoystick.GetRawButton(6)) {
+//		lifter->levelUp();
+//	}
+//	//Moves down to nearest level
+//	else if(operatorJoystick.GetRawButton(5)) {
+//		lifter->levelDown();
+//	}
 	if(operatorJoystick.GetRawButton(12)) {
 		lifter->idle();
 	}
