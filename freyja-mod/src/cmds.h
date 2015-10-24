@@ -34,8 +34,9 @@ namespace cmds {
 	 * Drives the robot a set distance
 	 */
 	void DRIVE_DIST(Robot *const robot);
-
 	void DRIVE_SHORT_DIST(Robot *const robot);
+	void DRIVE_LANDFILL(Robot *const robot);
+	void DRIVE_AUTO_ZONE(Robot *const robot);
 
 	/**
 	 * Deploys a tote from the ramp
@@ -45,7 +46,7 @@ namespace cmds {
 	void LIFT_UP(Robot *const robot);
 
 	/**
-	 * Turns left/right 90 deg
+	 * Turns left/right 90 degrees
 	 */
 	void TURN_LEFT(Robot *const robot);
 	void TURN_RIGHT(Robot *const robot);
