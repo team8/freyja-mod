@@ -38,6 +38,9 @@ private:
 	Lifter *lifter;
 	Ramp *ramp;
 
+	//Delay until ben can move again
+	const double DELAY_TIME = 0.7;
+
 	//Stores if lifter is locked (joystick controls disabled)
 	bool lifterLocked;
 	bool wasOperatorTriggerPressed;
@@ -48,6 +51,8 @@ private:
 	void operateDrivetrain();
 	//Runs the ramp using joystick input
 	void operateRamp();
+
+	Timer rampDelay;
 };
 
 #endif

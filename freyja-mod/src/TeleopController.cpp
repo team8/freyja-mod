@@ -10,7 +10,8 @@ TeleopController::TeleopController(Robot *robot) :
 	ramp(&robot->ramp),
 	lifterLocked(false),
 	wasOperatorTriggerPressed(false),
-	wasDrivetrainTriggerPressed(false)
+	wasDrivetrainTriggerPressed(false),
+	rampDelay()
 {
 
 }
@@ -48,13 +49,18 @@ void TeleopController::disable() {
 }
 
 void TeleopController::operateRamp() {
+	std::cout << rampDelay.Get() << std::endl;
 	//Toggles the ramp state
-	if(operatorJoystick.GetRawButton(1)) {
-		ramp->toggleRampDeploy();
-		return;
-	}
 	if(operatorJoystick.GetRawButton(2)) {
 		ramp->toggleRampSlow();
+		rampDelay.Reset();
+		rampDelay.Start();
+		return;
+	}
+	if(operatorJoystick.GetRawButton(1) && rampDelay.Get() > DELAY_TIME) {
+		ramp->toggleRampDeploy();
+		rampDelay.Stop();
+		//Do not reset otherwise you can't go forward consectively
 		return;
 	}
 	ramp->toggleRampReset();

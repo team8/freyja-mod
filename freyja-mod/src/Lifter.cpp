@@ -44,7 +44,7 @@ void Lifter::update() {
 //	}
 //	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	debug();
+	//debug();
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
