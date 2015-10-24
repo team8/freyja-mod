@@ -105,7 +105,7 @@ private:
 	const double TURN_SCALING = 1.0;
 
 	//Degrees to distance constant for automated turning
-	const double DEGREES_TO_DIST = 0.1;
+	const double DEGREES_TO_DIST = 0.25;
 
 	//Acceptable error constants
 	const double ACCEPTABLE_DRIVE_ERROR = 1;

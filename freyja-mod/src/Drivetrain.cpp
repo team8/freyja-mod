@@ -107,7 +107,7 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
 
-	disableGyroControllers();
+	disableControllers();
 
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -136,21 +136,21 @@ void Drivetrain::driveDist(double distance) {
 //	enableGyroControllers();
 //}
 void Drivetrain::rotateAngle(double angle) {
-	setState(AUTOMATED_ROTATE);
+	setState(AUTOMATED_DRIVE);
 
 	double scaledAngle = angle * DEGREES_TO_DIST;
 
-	disableGyroControllers();
+	disableControllers();
 
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
 	leftDriveController1.SetSetpoint(scaledAngle);
-	leftDriveController1.SetSetpoint(scaledAngle);
-	rightDriveController2.SetSetpoint(-scaledAngle);
+	leftDriveController2.SetSetpoint(scaledAngle);
+	rightDriveController1.SetSetpoint(-scaledAngle);
 	rightDriveController2.SetSetpoint(-scaledAngle);
 
-	enableGyroControllers();
+	enableDriveControllers();
 }
 
 void Drivetrain::brake() {
