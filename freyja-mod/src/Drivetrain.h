@@ -10,23 +10,6 @@
 #include "Subsys.h"
 #include <Ports.h>
 
-//PID constants
-#define DRIVE_PROPORTIONAL 0.12
-#define DRIVE_INTEGRAL 0.0
-#define DRIVE_DERIVATIVE 0.1
-
- //Gyro PID constants
-#define GYRO_PROPORTIONAL 0.12
-#define GYRO_INTEGRAL 0.0
-#define GYRO_DERIVATIVE 0.1
-
-//Encoder constants
-#define RIGHT_DPP 0.0260846883*4
-#define LEFT_DPP 0.0257091439*4
-#define ENCODER_INPUT_RANGE 999
-#define PID_DRIVE_OUTPUT_RANGE 0.3
-#define ENCODER_GYRO_OUTPUT_RANGE 999
-
 /**
  * The drivetrain is a subsystem of the robot that moves it around. It has 2 encoders and 2 Talons; a left and a right one.
  * The drivetrain also has two gyro PID controllers linked to one gyro. Each gyro controller controls the Talon on its side.
@@ -97,6 +80,23 @@ public:
 	void brake();
 
 private:
+	//PID constants
+	const double DRIVE_PROPORTIONAL 0.12
+	const double DRIVE_INTEGRAL 0.0
+	const double DRIVE_DERIVATIVE 0.1
+
+	 //Gyro PID constants
+	const double GYRO_PROPORTIONAL 0.12
+	const double GYRO_INTEGRAL 0.0
+	const double GYRO_DERIVATIVE 0.1
+
+	//Encoder constants
+	const double RIGHT_DPP 0.0260846883*4
+	const double LEFT_DPP 0.0257091439*4
+	const double ENCODER_INPUT_RANGE 999
+	const double PID_DRIVE_OUTPUT_RANGE 0.3
+	const double ENCODER_GYRO_OUTPUT_RANGE 999
+
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
 	const double MAX_FORWARD_SPEED = 0.5;//0.5;
@@ -111,6 +111,9 @@ private:
 	const double ACCEPTABLE_DRIVE_ERROR = 1;
 	const double ACCEPTABLE_ROTATE_ERROR = 1;
 	const double ACCEPTABLE_BRAKE_ERROR = 0.01;
+
+	//Distance to bump
+	const double BUMP_DIST = 1;
 
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 100;
@@ -188,6 +191,8 @@ private:
 	enum State{
 		IDLE,
 		TELEOP,
+		BUMP_FORWARD,
+		BUMP_BACKWARD,
 		AUTOMATED_DRIVE,
 		AUTOMATED_ROTATE,
 		BRAKING,

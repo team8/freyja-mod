@@ -127,6 +127,22 @@ void Drivetrain::driveDist(double distance) {
 	enableDriveControllers();
 }
 
+void Drivetrain::bump() {
+	setState(BUMP_FORWARD);
+	//Stop all current PID
+	disableControllers();
+
+	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+
+	leftDriveController1.SetSetpoint(BUMP_DIST);
+	leftDriveController2.SetSetpoint(BUMP_DIST);
+	rightDriveController1.SetSetpoint(BUMP_DIST);
+	rightDriveController2.SetSetpoint(BUMP_DIST);
+
+	enableDriveControllers();
+}
+
 //void Drivetrain::rotateAngle(double angle) {
 //	setState(AUTOMATED_ROTATE);
 //
