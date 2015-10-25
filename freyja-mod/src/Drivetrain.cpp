@@ -55,11 +55,11 @@ void Drivetrain::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
-//		std::cout << "Drivetrain State: " << state << std::endl;
+		//std::cout << "Drivetrain State: " << state << std::endl;
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			idle();
 		}
-//		std::cout << "Drivetrain State: " << state << std::endl;
+		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
