@@ -50,7 +50,10 @@ namespace cmds {
 	 */
 	void TURN_LEFT(Robot *const robot);
 	void TURN_RIGHT(Robot *const robot);
+	/**
+	 * Rotates to align with chute door
+	 */
+	void ALIGN_CHUTE(Robot *const robot);
 }
-
 
 #endif //CMDS_H
