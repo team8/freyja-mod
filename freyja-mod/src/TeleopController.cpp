@@ -49,6 +49,11 @@ void TeleopController::disable() {
 }
 
 void TeleopController::operateRamp() {
+	//ramp slow at first, then speed up
+	if(operatorJoystick.GetRawButton(3)) {
+		ramp->troutDeploy();
+	}
+
 	//Toggles the ramp state
 	if(operatorJoystick.GetRawButton(2)) {
 		ramp->toggleRampSlow();

@@ -40,7 +40,8 @@ private:
 		IDLE,
 		RUNNING,
 		SLOWING,
-		DEPLOYING
+		DEPLOYING,
+		TROUT_DEPLOY
 	};
 	State state;
 public:
@@ -108,6 +109,11 @@ public:
 	 * Idles the ramp
 	 */
 	void idle();
+
+	/**
+	 * Deploys the ramp, starting slow then speeding up
+	 */
+	void troutDeploy();
 
 	/**
 	 * Determines whether or not the ramp is idle

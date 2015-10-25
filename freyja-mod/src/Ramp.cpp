@@ -57,6 +57,21 @@ void Ramp::update() {
 			deployTimer.Reset();
 		}
 		break;
+	case(State::TROUT_DEPLOY):
+		if(deployTimer.Get() < 0.5) {
+			rightVic.Set(-0.3);
+			leftVic.Set(0.3);
+		}
+		if(deployTimer.Get() >= 0.5 && deployTimer.Get() <= 1) {
+			rightVic.Set(-0.6);
+			leftVic.Set(0.6);
+		}
+		if(deployTimer.Get() > 1) {
+			setState(IDLE);
+			deployTimer.Stop();
+			deployTimer.Reset();
+		}
+		break;
 	}
 }
 
@@ -151,6 +166,15 @@ void Ramp::setState(State state) {
  */
 void Ramp::idle() {
 	stop();
+}
+
+/**
+ * Deploys the ramp in trout mode
+ */
+void Ramp::troutDeploy() {
+	setState(TROUT_DEPLOY);
+	deployTimer.Reset();
+	deployTimer.Start();
 }
 
 /**
