@@ -48,7 +48,7 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
-//	debug();
+	debug();
 	switch(state) {
 	case IDLE:
 		leftDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
@@ -68,7 +68,7 @@ void Drivetrain::update() {
 		rightDriveController2.SetOutputRange(-0.4, 0.4);
 		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
-	case BUMP_FORWARD:
+	case BUMP_FORWARD
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			bumpBackward();
 		}
@@ -154,6 +154,7 @@ void Drivetrain::bumpForward() {
 }
 
 void Drivetrain::bumpBackward() {
+	std::cout << "Bumping backward" << std::endl;
 	setState(BUMP_BACKWARD);
 	//Stop all current PID
 	disableControllers();
@@ -224,6 +225,13 @@ void Drivetrain::setState(State state) {
 	}
 }
 
+bool Drivetrain::isBusy() {
+	if(state == State::TELEOP && state == State::IDLE ) {
+		return false;
+	}
+	return true;
+}
+
 bool Drivetrain::encodersStopped() {
 	return leftEncoder.GetStopped() && rightEncoder.GetStopped();
 }
@@ -276,7 +284,7 @@ void Drivetrain::disableDriveControllers() {
 }
 
 void Drivetrain::debug() {
-//std::cout << "Drivetrain State: " << state << std::endl;
+std::cout << "Drivetrain State: " << state << std::endl;
 //	std::cout << "Left Encoder  | Raw: " << leftEncoder.GetRaw() << " | Distance: " << leftEncoder.GetDistance()
 //			<< " | Rate: " << leftEncoder.GetRate() << " | Stopped: " << leftEncoder.GetStopped() << std::endl;
 //	std::cout << "Right Encoder | Raw: " << rightEncoder.GetRaw() << " | Distance: " << rightEncoder.GetDistance()

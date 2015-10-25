@@ -107,7 +107,12 @@ void TeleopController::operateLifter() {
 }
 
 void TeleopController::operateDrivetrain() {
+	if(!drivetrain->isBusy()) {
+		std::cout << "No DT running" << std::endl;
+		return;
+	}
 	if(driveJoystick.GetRawButton(2)) {
+		std::cout << "Bumping called" << std::endl;
 		drivetrain->bumpForward();
 		return;
 	}

@@ -50,6 +50,11 @@ public:
 	void idle();
 
 	/**
+	 * Used to lock lifter while bumping
+	 */
+	bool isBusy();
+
+	/**
 	 * Determines if the drivetrain is idle or not
 	 * @return true if drivetrain is idling.
 	 */
@@ -119,7 +124,7 @@ private:
 	const double ACCEPTABLE_BRAKE_ERROR = 0.01;
 
 	//Distance to bump
-	const double BUMP_DIST = 1;
+	const double BUMP_DIST = 3;
 
 	// Max period for which
 	const int ENCODER_MAX_PERIOD = 100;
