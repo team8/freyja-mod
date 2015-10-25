@@ -41,7 +41,7 @@ void Freyja::RobotInit() {
 }
 
 void Freyja::AutonomousInit() {
-	autocontroller.init(paths::AUTO);
+	autocontroller.init(paths::NOTHING);
 }
 
 void Freyja::AutonomousPeriodic() {
