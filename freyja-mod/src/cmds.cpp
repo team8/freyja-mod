@@ -14,7 +14,7 @@ void cmds::DRIVE_SHORT_DIST(Robot *const robot) {
 }
 
 void cmds::DRIVE_LANDFILL(Robot *const robot) {
-	robot->drivetrain.driveDist(80);
+	robot->drivetrain.driveDist(65);
 }
 
 void cmds::DRIVE_AUTO_ZONE(Robot *const robot) {

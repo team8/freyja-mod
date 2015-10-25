@@ -51,6 +51,10 @@ void Drivetrain::update() {
 //	debug();
 	switch(state) {
 	case IDLE:
+		leftDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+		rightDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+		leftDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+		rightDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 		break;
 	case TELEOP:
 		break;
@@ -58,6 +62,10 @@ void Drivetrain::update() {
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			idle();
 		}
+		leftDriveController1.SetOutputRange(-0.4, 0.4);
+		leftDriveController2.SetOutputRange(-0.4, 0.4);
+		rightDriveController1.SetOutputRange(-0.4, 0.4);
+		rightDriveController2.SetOutputRange(-0.4, 0.4);
 		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
 	case AUTOMATED_ROTATE:
