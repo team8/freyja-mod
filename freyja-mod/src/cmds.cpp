@@ -14,7 +14,7 @@ void cmds::DRIVE_SHORT_DIST(Robot *const robot) {
 }
 
 void cmds::DRIVE_LANDFILL(Robot *const robot) {
-	robot->drivetrain.driveDist(66);
+	robot->drivetrain.driveDist(80);
 }
 
 void cmds::DRIVE_AUTO_ZONE(Robot *const robot) {
@@ -29,23 +29,18 @@ void cmds::RAMP_DEPLOY(Robot *const robot) {
 }
 
 void cmds::LIFT_UP(Robot *const robot) {
-//
-//	while(true) {
-//		if(robot->isIdle()) {
-			robot->lifter.liftLevel(2.5);
-//			if(robot->lifter.isIdle()) {
-//				break;
-//			}
-//		}
-//	}
-
+	robot->lifter.liftLevel(2.5);
 }
-
 
 void cmds::TURN_LEFT(Robot *const robot) {
 	robot->drivetrain.rotateAngle(-90);
 }
 
 void cmds::TURN_RIGHT(Robot *const robot) {
-	robot->drivetrain.rotateAngle(90);
+	robot->drivetrain.rotateAngle(83);
 }
+
+void cmds::ALIGN_CHUTE(Robot *const robot) {
+	robot->drivetrain.rotateAngle(125);
+}
+

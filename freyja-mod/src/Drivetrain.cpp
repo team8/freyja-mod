@@ -48,18 +48,18 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
-	debug();
+	//debug();
 	switch(state) {
 	case IDLE:
 		break;
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
-		std::cout << "Drivetrain State: " << state << std::endl;
+//		std::cout << "Drivetrain State: " << state << std::endl;
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			idle();
 		}
-		std::cout << "Drivetrain State: " << state << std::endl;
+		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
@@ -136,7 +136,7 @@ void Drivetrain::driveDist(double distance) {
 //	enableGyroControllers();
 //}
 void Drivetrain::rotateAngle(double angle) {
-	setState(AUTOMATED_DRIVE);
+	setState(AUTOMATED_ROTATE);
 
 	double scaledAngle = angle * DEGREES_TO_DIST;
 
@@ -185,8 +185,8 @@ int Drivetrain::driveControllerError() {
 }
 
 int Drivetrain::rotateControllerError() {
-	return std::max(std::max(leftGyroController1.GetError(), leftGyroController2.GetError()),
-			std::max(rightGyroController1.GetError(), rightGyroController2.GetError()));
+	return std::max(std::max(leftDriveController1.GetError(), leftDriveController2.GetError()),
+			std::max(rightDriveController1.GetError(), rightDriveController2.GetError()));
 }
 
 void Drivetrain::enableGyroControllers() {
@@ -217,6 +217,9 @@ void Drivetrain::disableGyroControllers() {
 }
 
 void Drivetrain::disableDriveControllers() {
+	leftEncoder.Reset();
+	rightEncoder.Reset();
+
 	leftDriveController1.Disable();
 	leftDriveController2.Disable();
 	rightDriveController1.Disable();

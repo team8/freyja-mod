@@ -51,7 +51,7 @@ namespace paths {
 	//Cross the autozone
 	const Path DRIVE_AUTO_ZONE = {cmds::DRIVE_AUTO_ZONE};
 	//Starting in landfill, enter auto zone, end away from step
-	const Path LANDFILL_AUTO = buildPath(ROTATE_AUTO_ZONE, DRIVE_AUTO_ZONE);
+	const Path LANDFILL_AUTO = buildPath(ROTATE_AUTO_ZONE, DRIVE_AUTO_ZONE, cmds::ALIGN_CHUTE);
 }
 
 
