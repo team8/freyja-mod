@@ -69,6 +69,12 @@ public:
 	void driveDist(double distance);
 
 	/**
+	 * Bumps a tote forward so lifter can pick it up
+	 */
+	void bumpForward();
+	void bumpBackward();
+
+	/**
 	 * Rotates the drivetrain by an angle
 	 * @param angle how much you want to turn
 	 */
@@ -81,21 +87,21 @@ public:
 
 private:
 	//PID constants
-	const double DRIVE_PROPORTIONAL 0.12
-	const double DRIVE_INTEGRAL 0.0
-	const double DRIVE_DERIVATIVE 0.1
+	const double DRIVE_PROPORTIONAL = 0.12;
+	const double DRIVE_INTEGRAL = 0.0;
+	const double DRIVE_DERIVATIVE = 0.1;
 
 	 //Gyro PID constants
-	const double GYRO_PROPORTIONAL 0.12
-	const double GYRO_INTEGRAL 0.0
-	const double GYRO_DERIVATIVE 0.1
+	const double GYRO_PROPORTIONAL = 0.12;
+	const double GYRO_INTEGRAL = 0.0;
+	const double GYRO_DERIVATIVE = 0.1;
 
 	//Encoder constants
-	const double RIGHT_DPP 0.0260846883*4
-	const double LEFT_DPP 0.0257091439*4
-	const double ENCODER_INPUT_RANGE 999
-	const double PID_DRIVE_OUTPUT_RANGE 0.3
-	const double ENCODER_GYRO_OUTPUT_RANGE 999
+	const double RIGHT_DPP = 0.0260846883*4;
+	const double LEFT_DPP = 0.0257091439*4;
+	const double ENCODER_INPUT_RANGE = 999;
+	const double PID_DRIVE_OUTPUT_RANGE = 0.3;
+	const double ENCODER_GYRO_OUTPUT_RANGE = 999;
 
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed

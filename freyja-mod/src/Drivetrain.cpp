@@ -68,6 +68,16 @@ void Drivetrain::update() {
 		rightDriveController2.SetOutputRange(-0.4, 0.4);
 		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
+	case BUMP_FORWARD:
+		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
+			bumpBackward();
+		}
+		break;
+	case BUMP_BACKWARD:
+		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
+			idle();
+		}
+		break;
 	case AUTOMATED_ROTATE:
 		if(encodersStopped() && rotateControllerError() < ACCEPTABLE_ROTATE_ERROR) {
 			idle();
@@ -127,7 +137,7 @@ void Drivetrain::driveDist(double distance) {
 	enableDriveControllers();
 }
 
-void Drivetrain::bump() {
+void Drivetrain::bumpForward() {
 	setState(BUMP_FORWARD);
 	//Stop all current PID
 	disableControllers();
@@ -139,6 +149,22 @@ void Drivetrain::bump() {
 	leftDriveController2.SetSetpoint(BUMP_DIST);
 	rightDriveController1.SetSetpoint(BUMP_DIST);
 	rightDriveController2.SetSetpoint(BUMP_DIST);
+
+	enableDriveControllers();
+}
+
+void Drivetrain::bumpBackward() {
+	setState(BUMP_BACKWARD);
+	//Stop all current PID
+	disableControllers();
+
+	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+
+	leftDriveController1.SetSetpoint(-BUMP_DIST);
+	leftDriveController2.SetSetpoint(-BUMP_DIST);
+	rightDriveController1.SetSetpoint(-BUMP_DIST);
+	rightDriveController2.SetSetpoint(-BUMP_DIST);
 
 	enableDriveControllers();
 }

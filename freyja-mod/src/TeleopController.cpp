@@ -107,6 +107,10 @@ void TeleopController::operateLifter() {
 }
 
 void TeleopController::operateDrivetrain() {
+	if(driveJoystick.GetRawButton(2)) {
+		drivetrain->bumpForward();
+		return;
+	}
 	if(driveJoystick.GetTrigger() && !wasDrivetrainTriggerPressed) {
 		drivetrain->brake();
 		wasDrivetrainTriggerPressed = true;
