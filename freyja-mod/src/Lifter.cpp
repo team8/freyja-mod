@@ -44,12 +44,12 @@ void Lifter::update() {
 //	}
 //	encoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	//debug();
+//	debug();
 
 	//Finds current level based on encoder value
 	currentLevel = encoder.GetDistance() / LEVEL_HEIGHT;
-	std::cout << "Current Level: " << currentLevel << std::endl;
-	std:: cout << "Setpoint: " << distanceController1.GetSetpoint() << std::endl;
+//	std::cout << "Current Level: " << currentLevel << std::endl;
+//	std:: cout << "Setpoint: " << distanceController1.GetSetpoint() << std::endl;
 
 	switch(state) {
 	case IDLE:

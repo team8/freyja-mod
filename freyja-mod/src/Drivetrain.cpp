@@ -55,7 +55,6 @@ void Drivetrain::update() {
 	case TELEOP:
 		break;
 	case AUTOMATED_DRIVE:
-		//std::cout << "Drivetrain State: " << state << std::endl;
 		if(encodersStopped() && driveControllerError() < ACCEPTABLE_DRIVE_ERROR) {
 			idle();
 		}
@@ -107,7 +106,7 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 void Drivetrain::driveDist(double distance) {
 	setState(AUTOMATED_DRIVE);
 
-	disableGyroControllers();
+	disableControllers();
 
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
@@ -120,20 +119,37 @@ void Drivetrain::driveDist(double distance) {
 	enableDriveControllers();
 }
 
+//void Drivetrain::rotateAngle(double angle) {
+//	setState(AUTOMATED_ROTATE);
+//
+//	disableDriveControllers();
+//
+//	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+//
+//	leftGyroController1.SetSetpoint(angle);
+//	leftGyroController1.SetSetpoint(angle);
+//	rightGyroController2.SetSetpoint(angle);
+//	rightGyroController2.SetSetpoint(angle);
+//
+//	enableGyroControllers();
+//}
 void Drivetrain::rotateAngle(double angle) {
 	setState(AUTOMATED_ROTATE);
 
-	disableDriveControllers();
+	double scaledAngle = angle * DEGREES_TO_DIST;
+
+	disableControllers();
 
 	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
 
-	leftGyroController1.SetSetpoint(angle);
-	leftGyroController1.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
-	rightGyroController2.SetSetpoint(angle);
+	leftDriveController1.SetSetpoint(scaledAngle);
+	leftDriveController2.SetSetpoint(scaledAngle);
+	rightDriveController1.SetSetpoint(-scaledAngle);
+	rightDriveController2.SetSetpoint(-scaledAngle);
 
-	enableGyroControllers();
+	enableDriveControllers();
 }
 
 void Drivetrain::brake() {
@@ -168,8 +184,8 @@ int Drivetrain::driveControllerError() {
 }
 
 int Drivetrain::rotateControllerError() {
-	return std::max(std::max(leftGyroController1.GetError(), leftGyroController2.GetError()),
-			std::max(rightGyroController1.GetError(), rightGyroController2.GetError()));
+	return std::max(std::max(leftDriveController1.GetError(), leftDriveController2.GetError()),
+			std::max(rightDriveController1.GetError(), rightDriveController2.GetError()));
 }
 
 void Drivetrain::enableGyroControllers() {
@@ -200,6 +216,9 @@ void Drivetrain::disableGyroControllers() {
 }
 
 void Drivetrain::disableDriveControllers() {
+	leftEncoder.Reset();
+	rightEncoder.Reset();
+
 	leftDriveController1.Disable();
 	leftDriveController2.Disable();
 	rightDriveController1.Disable();
