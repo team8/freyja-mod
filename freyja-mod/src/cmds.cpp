@@ -21,13 +21,6 @@ void cmds::DRIVE_AUTO_ZONE(Robot *const robot) {
 	robot->drivetrain.driveDist(86);
 }
 
-void cmds::RAMP_DEPLOY(Robot *const robot) {
-	robot->ramp.start();
-	if(robot->ramp.hasDeployed()) {
-		robot->ramp.stop();
-	}
-}
-
 void cmds::LIFT_UP(Robot *const robot) {
 	robot->lifter.liftLevel(2.5);
 }

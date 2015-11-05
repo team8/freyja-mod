@@ -7,7 +7,6 @@ TeleopController::TeleopController(Robot *robot) :
 	operatorJoystick((uint32_t) PORT_JOYSTICK_OPERATOR),
 	drivetrain(&robot->drivetrain),
 	lifter(&robot->lifter),
-	ramp(&robot->ramp),
 	lifterLocked(false),
 	wasOperatorTriggerPressed(false),
 	wasDrivetrainTriggerPressed(false),
@@ -21,8 +20,6 @@ void TeleopController::init() {
 	lifter->init();
 	std::cout << "DT Init" << std::endl;
 	drivetrain->init(); // problem
-	std::cout << "Ramp Init" << std::endl;
-	ramp->init();
 	std::cout << "Init Over" << std::endl;
 }
 
@@ -34,36 +31,13 @@ void TeleopController::update() {
 	// LIFTER CONTROLS
 	operateLifter();
 
-	//RAMP CONTROLS
-	operateRamp();
-
 	drivetrain->update();
 	lifter->update();
-	ramp->update();
 }
 
 void TeleopController::disable() {
 	drivetrain->disable();
 	lifter->disable();
-	ramp->disable();
-}
-
-void TeleopController::operateRamp() {
-	//Toggles the ramp state
-	if(operatorJoystick.GetRawButton(2)) {
-		ramp->toggleRampSlow();
-		rampDelay.Reset();
-		rampDelay.Start();
-		return;
-	}
-	//Deploys a prepared tote
-	if(operatorJoystick.GetRawButton(1) && rampDelay.Get() > DELAY_TIME) {
-		ramp->toggleRampDeploy();
-		rampDelay.Stop();
-		//Do not reset otherwise you can't go forward consecutively repeatedly
-		return;
-	}
-	ramp->toggleRampReset();
 }
 
 void TeleopController::operateLifter() {

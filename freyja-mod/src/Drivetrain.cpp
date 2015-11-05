@@ -5,6 +5,8 @@ Drivetrain::Drivetrain() :
 	leftTalon2((uint32_t) PORT_DRIVETRAIN_TALON_LEFT_2),
 	rightTalon1((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT_1),
 	rightTalon2((uint32_t) PORT_DRIVETRAIN_TALON_RIGHT_2),
+	leftTalon3((uint32_t) 5),
+	rightTalon3((uint32_t) 6),
 	gyro((int32_t) PORT_GYROSCOPE),
 
 	leftEncoder((uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_A, (uint32_t) PORT_DRIVETRAIN_ENCODER_LEFT_B, false),
@@ -18,6 +20,8 @@ Drivetrain::Drivetrain() :
 	rightGyroController2(-GYRO_PROPORTIONAL, -GYRO_INTEGRAL, -GYRO_DERIVATIVE, &gyro, &rightTalon2),
 	leftDriveController2(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon2),
 	rightDriveController2(-DRIVE_PROPORTIONAL, -DRIVE_INTEGRAL, -DRIVE_DERIVATIVE, &rightEncoder, &rightTalon2),
+	leftDriveController3(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon3),
+	rightDriveController3(-DRIVE_PROPORTIONAL, -DRIVE_INTEGRAL, -DRIVE_DERIVATIVE, &rightEncoder, &rightTalon3),
 	state(IDLE)
 {
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
@@ -33,6 +37,8 @@ Drivetrain::Drivetrain() :
 	rightGyroController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 	leftDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
 	rightDriveController2.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	leftDriveController3.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
+	rightDriveController3.SetInputRange(-ENCODER_INPUT_RANGE, ENCODER_INPUT_RANGE);
 	leftDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 	rightDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 	leftGyroController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
@@ -55,6 +61,8 @@ void Drivetrain::update() {
 		rightDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 		leftDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 		rightDriveController2.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+		leftDriveController3.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
+		rightDriveController3.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
 		break;
 	case TELEOP:
 		break;
@@ -66,6 +74,8 @@ void Drivetrain::update() {
 		leftDriveController2.SetOutputRange(-0.4, 0.4);
 		rightDriveController1.SetOutputRange(-0.4, 0.4);
 		rightDriveController2.SetOutputRange(-0.4, 0.4);
+		leftDriveController3.SetOutputRange(-0.4, 0.4);
+		rightDriveController3.SetOutputRange(-0.4, 0.4);
 		//std::cout << "Drivetrain State: " << state << std::endl;
 		break;
 	case AUTOMATED_ROTATE:
@@ -109,6 +119,8 @@ void Drivetrain::drive(double turnValue, double forwardValue) {
 	leftTalon2.Set(-(scaledForward - scaledTurn));
 	rightTalon1.Set(scaledForward + scaledTurn);
 	rightTalon2.Set(scaledForward + scaledTurn);
+	leftTalon3.Set(-(scaledForward - scaledTurn));
+	rightTalon3.Set(scaledForward + scaledTurn);
 }
 
 void Drivetrain::driveDist(double distance) {
@@ -123,6 +135,8 @@ void Drivetrain::driveDist(double distance) {
 	leftDriveController2.SetSetpoint(distance);
 	rightDriveController1.SetSetpoint(distance);
 	rightDriveController2.SetSetpoint(distance);
+	leftDriveController3.SetSetpoint(distance);
+	rightDriveController3.SetSetpoint(distance);
 
 	enableDriveControllers();
 }
@@ -156,6 +170,8 @@ void Drivetrain::rotateAngle(double angle) {
 	leftDriveController2.SetSetpoint(scaledAngle);
 	rightDriveController1.SetSetpoint(-scaledAngle);
 	rightDriveController2.SetSetpoint(-scaledAngle);
+	leftDriveController3.SetSetpoint(scaledAngle);
+	rightDriveController3.SetSetpoint(-scaledAngle);
 
 	enableDriveControllers();
 }
@@ -172,6 +188,8 @@ void Drivetrain::brake() {
 	leftDriveController1.SetSetpoint(0);
 	rightDriveController2.SetSetpoint(0);
 	rightDriveController2.SetSetpoint(0);
+	leftDriveController3.SetSetpoint(0);
+	rightDriveController3.SetSetpoint(0);
 
 	enableDriveControllers();
 }
@@ -208,6 +226,8 @@ void Drivetrain::enableDriveControllers() {
 	leftDriveController2.Enable();
 	rightDriveController1.Enable();
 	rightDriveController2.Enable();
+	leftDriveController3.Enable();
+	rightDriveController3.Enable();
 }
 
 
@@ -231,6 +251,8 @@ void Drivetrain::disableDriveControllers() {
 	leftDriveController2.Disable();
 	rightDriveController1.Disable();
 	rightDriveController2.Disable();
+	leftDriveController3.Disable();
+	rightDriveController3.Disable();
 }
 
 void Drivetrain::debug() {

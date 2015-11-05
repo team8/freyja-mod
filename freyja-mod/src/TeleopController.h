@@ -6,7 +6,6 @@
 #include "paths.h"
 #include "Drivetrain.h"
 #include "Lifter.h"
-#include "Ramp.h"
 
 class TeleopController {
 public:
@@ -36,7 +35,6 @@ private:
 
 	Drivetrain *drivetrain;
 	Lifter *lifter;
-	Ramp *ramp;
 
 	//Delay until ben can move again
 	const double DELAY_TIME = 0.7;

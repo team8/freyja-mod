@@ -31,7 +31,6 @@ namespace paths {
 	 */
 
 	const Path NOTHING = {cmds::STOP};
-	const Path RAMP_DEPLOY = {cmds::RAMP_DEPLOY};
 	const Path DRIVE = {cmds::DRIVE_DIST};
 	const Path LIFT = {cmds::LIFT_UP};
 

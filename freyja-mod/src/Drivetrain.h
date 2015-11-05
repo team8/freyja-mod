@@ -127,6 +127,9 @@ private:
 	PIDController rightDriveController1;
 	PIDController rightDriveController2;
 
+	PIDController leftDriveController3;
+	PIDController rightDriveController3;
+
 	/**
 	 * A controller for the left wheels when rotating angle
 	 */
@@ -158,6 +161,10 @@ private:
 	 * The other talon that controls the right wheels
 	 */
 	TalonSRX rightTalon2;
+
+	TalonSRX leftTalon3;
+
+	TalonSRX rightTalon3;
 
 	/**
 	 * The gyro of the robot that returns the current angle of the robot
