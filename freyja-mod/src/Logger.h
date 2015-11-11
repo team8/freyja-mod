@@ -19,6 +19,7 @@ public:
 private:
 	std::string filename_;
 	std::string *cols_;
+	std::ofstream stream_;
 };
 
 #endif /* LOGGER_H_ */

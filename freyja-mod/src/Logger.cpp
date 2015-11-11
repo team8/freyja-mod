@@ -14,10 +14,12 @@ Logger::Logger(std::string filename, std::string *cols)
 {
 	filename_ = filename;
 	cols_ = cols;
+	std::ofstream data(filename_);
 }
 
 void Logger::log(std::string *input) {
 	assert(sizeof input == sizeof cols_);
+
 
 }
 
