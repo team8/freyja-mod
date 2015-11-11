@@ -9,17 +9,17 @@
 #define LOGGER_H_
 #include <iostream>
 #include <fstream>
+#include <string>
 
 
 class Logger {
 public:
-	Logger(std::string filename, std::string *cols);
-	void log(std::string *input);
+	Logger(const char* filename);
+	void log(const char** input);
 	virtual ~Logger();
 private:
-	std::string filename_;
-	std::string *cols_;
-	std::ofstream stream_;
+	const char* filename_;
+	const char** cols_;
 };
 
 #endif /* LOGGER_H_ */

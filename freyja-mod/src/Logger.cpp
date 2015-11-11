@@ -10,17 +10,16 @@
 #include <iostream>
 #include <fstream>
 
-Logger::Logger(std::string filename, std::string *cols)
+Logger::Logger(const char* filename)
 {
 	filename_ = filename;
-	cols_ = cols;
-	std::ofstream data(filename_);
+	cols_ = {"Left", "Right"};
 }
 
-void Logger::log(std::string *input) {
+void Logger::log(const char** input) {
 	assert(sizeof input == sizeof cols_);
-
-
+	std::ofstream data_(filename_);
+	data_ << input[0] << "," << input[1] << std::endl;
 }
 
 Logger::~Logger() {

@@ -9,6 +9,7 @@
 #include <WPILib.h>
 #include "Subsys.h"
 #include <Ports.h>
+#include <Logger.h>
 
 //PID constants
 #define DRIVE_PROPORTIONAL 0.12
@@ -97,6 +98,7 @@ public:
 	void brake();
 
 private:
+	Logger dt_log_;
 	// MAX_FORWARD_SPEED + MAX_TURN_SPEED should not exceed 1.0
 	//Constants for regulating speed
 	const double MAX_FORWARD_SPEED = 0.5;//0.5;

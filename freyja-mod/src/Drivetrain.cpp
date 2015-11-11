@@ -18,7 +18,9 @@ Drivetrain::Drivetrain() :
 	rightGyroController2(-GYRO_PROPORTIONAL, -GYRO_INTEGRAL, -GYRO_DERIVATIVE, &gyro, &rightTalon2),
 	leftDriveController2(DRIVE_PROPORTIONAL, DRIVE_INTEGRAL, DRIVE_DERIVATIVE, &leftEncoder, &leftTalon2),
 	rightDriveController2(-DRIVE_PROPORTIONAL, -DRIVE_INTEGRAL, -DRIVE_DERIVATIVE, &rightEncoder, &rightTalon2),
-	state(IDLE)
+	state(IDLE),
+	dt_log_("dt_output.csv")
+
 {
 	leftEncoder.SetDistancePerPulse(LEFT_DPP);
 	rightEncoder.SetDistancePerPulse(RIGHT_DPP);
@@ -49,6 +51,7 @@ void Drivetrain::init() {
 
 void Drivetrain::update() {
 	debug();
+	dt_log_.log({"word", "other word"});
 	switch(state) {
 	case IDLE:
 		break;
