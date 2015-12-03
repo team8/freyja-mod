@@ -54,7 +54,7 @@ void Drivetrain::init() {
 }
 
 void Drivetrain::update() {
-//	debug();
+	debug();
 	switch(state) {
 	case IDLE:
 		leftDriveController1.SetOutputRange(-PID_DRIVE_OUTPUT_RANGE, PID_DRIVE_OUTPUT_RANGE);
