@@ -1,4 +1,4 @@
-#include <Drivetrain.h>
+#include "Drivetrain.h"
 
 Drivetrain::Drivetrain() :
 	leftTalon1((uint32_t) PORT_DRIVETRAIN_TALON_LEFT_1),
@@ -128,8 +128,8 @@ void Drivetrain::driveDist(double distance) {
 
 	disableControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	leftEncoder.SetPIDSourceType(PIDSourceType::kDisplacement);
+	rightEncoder.SetPIDSourceType(PIDSourceType::kDisplacement);
 
 	leftDriveController1.SetSetpoint(distance);
 	leftDriveController2.SetSetpoint(distance);
@@ -163,8 +163,8 @@ void Drivetrain::rotateAngle(double angle) {
 
 	disableControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kDistance);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kDistance);
+	leftEncoder.SetPIDSourceType(PIDSourceType::kDisplacement);
+	rightEncoder.SetPIDSourceType(PIDSourceType::kDisplacement);
 
 	leftDriveController1.SetSetpoint(scaledAngle);
 	leftDriveController2.SetSetpoint(scaledAngle);
@@ -181,8 +181,8 @@ void Drivetrain::brake() {
 
 	disableGyroControllers();
 
-	leftEncoder.SetPIDSourceParameter(PIDSource::kRate);
-	rightEncoder.SetPIDSourceParameter(PIDSource::kRate);
+	leftEncoder.SetPIDSourceType(PIDSourceType::kRate);
+	rightEncoder.SetPIDSourceType(PIDSourceType::kRate);
 
 	leftDriveController1.SetSetpoint(0);
 	leftDriveController1.SetSetpoint(0);

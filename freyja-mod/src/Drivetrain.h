@@ -6,9 +6,9 @@
 #ifndef SRC_DRIVETRAIN_H_
 #define SRC_DRIVETRAIN_H_
 
-#include <WPILib.h>
+#include "WPILib.h"
 #include "Subsys.h"
-#include <Ports.h>
+#include "Ports.h"
 
 //PID constants
 #define DRIVE_PROPORTIONAL 0.12
@@ -169,7 +169,7 @@ private:
 	/**
 	 * The gyro of the robot that returns the current angle of the robot
 	 */
-	Gyro gyro;
+	AnalogGyro gyro;
 
 	/**
 	 * The encoder on the center left wheel that keeps track of rotation

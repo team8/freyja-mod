@@ -87,7 +87,7 @@ void Lifter::disable() {
 
 void Lifter::idle() {
 	disableControllers();
-	encoder.SetPIDSourceParameter(PIDSource::kRate);
+	encoder.SetPIDSourceType(PIDSourceType::kRate);
 	velocityController1.SetSetpoint(0);
 	velocityController2.SetSetpoint(0);
 	velocityController1.Enable();
@@ -119,7 +119,7 @@ void Lifter::disableControllers() {
 void Lifter::setLevel(double level) {
 	disableControllers();
 	double setpoint = level * LEVEL_HEIGHT;
-	encoder.SetPIDSourceParameter(PIDSource::kDistance);
+	encoder.SetPIDSourceType(PIDSourceType::kDisplacement);
 	distanceController1.SetSetpoint(setpoint);
 	distanceController2.SetSetpoint(setpoint);
 	distanceController1.Enable();
